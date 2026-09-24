@@ -1,0 +1,21 @@
+# Table 1 condition (c) — OpenJarvis spec, Intelligence = Qwen3.5-9B
+# Maps onto the OpenJarvis CLI: jarvis bench skills
+
+experiment_id: table1_c_hermes_openjarvis_qwen3.5-9b
+paper_table: 1
+paper_row: hermes_agent
+paper_condition: c
+
+model: qwen3.5:9b
+engine: ollama
+agent: native_react
+condition: skills_on
+
+# Paper: 5 independent runs. CLI default is 3; we use 5.
+seeds: [42, 43, 44, 45, 46]
+
+# null = full PinchBench (23 tasks)
+max_samples: null
+
+output_dir: results/runs/table1_c
+log_dir: results/logs
