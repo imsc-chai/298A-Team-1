@@ -7,6 +7,9 @@ __pycache__/
 *.log
 ~$*
 
+# Course PDFs/templates stay on laptops only, not GitHub
+Project 17 Documents/
+
 # Models and large artifacts
 *.gguf
 *.safetensors
