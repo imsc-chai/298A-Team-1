@@ -1,0 +1,23 @@
+{
+  "source": "Saad-Falcon et al. (2026) Table 1",
+  "arxiv": "2605.17172",
+  "framework_row": "Hermes Agent",
+  "conditions": {
+    "a_default_cloud_claude_opus_4.6": {
+      "pinchbench_accuracy_percent": 93.5,
+      "gaia_accuracy_percent": 55.1
+    },
+    "b_default_qwen3.5_9b": {
+      "pinchbench_accuracy_percent": 68.7,
+      "gaia_accuracy_percent": 22.4
+    },
+    "c_openjarvis_qwen3.5_9b": {
+      "pinchbench_accuracy_percent": 87.9,
+      "gaia_accuracy_percent": 40.8,
+      "is_298a_headline_target": true
+    }
+  },
+  "n_runs": 5,
+  "benchmark": "PinchBench",
+  "n_tasks": 23
+}

@@ -1,0 +1,25 @@
+# Canonical PinchBench v1 — 23 tasks (paper Table 1 / pinchbench.com "23 tasks")
+# Filenames in the current repo dropped the 00_ prefix; IDs match YAML `id:`.
+task_sanity
+task_calendar
+task_stock
+task_blog
+task_weather
+task_summary
+task_events
+task_email
+task_memory
+task_files
+task_workflow
+task_clawdhub
+task_skill_search
+task_image_gen
+task_humanizer
+task_daily_summary
+task_email_triage
+task_email_search
+task_market_research
+task_spreadsheet_summary
+task_eli5_pdf_summary
+task_openclaw_comprehension
+task_second_brain

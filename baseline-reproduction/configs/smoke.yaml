@@ -1,0 +1,9 @@
+experiment_id: table1_c_smoke
+model: qwen3.5:9b
+engine: ollama
+agent: native_react
+condition: skills_on
+seeds: [42]
+max_samples: 2
+output_dir: results/runs/smoke
+log_dir: results/logs

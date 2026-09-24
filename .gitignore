@@ -1,0 +1,19 @@
+.DS_Store
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+*.log
+~$*
+
+# Models and large artifacts
+*.gguf
+*.safetensors
+*.bin
+
+# Local eval dumps
+baseline-reproduction/third_party/
+baseline-reproduction/results/runs/
+baseline-reproduction/results/logs/
+baseline-reproduction/data/raw/
