@@ -1,15 +1,7 @@
-# DATA 298A — Team 1 — Topic 17
+# 298A Team 1 — Privacy-Preserving Personal AI Operating System
 
-Privacy-Preserving Personal AI Operating System.
+Course project for DATA 298A, Section 21, Team 1, Topic 17.
 
-```
-Project17/
-├── baseline-reproduction/    298A reproduced baseline (this semester)
-└── README.md
-```
+The local baseline is OpenJarvis with Qwen3.5-9B on the 23-task PinchBench, matching Table 1 of Saad-Falcon et al. (2026), Hermes Agent block, condition (c). The paper reports 87.9%. This machine scored **71.5% ± 3.4** over 5 runs.
 
-Course PDFs and templates stay in a local `Project 17 Documents/` folder (gitignored).
-
-**Baseline (not one of our four models):** Saad-Falcon et al. (2026), Table 1, Hermes Agent row, condition (c): OpenJarvis + Qwen3.5-9B = **87.9% PinchBench**.
-
-Start here: `baseline-reproduction/README.md`
+How to repeat the run, and what differs from the paper, is in [baseline/SETUP.md](baseline/SETUP.md).

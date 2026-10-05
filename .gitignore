@@ -1,22 +1,24 @@
 .DS_Store
-.venv/
-venv/
 __pycache__/
 *.pyc
-.env
-*.log
-~$*
+.venv/
+venv/
 
-# Course PDFs/templates stay on laptops only, not GitHub
+# API keys. Copy baseline/.env.example to baseline/.env and fill it in locally.
+.env
+**/.env
+
+# Recreated by baseline/SETUP.md. Do not commit the checkouts.
+baseline/OpenJarvis/
+baseline/pinchbench_repo/
+baseline/pinchbench_23tasks/
+
+# Local archive and course PDFs. Not part of the repository.
+recycle/
+Project documents/
 Project 17 Documents/
 
-# Models and large artifacts
+# Model weights stay local.
 *.gguf
 *.safetensors
 *.bin
-
-# Local eval dumps
-baseline-reproduction/third_party/
-baseline-reproduction/results/runs/
-baseline-reproduction/results/logs/
-baseline-reproduction/data/raw/

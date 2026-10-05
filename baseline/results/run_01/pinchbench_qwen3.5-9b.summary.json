@@ -1,0 +1,305 @@
+{
+  "hardware_info": {
+    "platform": "darwin",
+    "cpu_brand": "Apple M5",
+    "cpu_count": 10,
+    "ram_gb": 16.0,
+    "gpu": {
+      "vendor": "apple",
+      "name": "Apple M5",
+      "vram_gb": 16.0,
+      "count": 1
+    }
+  },
+  "benchmark": "pinchbench",
+  "category": "pinchbench",
+  "backend": "jarvis-agent",
+  "model": "qwen3.5:9b",
+  "total_samples": 23,
+  "scored_samples": 23,
+  "correct": 17,
+  "accuracy": 0.7391,
+  "errors": 0,
+  "mean_latency_seconds": 50.7199,
+  "total_cost_usd": 0.0,
+  "per_subject": {
+    "AI Image Generation": {
+      "accuracy": 0.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 0.0
+    },
+    "Blog Post Writing": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "CSV and Excel Data Summarization": {
+      "accuracy": 0.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 0.0
+    },
+    "Calendar Event Creation": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Competitive Market Research": {
+      "accuracy": 0.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 0.0
+    },
+    "Create Project Structure": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Daily Research Summary Generation": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Document Summarization": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "ELI5 PDF Summarization": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Email Inbox Triage": {
+      "accuracy": 0.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 0.0
+    },
+    "Email Search and Summarization": {
+      "accuracy": 0.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 0.0
+    },
+    "File Structure Creation": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Humanize AI-Generated Blog": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Memory Retrieval from Context": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Multi-step API Workflow": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "OpenClaw Report Comprehension": {
+      "accuracy": 0.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 0.0
+    },
+    "Professional Email Drafting": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Sanity Check": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Search and Replace in Files": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Second Brain Knowledge Persistence": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Stock Price Research": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Tech Conference Research": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    },
+    "Weather Script Creation": {
+      "accuracy": 1.0,
+      "total": 1.0,
+      "scored": 1.0,
+      "correct": 1.0
+    }
+  },
+  "started_at": 1791157694.767405,
+  "ended_at": 1791159069.611833,
+  "accuracy_stats": {
+    "mean": 0.7391304347826086,
+    "median": 1.0,
+    "min": 0.0,
+    "max": 1.0,
+    "std": 0.4489777585448796,
+    "p90": 1.0,
+    "p95": 1.0,
+    "p99": 1.0
+  },
+  "latency_stats": {
+    "mean": 50.71991753439247,
+    "median": 48.07666799999424,
+    "min": 1.991534833010519,
+    "max": 142.19323095900472,
+    "std": 36.71607058908041,
+    "p90": 102.11398692440417,
+    "p95": 118.2187404290991,
+    "p99": 137.2486403555234
+  },
+  "ttft_stats": null,
+  "energy_stats": null,
+  "power_stats": null,
+  "gpu_utilization_stats": null,
+  "throughput_stats": null,
+  "mfu_stats": null,
+  "mbu_stats": null,
+  "ipw_stats": null,
+  "ipj_stats": null,
+  "energy_per_output_token_stats": null,
+  "throughput_per_watt_stats": null,
+  "itl_stats": null,
+  "input_token_stats": null,
+  "output_token_stats": null,
+  "total_energy_joules": 0.0,
+  "total_estimated_flops": 0.0,
+  "flops_stats": null,
+  "warmup_samples_excluded": 0,
+  "steady_state_reached": false,
+  "energy_method": "",
+  "avg_power_watts": 0.0,
+  "total_input_tokens": 0,
+  "total_output_tokens": 0,
+  "efficiency": {
+    "accuracy": 0.7391,
+    "total_energy_joules": 0.0,
+    "avg_power_watts": 0.0,
+    "total_estimated_flops": 0.0,
+    "ipj": null,
+    "ipw": null
+  },
+  "normalized_statistics": {
+    "_description": "Statistics recomputed after trimming 1 outlier(s) from each end by latency (21/23 results kept)",
+    "_outliers_removed": 2,
+    "accuracy": 0.7619,
+    "latency_stats": {
+      "mean": 48.68444464281007,
+      "median": 48.07666799999424,
+      "min": 8.858043332991656,
+      "max": 119.71781912499864,
+      "std": 30.682819273774363,
+      "p90": 91.66180595800688,
+      "p95": 104.72703216600348,
+      "p99": 116.71966173319962
+    },
+    "energy_stats": null,
+    "power_stats": null,
+    "throughput_stats": null,
+    "mbu_stats": null
+  },
+  "normalized_efficiency": {
+    "accuracy": 0.7619,
+    "total_energy_joules": 0.0,
+    "avg_power_watts": 0.0,
+    "ipj": null,
+    "ipw": null
+  },
+  "mean_continuous_score": 0.72212,
+  "median_continuous_score": 0.8875,
+  "pct_above_0.5": 0.73913,
+  "pct_above_0.7": 0.652174,
+  "pct_above_0.8": 0.652174,
+  "pct_above_0.9": 0.434783,
+  "telemetry_summary": {
+    "total_energy_joules": 0.0,
+    "avg_power_watts": 0.0,
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "total_tokens": 0,
+    "total_estimated_flops": 0.0,
+    "throughput_stats": null,
+    "gpu_utilization_stats": null,
+    "energy_stats": null,
+    "power_stats": null,
+    "flops_stats": null,
+    "ipw": null,
+    "ipj": null
+  },
+  "framework": "openjarvis",
+  "framework_commit": "e97088f199cf86ea5f78de921772357d1f0d2cec",
+  "n_tasks": 23,
+  "metrics": {
+    "accuracy": {
+      "mean": 0.7391304347826086,
+      "std": 0.4489777585448796,
+      "n": 23
+    },
+    "latency_seconds": {
+      "mean": 50.71991753439247,
+      "std": 36.71607058908041,
+      "n": 23
+    },
+    "energy_joules_per_query": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 0
+    },
+    "input_tokens_per_query": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 0
+    },
+    "output_tokens_per_query": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 0
+    },
+    "cost_usd_per_query": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 0
+    },
+    "peak_power_w": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 0
+    }
+  }
+}

@@ -1,0 +1,38 @@
+# Table 1 condition (c): OpenJarvis + Qwen3.5-9B on PinchBench (23 tasks).
+# Copied from OpenJarvis v1.0.0 src/openjarvis/evals/configs/pinchbench-qwen-9b.toml.
+# Changes from that file:
+#   judge  claude-opus-4-5     -> gpt-5-mini-2025-08-07 (paper Section 4.1)
+#   model  Qwen/Qwen3.5-9B vllm -> qwen3.5:9b ollama (Q4_K_M; no NVIDIA GPU, 16 GB Mac)
+#   output_dir                 -> results/run_01
+
+[meta]
+name = "condition-c-pinchbench-qwen35-9b"
+description = "Table 1 (c): OpenJarvis native_openhands + Qwen3.5-9B, 23-task PinchBench"
+
+[defaults]
+temperature = 0.6
+max_tokens = 8192
+
+[judge]
+model = "gpt-5-mini-2025-08-07"
+temperature = 0.0
+engine = "cloud"
+
+[run]
+max_workers = 1
+output_dir = "results/run_01"
+seed = 42
+
+[[models]]
+name = "qwen3.5:9b"
+engine = "ollama"
+
+[[benchmarks]]
+name = "pinchbench"
+backend = "jarvis-agent"
+agent = "native_openhands"
+tools = [
+    "think", "file_read", "file_write", "web_search", "shell_exec",
+    "code_interpreter", "browser_navigate", "image_generate",
+    "calculator", "http_request", "pdf_extract",
+]
