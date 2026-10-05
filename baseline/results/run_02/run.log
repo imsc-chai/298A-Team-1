@@ -1,0 +1,187 @@
+╭──────────────────────── v1.8 ─────────────────────────╮
+│                                                       │
+│   ___                       _                  _      │
+│  / _ \ _ __   ___ _ __     | | __ _ _ ____   _(_)___  │
+│ | | | | '_ \ / _ \ '_ \ _  | |/ _` | '__\ \ / / / __| │
+│ | |_| | |_) |  __/ | | | |_| | (_| | |   \ V /| \__ \ │
+│  \___/| .__/ \___|_| |_|\___/ \__,_|_|    \_/ |_|___/ │
+│       |_|                                             │
+╰───────────────────────────────────────────────────────╯
+───────────────────────────── Suite Configuration ──────────────────────────────
+  Suite:       condition-c-pinchbench-qwen35-9b
+  Description: Table 1 (c): OpenJarvis native_openhands + Qwen3.5-9B, 23-task 
+PinchBench
+  Matrix:     1 model(s) x 1 benchmark(s) = 1 run(s)
+─────────────────────── Run 1/1: pinchbench / qwen3.5:9b ───────────────────────
+17:43:47 INFO httpx: HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+17:43:47 INFO openjarvis.evals.datasets.pinchbench: PinchBench: loaded 23 tasks
+17:43:47 INFO openjarvis.evals.core.runner: Running pinchbench: 23 samples, backend=jarvis-agent, model=qwen3.5:9b, workers=1, episode_mode=False
+17:43:47 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_mkwywnuh (task task_16_email_triage)
+17:44:14 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:44:56 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:45:48 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:46:06 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:46:06 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_hajh5rz3 (task task_15_daily_summary)
+17:46:08 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:46:10 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:46:12 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:46:15 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:46:17 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:46:19 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:47:15 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:47:26 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:47:40 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:47:40 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_eellybtm (task task_02_stock)
+17:47:43 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:48:08 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:48:22 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:48:32 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:48:32 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_bjtnhz2a (task task_14_humanizer)
+17:48:35 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:48:37 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:49:15 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:49:23 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:49:34 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:49:34 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_67jitjfw (task task_05_summary)
+17:49:36 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:49:56 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:04 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:14 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:50:14 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_pd22_sz4 (task task_13_image_gen)
+17:50:18 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:18 INFO httpx: HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 400 Bad Request"
+17:50:21 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:22 INFO httpx: HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 400 Bad Request"
+17:50:27 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:27 INFO httpx: HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 400 Bad Request"
+17:50:31 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:38 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:50:38 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_q82_8rd4 (task task_17_email_search)
+17:50:42 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:47 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:50 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:52 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:55 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:50:58 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:01 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:04 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:07 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:10 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:17 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:51:17 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_p6vbfjq0 (task task_12_skill_search)
+17:51:21 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:23 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:24 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:38 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:47 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:57 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:51:57 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_n9g0bd_p (task task_22_second_brain)
+17:52:04 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:10 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:12 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:16 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:18 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:23 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:35 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:52:35 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_h7yuhujo (task task_06_events)
+17:52:38 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:45 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:50 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:52:56 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:53:01 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:53:06 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:53:37 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:53:52 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:53:52 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_nuxdtt6l (task task_09_files)
+17:53:54 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:53:57 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:53:59 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:54:01 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:54:05 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:54:05 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_eq5m6qpc (task task_01_calendar)
+17:54:22 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:54:33 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:54:40 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:54:40 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_r19ml8b8 (task task_18_spreadsheet_summary)
+17:54:44 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:54:48 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:55:13 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:55:31 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:55:41 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:55:55 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:02 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:04 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:06 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:21 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:31 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:56:31 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_ap3_6me7 (task task_11_clawdhub)
+17:56:34 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:37 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:43 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:50 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:56:55 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:57:02 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:57:02 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_uohstgb8 (task task_10_workflow)
+17:57:03 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:57:29 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:57:56 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:58:08 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:58:23 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+17:58:23 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_pjupluqi (task task_21_openclaw_comprehension)
+17:58:25 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:58:31 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:58:50 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:58:53 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:59:10 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:59:12 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:59:36 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+17:59:50 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:00:05 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:00:15 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:00:15 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_6dqbv1qc (task task_04_weather)
+18:00:40 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:00:48 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:00:48 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_u1q3nmg_ (task task_16_market_research)
+18:00:51 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:00:58 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:01:04 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:01:11 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:01:17 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:01:33 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:01:50 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:01:58 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+18:01:58 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_ny2tessf (task task_07_email)
+18:02:09 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:02:14 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:02:24 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+18:02:24 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_24v6d6yz (task task_08_memory)
+18:02:26 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:02:30 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:02:32 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:02:32 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_6beuju1z (task task_00_sanity)
+18:02:33 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:02:33 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_fu2y70zn (task task_03_blog)
+18:03:13 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:03:21 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:03:34 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+18:03:34 INFO openjarvis.evals.execution.pinchbench_env: PinchBench workspace: /var/folders/0_/9hh3y3f14tjfxx9kx_vzv76w0000gn/T/pinchbench_yztotjfh (task task_20_eli5_pdf_summary)
+18:03:37 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:03:39 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:04:00 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:04:23 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:04:33 INFO httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+18:04:50 INFO httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+18:04:50 INFO openjarvis.evals.core.runner: Results written to /Users/chai/pro17/baseline/results/run_02/pinchbench_qwen3.5-9b.jsonl
+18:04:50 INFO openjarvis.evals.core.runner: Summary written to /Users/chai/pro17/baseline/results/run_02/pinchbench_qwen3.5-9b.summary.json
+18:04:50 INFO openjarvis.evals.core.runner: Traces written to /Users/chai/pro17/baseline/results/run_02/traces/pinchbench_qwen3.5-9b
+18:04:50 INFO openjarvis.agents.scheduler: Agent scheduler stopped
+18:04:50 INFO openjarvis.agents.scheduler: Agent scheduler stopped
+  0.7391 (17/23)
+──────────────────────────────── Suite Results ─────────────────────────────────
+            Suite Results: condition-c-pinchbench-qwen35-9b             
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Benchmark  ┃ Model      ┃ Accuracy ┃ Scored ┃ Latency (s) ┃ Cost ($) ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ pinchbench │ qwen3.5:9b │   0.7391 │  17/23 │       47.03 │   0.0000 │
+└────────────┴────────────┴──────────┴────────┴─────────────┴──────────┘
+EXIT 0

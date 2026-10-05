@@ -1,0 +1,37 @@
+{
+  "paper_target": 87.9,
+  "runs": {
+    "run_01": 72.21,
+    "run_02": 71.98,
+    "run_03": 65.7,
+    "run_04": 73.21,
+    "run_05": 74.46
+  },
+  "mean": 71.51,
+  "std": 3.39,
+  "per_task_mean": {
+    "task_00_sanity": 1.0,
+    "task_01_calendar": 0.6667,
+    "task_02_stock": 1.0,
+    "task_03_blog": 0.9275,
+    "task_04_weather": 1.0,
+    "task_05_summary": 0.975,
+    "task_06_events": 0.6395,
+    "task_07_email": 0.7925,
+    "task_08_memory": 0.94,
+    "task_09_files": 0.9143,
+    "task_10_workflow": 0.8842,
+    "task_11_clawdhub": 1.0,
+    "task_12_skill_search": 1.0,
+    "task_13_image_gen": 0.5,
+    "task_14_humanizer": 0.945,
+    "task_15_daily_summary": 0.9105,
+    "task_16_email_triage": 0.4437,
+    "task_16_market_research": 0.13,
+    "task_17_email_search": 0.0135,
+    "task_18_spreadsheet_summary": 0.068,
+    "task_20_eli5_pdf_summary": 0.715,
+    "task_21_openclaw_comprehension": 0,
+    "task_22_second_brain": 0.9825
+  }
+}
