@@ -1,0 +1,33 @@
+[project]
+name = "p17sim"
+version = "0.1.0"
+description = "Topic 17 personal-data sandbox: synthetic personas, 30-day traces, splits and harness"
+requires-python = ">=3.11"
+dependencies = [
+    "datasketch>=1.6",
+    "faker>=30",
+    "matplotlib>=3.8",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pydantic>=2.7",
+    "tabulate>=0.9",
+]
+
+[project.optional-dependencies]
+gemini = ["google-genai>=1.0"]
+
+[project.scripts]
+p17sim = "p17sim.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/p17sim"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
