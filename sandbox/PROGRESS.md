@@ -4,7 +4,7 @@ Owner: Savitha Vijayarangan · Branch: `savitha/trace-v1` (from `main` at `1ec25
 
 Tick a box only when its evidence exists (a file, a test, a command output). Update the "Last updated" line each time.
 
-Last updated: 2026-10-07 23:05 PDT
+Last updated: 2026-10-08 01:10 PDT
 
 ## How the pipeline fits together
 
@@ -36,31 +36,31 @@ personas (seeded)  ->  skeleton events + labels  ->  LLM renders text  ->  clean
 - [x] Generate 10 personas, seed 2026: 2,842 events, trace hash `d41497d4…` (`p17sim generate --seed 2026 --n-in 10 --n-ood 0`)
 - [x] Determinism, invariant, split and leakage tests pass
 
-### 2. LLM render (extraction source 2) — in progress
+### 2. LLM render (extraction source 2) — done
 - [x] Renderer with retries, required-string check and cache (`render.py`); 16/16 smoke renders kept every fact
-- [ ] Render all 1,725 text events with `llama3.2` — **359 / 1,725 cached** (about 20 per minute; restart resumes from cache)
-- [ ] Record final render count and failures here
+- [x] Render all 1,725 text events with `llama3.2` (resumed from 359 cached; about 20 per minute, finished 01:05)
+- [x] Final render: 1,715 ok, 10 `render_failed` after 3 tries; 1,117 events need no text
 
-### 3. Clean into the Workbook schema — code done, real run pending
+### 3. Clean into the Workbook schema — done
 - [x] Cleaning: LLM preamble, wrapping/stray quotes, markdown, whitespace (`trace.py: clean_text`)
 - [x] Missing values: failed renders imputed with template text that keeps the labeled fact; flagged `source=imputed`
 - [x] Duplicates: exact duplicate filler messages per persona dropped and counted
 - [x] PII scan: non-example emails, non-fictional phones, SSN and card patterns redacted (pattern rules; Presidio not yet)
 - [x] Export to the 7 Workbook fields + permission records; labels to a separate file
 - [x] Tested end to end on fake text (`tests/test_trace.py`, 8 tests)
-- [ ] Run on the real render: `p17sim build-trace --data data/v1 --out ../data/trace_v1`
-- [ ] Copy cleaning counts and 3 before/after samples into the slides
+- [x] Run on the real render: `p17sim build-trace --data data/v1 --out ../data/trace_v1` → 2,886 records (2,842 − 6 duplicates + 50 permission records); trace hash `5e28d37f…`; rebuild in 11 s is byte-identical
+- [ ] Copy cleaning counts and 3 before/after samples into the slides (counts: 495 wrapping quotes, 17 stray quotes, 5 preambles, 2 whitespace, 10 imputed, 6 duplicates, 0 PII left; samples in `Presentation_Evidence_TM1/03_clean_trace/`)
 
-### 4. Validate, split, leakage — code done, real run pending
+### 4. Validate, split, leakage — done
 - [x] Validation: schema, unique ids, timestamps in window, deletions/conflicts point to earlier records, no PII left
 - [x] Leakage: no tasks in train, task evidence inside train window, canaries only in their own persona, no task text contains its answer
-- [ ] Real run shows `0 violations` and `0 findings`
-- [ ] Rehearse the corruption demo: break one line, `p17sim validate-trace` fails with the named check
+- [x] Real run shows `0 violations` and `0 findings`; splits train 2,147 / val 299 / test 440; oracle 100%, null 0% on utility tasks
+- [x] Corruption demo run: bad timestamp, planted PII, duplicate id each fail with the named check (outputs in `Presentation_Evidence_TM1/06_corruption_demo/`); rehearse it live once
 
-### 5. EDA — code done, real plots pending
+### 5. EDA — real plots done
 - [x] Five plots: records per day with split lines, type mix per split, text length, scored tasks per split, cleaning issues
 - [x] `eda/report.md` with tables, samples and coverage gaps
-- [ ] Review real plots; pick 2 for slide 7 and the ISA demo
+- [x] Review real plots; picked `records_per_day.png` (slide 7) and `cleaning_issues.png` (ISA demo)
 - [ ] Write the "problems found" list (start below)
 
 ### 6. Presentation prep
@@ -82,6 +82,8 @@ personas (seeded)  ->  skeleton events + labels  ->  LLM renders text  ->  clean
 - LLM text adds preambles ("Here is a short message:"), stray quotes, and invented names despite instructions.
 - Routines are more regular than real life (start-time spread of only about 7–16 minutes).
 - PII scan uses pattern rules; Workbook 2.1 promises Presidio as well.
+- 10 of 1,725 renders (0.6%) dropped a required fact 3 times; imputed from a template.
+- The LLM wrapped 495 texts (29%) in quotes despite "Output only the text".
 
 ## Next cycle (Cycle 4, Oct 8–21)
 - [ ] Preference signals across all 30 days; re-render
