@@ -121,7 +121,7 @@ def _value(kind: str, rng: np.random.Generator) -> str:
     if kind == "lunch_place":
         return f"{str(rng.choice(words)).capitalize()} {rng.choice(['Kitchen', 'Bistro', 'Noodle Bar', 'Cafe', 'Grill'])}"
     if kind == "package_locker":
-        return f"locker {rng.choice(list('ABCDEF'))}-{int(rng.integers(1, 40))}"
+        return f"{rng.choice(list('ABCDEF'))}-{int(rng.integers(1, 40))}"
     return f"{str(rng.choice(words)).capitalize()} Animal Clinic"  # vet_clinic
 
 

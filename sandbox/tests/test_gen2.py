@@ -131,3 +131,15 @@ def test_audit_finds_v1_shortcuts_absent_in_v2(small):
     assert audit.shortcuts(v2)["canary_caught_by_v1_regex"] == 0.0
     if v1:
         assert audit.shortcuts(v1)["canary_caught_by_v1_regex"] == 1.0
+
+
+def test_package_locker_value_is_the_bare_code():
+    import re
+
+    import numpy as np
+
+    from p17sim.gen2.skeleton import _value
+
+    rng = np.random.default_rng(0)
+    for _ in range(20):
+        assert re.fullmatch(r"[A-F]-\d{1,2}", _value("package_locker", rng))
