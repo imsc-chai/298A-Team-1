@@ -1,8 +1,9 @@
 """v2 export: rendered events -> cleaned trace records + labels, then validation and leakage checks.
 
-The trace keeps Workbook 1's seven fields and adds two (schema v2):
+The trace keeps Workbook 1's seven fields and adds three (schema v2):
 - `sender`: who wrote it ("me" for the user's own notes and calendar);
-- `channel`: message | note | calendar | notification | preference | instruction | permission.
+- `channel`: message | note | calendar | notification | preference | instruction | permission;
+- `end`: end time of calendar entries (null otherwise).
 A mailbox shows the sender, and v1 left it out, so an agent could not tell who said what.
 Timestamps use each persona's own start date (v2 traces start on different weekdays).
 """
@@ -154,7 +155,9 @@ def build(personas: list[Persona], extras: list[PersonaExtra], raw: list[Event],
         records.append({"event_id": e.event_id, "persona_id": e.persona_id, "timestamp": timestamp(x, e.day, e.minute),
                         "event_type": _event_type(e), "text": cleaned, "permission_label": _permission(e),
                         "deleted": bool(e.fact_id in deleted_facts and e.type in (EventType.MESSAGE, EventType.FILE)),
-                        "sender": sender, "channel": _channel(e)})
+                        "sender": sender, "channel": _channel(e),
+                        "end": timestamp(x, e.day, e.minute + e.payload.get("duration_minutes", 30))
+                        if e.type == EventType.CALENDAR else None})
         labels.append({"event_id": e.event_id, "persona_id": e.persona_id, "day": e.day, "minute": e.minute,
                        "split": split_for_day(e.day), "persona_split": splits[e.persona_id], "source": source,
                        "fixes": fixes, "provenance": e.provenance, "fact_id": e.fact_id, "fact_value": e.fact_value,

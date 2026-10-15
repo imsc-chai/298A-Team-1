@@ -159,6 +159,78 @@ def cmd_render2(a) -> int:
     return 0
 
 
+def cmd_build_trace2(a) -> int:
+    from p17sim.gen2.build import export
+
+    res = export(a.data, a.out)
+    print("clean   " + ", ".join(f"{k}={v}" for k, v in sorted(res["log"].items())))
+    print(f"validate {len(res['violations'])} violations")
+    for v in res["violations"][:20]:
+        print("       " + v)
+    print(f"leakage  {len(res['leakage'])} findings")
+    for f in res["leakage"][:20]:
+        print("       " + f)
+    print(f"manifest {a.out / 'manifest.json'}")
+    return 1 if res["violations"] or res["leakage"] else 0
+
+
+def cmd_audit(a) -> int:
+    from p17sim.gen2 import audit
+
+    results = [audit.run(audit.view_v1(a.v1, a.v1 / "events_rendered.jsonl")),
+               audit.run(audit.view_v2(a.v2, "events_rendered.jsonl" if (a.v2 / "events_rendered.jsonl").exists()
+                                       else "events.jsonl"))]
+    a.out.parent.mkdir(parents=True, exist_ok=True)
+    a.out.write_text(json.dumps(results, indent=1) + "\n")
+    print(audit.table(results))
+    return 0
+
+
+def cmd_train_a(a) -> int:
+    from p17sim.agents.train import train_all
+    from p17sim.system.runner import Dataset
+
+    report = train_all(Dataset.load(a.trace, a.data), a.out, use_embeddings=not a.no_embeddings)
+    print(json.dumps({k: report[k] for k in ("params", "compute")}, indent=1))
+    return 0
+
+
+def cmd_eval(a) -> int:
+    from p17sim.agents.registry import ABLATIONS, factory, run_meta
+    from p17sim.system.runner import Dataset, evaluate
+
+    ds = Dataset.load(a.trace, a.data)
+    pids = sorted(p for p, s in ds.splits.items() if s in a.personas.split(","))
+    if a.limit:
+        pids = pids[: a.limit]
+    windows = tuple(a.windows.split(","))
+    kinds = set(a.kinds.split(",")) if a.kinds else (ABLATIONS[a.system][1] | {"deletion"}
+                                                     if a.system in ABLATIONS and a.targeted else None)
+    out = a.out / f"{a.system}_s{a.seed}_{a.personas.replace(',', '+')}_{a.windows.replace(',', '+')}.jsonl"
+    meta = run_meta(a.system, a.model, a.seed, pids, windows)
+    meta["kinds"] = sorted(kinds) if kinds else "all"
+    rows = evaluate(ds, factory(a.system, ds, a.model, a.seed), pids, windows, out, meta, kinds)
+    tasks = [r for r in rows if r.get("kind") and r["kind"] != "deletion_audit"]
+    print(f"{out}: {sum(r['passed'] for r in tasks)}/{len(tasks)} tasks passed in this call")
+    return 0
+
+
+def cmd_report(a) -> int:
+    from p17sim.analysis.report import build
+
+    build(a.results)
+    print(f"wrote {a.results / 'RESULTS.md'}")
+    return 0
+
+
+def cmd_profile_models(a) -> int:
+    from p17sim.analysis.profile_models import run
+
+    for r in run(a.out):
+        print(json.dumps(r))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="p17sim")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -210,6 +282,46 @@ def main(argv: list[str] | None = None) -> int:
     r2.add_argument("--cache", type=Path, default=Path("data/render_cache_v2"))
     r2.add_argument("--workers", type=int, default=4)
     r2.set_defaults(fn=cmd_render2)
+
+    b2 = sub.add_parser("build-trace2", help="v2 rendered events -> cleaned trace, labels, checks")
+    b2.add_argument("--data", type=Path, default=Path("data/v2"))
+    b2.add_argument("--out", type=Path, default=Path("../data/trace_v2"))
+    b2.set_defaults(fn=cmd_build_trace2)
+
+    au = sub.add_parser("audit", help="bias and shortcut audit, v1 vs v2")
+    au.add_argument("--v1", type=Path, default=Path("data/v1"))
+    au.add_argument("--v2", type=Path, default=Path("data/v2"))
+    au.add_argument("--out", type=Path, default=Path("research/results/audit.json"))
+    au.set_defaults(fn=cmd_audit)
+
+    ta = sub.add_parser("train-a", help="train Model A's reranker, intent model and preference estimator")
+    ta.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    ta.add_argument("--data", type=Path, default=Path("data/v2"))
+    ta.add_argument("--out", type=Path, default=Path("models/model_a"))
+    ta.add_argument("--no-embeddings", action="store_true")
+    ta.set_defaults(fn=cmd_train_a)
+
+    ev = sub.add_parser("eval", help="run one system on the v2 harness")
+    ev.add_argument("--system", required=True)
+    ev.add_argument("--seed", type=int, default=11)
+    ev.add_argument("--model", default="qwen3.5:4b")
+    ev.add_argument("--personas", default="test", help="comma list of persona splits")
+    ev.add_argument("--windows", default="test", help="comma list of day windows: val, test")
+    ev.add_argument("--kinds", default="", help="only these task kinds (comma list)")
+    ev.add_argument("--targeted", action="store_true", help="ablations: only their target task kinds")
+    ev.add_argument("--limit", type=int, default=0, help="first N personas only (smoke runs)")
+    ev.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    ev.add_argument("--data", type=Path, default=Path("data/v2"))
+    ev.add_argument("--out", type=Path, default=Path("research/results/runs"))
+    ev.set_defaults(fn=cmd_eval)
+
+    rp = sub.add_parser("report", help="build research/results/RESULTS.md from the run files")
+    rp.add_argument("--results", type=Path, default=Path("research/results"))
+    rp.set_defaults(fn=cmd_report)
+
+    pm = sub.add_parser("profile-models", help="measure each local model alone (load, memory, speed)")
+    pm.add_argument("--out", type=Path, default=Path("research/results/model_profile.json"))
+    pm.set_defaults(fn=cmd_profile_models)
 
     t = sub.add_parser("validate-trace")
     t.add_argument("trace", type=Path)

@@ -53,3 +53,25 @@ def render(data: Path, cache: Path, workers: int, out_file: str = "events_render
     for e in rendered:
         status[e.render_status] = status.get(e.render_status, 0) + 1
     return status
+
+
+def export(data: Path, out: Path, raw_file: str = "events_rendered.jsonl") -> dict:
+    """Rendered events -> cleaned v2 trace + labels, validated and leak-checked, with a hashed manifest."""
+    from p17sim.gen2.trace import build, leakage, validate
+    from p17sim.trace import sha256_file
+
+    personas, extras, raw, splits = load(data, raw_file)
+    built = build(personas, extras, raw, splits)
+    violations = validate(built["records"], built["labels"], extras)
+    leaks = leakage(built["records"], built["labels"], splits)
+    write_jsonl(out / "trace.jsonl", built["records"])
+    write_jsonl(out / "labels.jsonl", built["labels"])
+    (out / "cleaning_log.json").write_text(json.dumps({"log": built["log"], "samples": built["samples"]},
+                                                      indent=1, ensure_ascii=False) + "\n")
+    (out / "checks.json").write_text(json.dumps({"violations": violations, "leakage": leaks}, indent=1) + "\n")
+    files = ["trace.jsonl", "labels.jsonl", "cleaning_log.json"]
+    m = {"generator_version": GENERATOR_VERSION, "records": len(built["records"]), "personas": len(personas),
+         "split_manifest_sha256": json.loads((data / "split_manifest.json").read_text())["sha256"],
+         "sha256": {f: sha256_file(out / f) for f in files}}
+    (out / "manifest.json").write_text(json.dumps(m, indent=1, sort_keys=True) + "\n")
+    return {"log": built["log"], "violations": violations, "leakage": leaks, "manifest": m}
