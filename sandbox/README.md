@@ -14,6 +14,7 @@ The data is synthetic, so no real person's mail is used. Models A, B and C are t
 their slots exist, report "pending training", and their training data is exported.
 
 Architecture at a glance: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) ·
+What the user sees (screenshots): [docs/USER_GUIDE.md](docs/USER_GUIDE.md) ·
 Requirements and design decisions: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) ·
 Design: [docs/plans/2026-10-15-personal-ai-os-design.md](docs/plans/2026-10-15-personal-ai-os-design.md) ·
 Research pipeline: [research/PIPELINE.md](research/PIPELINE.md) ·
