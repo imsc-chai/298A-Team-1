@@ -212,9 +212,10 @@ class Shell:
                            {"ids": ("array", "record ids to delete")}, ["ids"]),
     }
 
-    def tool_schemas(self) -> list[dict]:
+    @classmethod
+    def tool_schemas(cls) -> list[dict]:
         out = []
-        for name, (desc, params, required) in self.TOOLS.items():
+        for name, (desc, params, required) in cls.TOOLS.items():
             props = {}
             for p, (typ, d) in params.items():
                 props[p] = {"type": typ, "description": d}
@@ -224,8 +225,9 @@ class Shell:
                 "type": "object", "properties": props, "required": required}}})
         return out
 
-    def tool_descriptions(self) -> str:
-        return "\n".join(f"- {n}({', '.join(p)}): {d}" for n, (d, p, _) in self.TOOLS.items())
+    @classmethod
+    def tool_descriptions(cls) -> str:
+        return "\n".join(f"- {n}({', '.join(p)}): {d}" for n, (d, p, _) in cls.TOOLS.items())
 
     def execute(self, name: str, args: dict[str, Any]) -> str:
         fn = getattr(self, name, None) if name in self.TOOLS else None

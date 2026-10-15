@@ -92,6 +92,8 @@ class Chat:
         self.hostname = urllib.parse.urlparse(host).hostname or host
         self.profile = Profile()
         self.persona_text = PersonaText()
+        self.gateway = None  # an aios EgressGateway: when set, every request goes through it and is logged
+        self.persona_id: str | None = None
 
     def settings(self) -> dict[str, Any]:
         return {"model": self.model, "temperature": self.temperature, "max_tokens": self.max_tokens,
@@ -114,9 +116,15 @@ class Chat:
                          bytes_out=len(body), persona_bytes_out=self.persona_text.bytes_in(body.decode()))
         t = time.perf_counter()
         try:
-            req = urllib.request.Request(f"{self.host}/api/chat", data=body, headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req, timeout=self.timeout) as r:
-                data = json.loads(r.read())
+            if self.gateway is not None:
+                data = json.loads(self.gateway.post(f"{self.host}/api/chat", body, purpose=component,
+                                                    persona_id=self.persona_id,
+                                                    persona_texts=self.persona_text.snippets, timeout=self.timeout))
+            else:
+                req = urllib.request.Request(f"{self.host}/api/chat", data=body,
+                                             headers={"Content-Type": "application/json"})
+                with urllib.request.urlopen(req, timeout=self.timeout) as r:
+                    data = json.loads(r.read())
         except Exception as exc:  # recorded and re-raised so the runner logs a real error
             rec.wall_s, rec.error = time.perf_counter() - t, f"{type(exc).__name__}: {exc}"
             self.profile.calls.append(rec)
@@ -143,16 +151,21 @@ class Chat:
 
 
 def embed(texts: list[str], model: str = "all-minilm", host: str = "http://localhost:11434",
-          profile: Profile | None = None, persona_text: PersonaText | None = None) -> list[list[float]]:
+          profile: Profile | None = None, persona_text: PersonaText | None = None, gateway=None,
+          persona_id: str | None = None) -> list[list[float]]:
     """Local sentence embeddings (all-minilm, 23M parameters) through Ollama."""
     body = json.dumps({"model": model, "input": texts}).encode()
     hostname = urllib.parse.urlparse(host).hostname or host
     rec = CallRecord(component="embed", model=model, host=hostname, wall_s=0.0, bytes_out=len(body),
                      persona_bytes_out=(persona_text or PersonaText()).bytes_in(body.decode()))
     t = time.perf_counter()
-    req = urllib.request.Request(f"{host}/api/embed", data=body, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=600) as r:
-        data = json.loads(r.read())
+    if gateway is not None:
+        data = json.loads(gateway.post(f"{host}/api/embed", body, purpose="embed", persona_id=persona_id,
+                                       persona_texts=(persona_text or PersonaText()).snippets, timeout=600))
+    else:
+        req = urllib.request.Request(f"{host}/api/embed", data=body, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=600) as r:
+            data = json.loads(r.read())
     rec.wall_s = time.perf_counter() - t
     rec.load_s = data.get("load_duration", 0) / 1e9
     rec.prompt_tokens = data.get("prompt_eval_count", 0)
