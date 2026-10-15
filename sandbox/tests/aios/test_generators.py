@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta
 
 import pytest
@@ -79,3 +80,16 @@ def test_template_prompts_receive_the_upstream_data(v2ds):
     prompt = ws.llm.seen[0][-1]["content"]
     assert "{{" not in prompt and "}}" not in prompt and '{"start": "HH:MM"}' in prompt
     assert "Calendar: [" in prompt
+
+
+def test_forget_template_leaves_no_copy_anywhere(v2ds):
+    """Regression: the delete step's own log row used to keep the deleted text (found in live testing)."""
+    from p17sim.aios.engine import auto_approve
+
+    ws = ready_ws(v2ds)
+    rec = next(r for r in ws.store.visible(ws.pid, before=ws.now.isoformat(), channels={"message"})
+               if any(ch.isdigit() for ch in r["text"]) and len(r["text"]) > 30)
+    query = " ".join(rec["text"].split()[:6])
+    res = generator("template:forget").run("", ws, approver=auto_approve, params={"query": query})
+    assert res.status == "succeeded" and rec["id"] in json.dumps(res.node_runs)
+    assert ws.deletion.storage_audit(ws.pid, rec["text"][:40]) == []

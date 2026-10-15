@@ -272,8 +272,11 @@ class Engine:
         wall = time.perf_counter() - t
         out_cls = max_class(cls, out_cls) if spec.category not in ("context", "trigger") else out_cls
         st.outputs[node.id], st.classes[node.id] = out, out_cls
-        self._log(st, node, "ok", spec.location, out_cls, {k: v for k, v in params.items() if k != "_approved"}, out,
-                  None, wall)
+        logged = {k: v for k, v in params.items() if k != "_approved"}
+        if node.type == "action.delete_records":
+            # This log row is written after the deletion ran: keep only the ids, never what the records said.
+            logged = {"ids": out["deleted"], "request": logged.get("request", "")}
+        self._log(st, node, "ok", spec.location, out_cls, logged, out, None, wall)
         if spec.category == "action":
             self.ws.store.audit_log(self.ws.pid, self.ws.now.isoformat(), st.generator, node.type, node.id, out)
         if spec.reversible and spec.undo:
