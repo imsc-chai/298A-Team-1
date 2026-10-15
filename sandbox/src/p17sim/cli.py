@@ -231,6 +231,13 @@ def cmd_profile_models(a) -> int:
     return 0
 
 
+def cmd_serve(a) -> int:
+    from p17sim.system.app import serve
+
+    serve(a.trace, a.data, a.model, a.port)
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="p17sim")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -322,6 +329,13 @@ def main(argv: list[str] | None = None) -> int:
     pm = sub.add_parser("profile-models", help="measure each local model alone (load, memory, speed)")
     pm.add_argument("--out", type=Path, default=Path("research/results/model_profile.json"))
     pm.set_defaults(fn=cmd_profile_models)
+
+    sv = sub.add_parser("serve", help="prototype web interface on localhost")
+    sv.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    sv.add_argument("--data", type=Path, default=Path("data/v2"))
+    sv.add_argument("--model", default="qwen3.5:4b")
+    sv.add_argument("--port", type=int, default=8017)
+    sv.set_defaults(fn=cmd_serve)
 
     t = sub.add_parser("validate-trace")
     t.add_argument("trace", type=Path)

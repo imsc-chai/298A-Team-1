@@ -162,3 +162,17 @@ def test_report_builds_from_run_files(ds, tmp_path):
     assert "Verdict: **superior**" in text
     assert "model_a-no_reranker" in text and "Fairness slices: model_a" in text
     assert (tmp_path / "figures" / "success_by_kind.png").exists()
+
+
+def test_demo_replays_the_month_and_answers(ds):
+    from p17sim.system.app import Demo
+
+    demo = Demo(ds, "unused")
+    pid = next(p["id"] for p in demo.personas() if p["split"] == "test")
+    lab = next(ds.labels[r["event_id"]] for r in ds.records[pid]
+               if (ds.labels[r["event_id"]].get("checker") or {}).get("kind") == "recall")
+    req = next(r["text"] for r in ds.records[pid] if r["event_id"] == lab["event_id"])
+    hhmm = f"{lab['minute'] // 60:02d}:{lab['minute'] % 60:02d}"
+    out = demo.run({"persona_id": pid, "day": lab["day"], "time": hhmm, "system": "oracle", "request": req})
+    assert out["answer"] == lab["checker"]["args"]["expected"]
+    assert out["replayed"] > 0 and out["profile"]["raw_export_bytes"] == 0
