@@ -205,6 +205,15 @@ def cmd_eval(a) -> int:
     return 0
 
 
+def cmd_export_training(a) -> int:
+    from p17sim.aios.export import export_all
+    from p17sim.system.runner import Dataset
+
+    m = export_all(Dataset.load(a.trace, a.data), a.out, verify=not a.no_verify)
+    print(json.dumps({k: m[k] for k in ("files", "gold_check") if k in m}, indent=1))
+    return 1 if m.get("gold_check", {}).get("failed") else 0
+
+
 def cmd_report(a) -> int:
     from p17sim.analysis.report import build
 
@@ -296,6 +305,13 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--data", type=Path, default=Path("data/v2"))
     ev.add_argument("--out", type=Path, default=Path("research/results/runs"))
     ev.set_defaults(fn=cmd_eval)
+
+    ex = sub.add_parser("export-training", help="training data for Models A, B, C (train and val personas only)")
+    ex.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    ex.add_argument("--data", type=Path, default=Path("data/v2"))
+    ex.add_argument("--out", type=Path, default=Path("../data/training_v2"))
+    ex.add_argument("--no-verify", action="store_true")
+    ex.set_defaults(fn=cmd_export_training)
 
     rp = sub.add_parser("report", help="build research/results/RESULTS.md from the run files")
     rp.add_argument("--results", type=Path, default=Path("research/results"))
