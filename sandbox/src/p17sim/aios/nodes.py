@@ -266,6 +266,7 @@ def _delete(ctx: RunContext, p: dict) -> tuple[dict, str]:
     ids = p.get("ids", [])
     if isinstance(ids, str):
         ids = [i for i in re.split(r"[,\s]+", ids) if i]
+    ids = [i["id"] if isinstance(i, dict) else i for i in ids]  # search results can be passed straight in
     receipt = ctx.ws.deletion.delete(ctx.ws.pid, [str(i) for i in ids], str(p.get("request", "")), actor="assistant",
                                      ts=ctx.ws.now.isoformat())
     return {"deleted": receipt["record_ids"], "receipt": receipt["id"]}, "public"
