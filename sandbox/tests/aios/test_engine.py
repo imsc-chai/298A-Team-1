@@ -105,3 +105,16 @@ def test_stepwise_execution_records_an_agent_run_as_a_workflow(ws):
     assert [n["type"] for n in res.workflow["nodes"]] == ["trigger.chat", "reason.agent_step", "context.search",
                                                           "action.send_email", "output.respond"]
     assert res.answer == "Your gate code is 4821." and res.status == "succeeded"
+
+
+def test_resumed_workflow_still_asks_for_later_actions(ws):
+    """Regression (found in the UI): after one approval, later 'ask' actions were auto-approved."""
+    set_tool(ws, "mail.send", "ask")
+    w = wf([{"id": "ok", "type": "human.approval", "params": {"message": "Send this recap?"}},
+            {"id": "m", "type": "action.send_email", "params": {"to": "Ben", "body": "hi"}}], [("ok", "m", None)])
+    eng = Engine(ws)
+    first = eng.run(w, "test", approver=queue_approval)
+    second = eng.resume(first.approval_id, "approve")
+    assert second.status == "waiting_approval" and ws.store.outbox("q1") == []
+    third = eng.resume(second.approval_id, "approve")
+    assert third.status == "succeeded" and len(ws.store.outbox("q1")) == 1

@@ -54,6 +54,7 @@ class ExecState:
     answer: str = ""
     llm_calls_at_start: int = 0
     stepwise: bool = False  # an agent loop: a failed step is reported back, nothing is rolled back
+    approver: Approver = auto_approve  # kept so a resumed workflow asks again for later "ask" actions
 
 
 @dataclass
@@ -80,6 +81,8 @@ class Engine:
             start_at: int = 0, state: ExecState | None = None) -> ExecutionResult:
         wf.order()  # validate before anything runs
         st = state or self._open(wf, generator, trigger)
+        if state is None:
+            st.approver = approver
         for node in wf.order()[start_at:]:
             if not self._branch_taken(st, node):
                 self._log(st, node, "skipped", "local", "public", {}, None, None, 0.0)
@@ -109,7 +112,7 @@ class Engine:
         st.interventions += 1
         if self._run_node(st, order[idx], lambda r: "approved", already_approved=True):
             return self._close(st)
-        return self.run(st.workflow, st.generator, start_at=idx + 1, state=st)
+        return self.run(st.workflow, st.generator, approver=st.approver, start_at=idx + 1, state=st)
 
     # ---------------------------------------------------------------- single steps (agent loops)
     def open(self, goal: str, generator: str, trigger: str = "chat") -> str:
