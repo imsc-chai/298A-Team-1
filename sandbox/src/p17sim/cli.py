@@ -214,6 +214,13 @@ def cmd_export_training(a) -> int:
     return 1 if m.get("gold_check", {}).get("failed") else 0
 
 
+def cmd_serve(a) -> int:
+    from p17sim.aios.api import serve
+
+    serve(a.trace, a.data, a.model, a.port, a.store_dir)
+    return 0
+
+
 def cmd_report(a) -> int:
     from p17sim.analysis.report import build
 
@@ -312,6 +319,14 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("--out", type=Path, default=Path("../data/training_v2"))
     ex.add_argument("--no-verify", action="store_true")
     ex.set_defaults(fn=cmd_export_training)
+
+    sv = sub.add_parser("serve", help="Personal AI OS: API and web app on localhost")
+    sv.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    sv.add_argument("--data", type=Path, default=Path("data/v2"))
+    sv.add_argument("--model", default="qwen3.5:4b")
+    sv.add_argument("--port", type=int, default=8017)
+    sv.add_argument("--store-dir", type=Path, default=Path("data/aios"))
+    sv.set_defaults(fn=cmd_serve)
 
     rp = sub.add_parser("report", help="build research/results/RESULTS.md from the run files")
     rp.add_argument("--results", type=Path, default=Path("research/results"))
