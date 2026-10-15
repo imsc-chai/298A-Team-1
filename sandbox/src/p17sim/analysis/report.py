@@ -169,6 +169,13 @@ def build(results: Path) -> str:
                      "Hypotheses and tests are the ones in `research/PREREGISTRATION.md`.", ""]
     main = {s: seeds for (s, p, w), seeds in runs.items() if p == "test" and w == "test"}
     ood = {s: seeds for (s, p, w), seeds in runs.items() if p == "ood_test" and w == "test"}
+    from p17sim.aios.generators import PENDING
+
+    pending = [name for name in PENDING if name not in main]
+    if pending:
+        md += ["**Pending training:** " + ", ".join(f"`{n}` ({PENDING[n].description})" for n in pending)
+               + ". Their columns, H1–H5 comparisons and ablations appear once they are trained and evaluated "
+                 "with `p17sim eval`.", ""]
 
     # ---- main table
     md += ["## Main comparison (test personas, days 25–30)", "",

@@ -12,16 +12,16 @@ from `sandbox/`. Numbers in the results stages come from `research/results/RESUL
 | 4 | Research questions | `PREREGISTRATION.md` §3 |
 | 5 | Hypotheses | `PREREGISTRATION.md` §4 (committed before any result) |
 | 6 | Dataset | `src/p17sim/gen2/`, `manifests/v2_split_manifest.json`, `research/results/audit.json` |
-| 7 | Baseline | `baseline/` (PinchBench reproduction, untouched) and `src/p17sim/agents/baseline.py` |
-| 8 | Proposed method | `src/p17sim/agents/model_a.py`, `memory.py` |
-| 9 | Training | `src/p17sim/agents/train.py`, `models/model_a/training_report.json` |
-| 10 | Validation | val personas; grids and thresholds in the training report |
+| 7 | Baseline | `baseline/` (PinchBench reproduction, untouched); `agents/baseline.py` as the system's generator — **ready** |
+| 8 | Proposed method | Model A slot in `aios/generators.py` — **pending** (untrained draft in `agents/drafts/`) |
+| 9 | Training | data ready: `p17sim export-training` (gold workflows checked) — **training pending** |
+| 10 | Validation | val personas, exported separately — **ready for use** |
 | 11 | Testing | test and OOD personas, days 25–30, `research/results/runs/` |
 | 12 | Metrics | `src/p17sim/analysis/metrics.py` |
-| 13 | Controlled comparison | `RESULTS.md` "Main comparison", H1–H3 |
-| 14 | Ablation study | `RESULTS.md` "Ablations", H4 |
+| 13 | Controlled comparison | harness and stats ready; baseline column filled — **Model A column pending** |
+| 14 | Ablation study | pre-registered in `agents/registry.py` — **pending Model A** |
 | 15 | Statistical analysis | `src/p17sim/analysis/stats.py` |
-| 16 | System-level evaluation | `RESULTS.md` profiling and latency sections; `research/results/system_eval.json` |
+| 16 | System-level evaluation | the Personal AI OS runtime (`aios/`), privacy tests, profiling, baseline runs — **ready** |
 | 17 | Results | `research/results/RESULTS.md` |
 | 18 | Limitations | §18 |
 | 19 | Conclusion | §19 |
@@ -141,50 +141,47 @@ Two baseline layers, kept apart.
    It uses `qwen3.5:4b` because the 9B does not fit the 8 GB laptop. Model A uses the same model, so
    the comparison is controlled.
 
-## 8. Proposed method: Model A
+## 8. Proposed method (pending): Model A in the Personal AI OS
 
-A retrieval-augmented hierarchical planner (`agents/model_a.py`):
-- **Level 1:** a trained intent model chooses one of four plans; if unsure, a tool loop with retrieved
-  evidence takes over.
-- **Level 2:** each plan's sub-goals are done by retrieval, rules, the local model, or shell tools.
-  - **Lookup:** deletion-receipt check → hybrid BM25 + all-minilm retrieval → trained reranker →
-    recency rule → the model answers from the evidence only.
-  - **Forget:** reranker-selected records are deleted in the shell and in memory (index, vectors,
-    caches) → receipt.
-  - **Schedule:** contact, length and date (rules first, model fallback) → preferred window from a
-    trained, time-decayed estimator → first free slot → `create_event` → verify, and re-plan once on error.
-  - **Send:** recipient → last week's records minus private ones → model drafts → local check drops
-    sentences with words found only in private records → `send_email`.
+The system around the models is built (`aios/`, see `README.md`). Model A's job is fixed by its slot:
+- **Input:** a goal plus the person's context.
+- **Output:** a full workflow graph that the engine runs under the privacy layer.
 
-Everything runs on the laptop. The egress log checks this on every call.
+The baseline fills the same slot today; it builds its workflow one tool call at a time. The planned
+design (retrieval-augmented hierarchical planner) is in `PREREGISTRATION.md` §6. An early, untrained
+draft is kept in `agents/drafts/` and is not wired in.
 
-## 9. Training
+Models B and C have slots too:
+- **B:** proposes recurring workflows and triggers from routines.
+- **C:** picks proactive suggestions.
 
-Run with `p17sim train-a`. Only train personas are used, and held-out wordings are never seen.
+Each has a non-learned reference (counting routines; the most-accepted option), so their slots work and
+there is a bar to beat.
 
-| Part | Data | Model | Search |
-|---|---|---|---|
-| Reranker | fact questions at the times they are asked plus extra times; candidates from hybrid retrieval; label = the record states that fact | logistic regression on 18 numeric features + hashed n-grams of the record and query-record word pairs | C grid; learning curve over training-set size |
-| Intent | train-persona requests + 400 seen-template fills | TF-IDF word (1–2) and character (2–5) n-grams + logistic regression | C grid |
-| Preference | probe days 21–30, true meeting window | time-decayed vote | half-life × feedback weight × decline weight grid (128 settings) |
+## 9. Training (data ready, training pending)
 
-Compute time and artifact sizes are in `models/model_a/training_report.json`.
+`p17sim export-training` writes, from train and val personas only, with a hashed manifest:
+
+| File | One row is | Use |
+|---|---|---|
+| `model_a_goal_to_workflow.{train,val}.jsonl` | a request: goal, time, visible context ids, evidence ids, **gold workflow**, checker | Model A (supervised plans, retrieval labels) |
+| `model_b_event_sequences.{train,val}.jsonl` | one event in a person's month, with its routine label | Model B |
+| `model_c_suggestion_log.{train,val}.jsonl` | a suggestion: context, option offered, accepted?, true preference | Model C (offline bandit replay, regret) |
+
+Every gold workflow is executed in the runtime and must pass its task's checker before export
+(`gold_check` in the manifest).
 
 ## 10. Validation
 
-- Every choice uses val personas only:
-  - the C values;
-  - the relevance and deletion thresholds (best F1; recall ≥ 0.95 for deletion);
-  - the preference settings;
-  - prompt and pipeline fixes during development (smoke runs on val, days 21–24).
-- Test personas and days 25–30 were not looked at before the final runs.
+Val personas are exported separately, for every choice that training makes. Test personas and the
+days 25–30 of test and OOD personas never appear in a training file.
 
 ## 11. Testing
 
 - **Headline:** tasks in days 25–30 of the 12 test personas.
 - **Generalization:** the same window for the 6 OOD personas.
-- **Seeds:** 3 sampling seeds (11, 22, 33) for the baseline and Model A, and seed 11 for each ablation.
-- **Scoring:** the harness replays every day; deletion requests are handled when they happen.
+- **Systems run now:** the baseline (seeds 11, 22, 33) and the oracle and null references. Model A
+  joins with the same command once trained.
 
 ## 12. Metrics
 
@@ -203,19 +200,21 @@ per component.
 
 ## 13. Controlled comparison
 
-Same model, settings, tools, shell, data, tasks and seeds; only the method differs. Pairs are matched
-per task.
+Same model, settings, tools, shell, runtime, data, tasks and seeds; only the generator differs. Pairs are
+matched per task. Today the table holds the baseline (and the oracle/null references); Model A's column
+and H1–H3 fill in when it is evaluated.
 
-## 14. Ablation study
+## 14. Ablation study (pending Model A)
 
-Four ablations, each removing one part, scored on the task kinds that part targets (pre-registered):
+Four ablations are pre-registered (`agents/registry.py`, `ABLATIONS`). Each removes one part of Model A
+and is scored on the task kinds that part targets:
 
 | Ablation | Removes | Target kinds |
 |---|---|---|
-| `model_a-no_reranker` | trained reranker (reciprocal-rank fusion instead) | recall, update |
-| `model_a-no_recency` | recency rule and dates in evidence | update |
-| `model_a-no_intent` | trained intent model (the LLM picks the plan) | scheduling, privacy |
-| `model_a-no_deletion_memory` | purge of Model A's own memory | deletion (probes and storage audit) |
+| `model_a-no_reranker` | trained reranker | recall, update |
+| `model_a-no_recency` | recency rule | update |
+| `model_a-no_intent` | trained intent model | scheduling, privacy |
+| `model_a-no_deletion_memory` | purge of Model A's own memory | deletion |
 
 ## 15. Statistical analysis
 
@@ -227,11 +226,19 @@ Four ablations, each removing one part, scored on the task kinds that part targe
 
 ## 16. System-level evaluation
 
-- **Latency, cost and memory:** the whole system on the laptop, with p95 latency per task, cost per
-  user-day, and the model profile (`p17sim profile-models`: load time, resident memory, time to first
-  token, prefill and decode speed, energy per 1,000 tokens).
-- **Privacy at the system boundary:** the egress log over every model call.
-- **Deletion end to end:** storage audits after every deletion request.
+The harness runs the complete Personal AI OS, not a stub:
+- the SQLite store;
+- the privacy layer (data classes, location and tool policy, egress gateway, deletion manager);
+- the workflow engine.
+
+Measured at the system level:
+- p95 latency and cost per user-day;
+- the egress log (bytes to non-local hosts must be 0);
+- a storage audit across every table after every deletion request;
+- interventions (approvals);
+- the model profile (`p17sim profile-models`).
+
+The privacy guarantees each have a test (`README.md`, "Privacy guarantees").
 
 ## 17. Results
 

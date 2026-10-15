@@ -138,3 +138,26 @@ Plan and hypotheses: `research/PREREGISTRATION.md` (committed `efe545f` before a
 - A health canary format (`patient no. 114-9441`) looked like a phone number and tripped the PII check; changed to 4+3 digits.
 - phi3 adds meta-notes ("(15 words, casual tone)") and "[Your Name]" placeholders, and can run until the timeout without an output cap.
 - The 8 GB laptop swaps heavily during the render (8 GB swap); the disk filled once and stopped the render. Caches cleared with permission; a disk guard now stops the render below 1.5 GB.
+
+---
+
+# Personal AI OS — complete system with the baseline (Models A, B, C pending)
+
+Design approved 2026-10-15 (`docs/plans/2026-10-15-personal-ai-os-design.md`); plan:
+`docs/plans/2026-10-15-personal-ai-os.md`. Ticked only with evidence (commit or test).
+
+- [x] Task 0 — FastAPI, uvicorn, httpx added (`662e811`)
+- [x] Task 1 — package-locker values as the bare code (`484891e`)
+- [x] Task 2 — SQLite store with FTS5 (`aios/store.py`, 6 tests)
+- [x] Task 3 — privacy layer: data classes, location/tool policy, egress gateway, deletion manager (`26e4e26`, 6 tests)
+- [x] Task 4 — workflow graphs, references, node library (`e1f7137`, 7 tests)
+- [x] Task 5 — engine: policies, approvals, rollback, branches, stepwise agent runs (9 tests)
+- [x] Task 6 — workspace runtime: clock, replay, triggers, engine-backed agent tools (5 tests)
+- [x] Task 7 — generators: baseline, 4 templates, pending A/B/C, B/C references (`d5a6c78`)
+- [x] Task 8 — harness on the runtime; oracle 100% and null 0% through it (`328eac3`)
+- [x] Task 9 — training exports for A, B, C; every gold workflow passes its checker (`975b163`)
+- [x] Task 10 — FastAPI backend (`1dede1f`, 6 API tests)
+- [x] Task 11 — web front end (`2505a22`, 3 front-end tests; checked live with the API)
+- [x] Live check found a deletion leak in the delete step's own log row; fixed with a regression test (`29763ca`)
+- [ ] Task 12 — after the render: build-trace2, audit, export-training, oracle/null, baseline × 3 seeds (test + OOD), profile-models, report
+- [x] Task 13 — README, pipeline stages, pre-registration amendment (this commit); evidence folder after Task 12

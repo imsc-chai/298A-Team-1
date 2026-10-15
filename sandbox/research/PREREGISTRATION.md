@@ -130,4 +130,15 @@ Model profiling is reported next to these numbers, per system and per model:
 
 ## Amendments
 
-(none yet)
+**2026-10-15 (before any harness result).**
+
+1. The harness runs on the complete Personal AI OS runtime: SQLite store, privacy layer and workflow
+   engine (`aios/`), instead of the in-memory shell.
+   - Every system's tool calls go through the same engine nodes and policies.
+   - The deletion audit searches every table, including execution logs.
+   - Metrics and tests are unchanged.
+2. Model A is built after the rest of the system (decision of 2026-10-15). Until then:
+   - the baseline, oracle and null are evaluated;
+   - H1–H5 are tested when Model A is evaluated with the same seeds, tasks and settings.
+3. `package_locker` values are stored as the bare code (`E-34`), so a correct answer is not failed for
+   formatting. This was found on a validation persona in a smoke run; no test data was involved.
