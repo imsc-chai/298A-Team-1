@@ -307,6 +307,13 @@ def create_app(ds: Dataset, model: str = "qwen3.5:4b", store_dir: Path | None = 
         md = results / "RESULTS.md"
         return {"runs": runs, "results_md": md.read_text() if md.exists() else None}
 
+    @app.get("/api/results/figures/{name}")
+    def figure(name: str):
+        path = (results / "figures" / name).resolve()
+        if path.parent != (results / "figures").resolve() or not path.exists() or path.suffix != ".png":
+            raise HTTPException(404, "no such figure")
+        return FileResponse(path)
+
     @app.get("/api/profile")
     def profile():
         p = results / "model_profile.json"
