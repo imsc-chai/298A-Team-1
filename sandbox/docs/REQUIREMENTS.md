@@ -1,10 +1,19 @@
 # Personal AI OS — Requirements Specification
 
 **Project:** Topic 17, Privacy-Preserving Personal AI Operating System (DATA 298A/B, Section 21, Team 1)
-**Document owner:** Savitha Vijayarangan · **Version:** 1.0 · **Date:** 2026-10-15
+**Document owner:** Savitha Vijayarangan · **Version:** 2.0 · **Date:** 2026-10-15
 **Status of the system on this date:**
-- Built and tested: everything except Models A, B, C and D (136 automated tests pass).
+- Built and tested: the device system, i.e. everything except Models A, B, C and D (136 automated tests
+  pass).
 - Data render in progress.
+
+**What changed in 2.0:** the team has GPU access and can get cloud accounts. The scope now covers the
+complete system:
+- the **data-warehouse pipeline** (lake → warehouse, orchestrated, with quality gates);
+- the **ML platform** (GPU training, experiment tracking, model registry, evaluation at scale);
+- the **user-facing system** (the device app plus a deployed cloud demo).
+
+The privacy boundary (§2.4) decides what may run where.
 
 Related documents:
 - Design: [plans/2026-10-15-personal-ai-os-design.md](plans/2026-10-15-personal-ai-os-design.md).
@@ -52,11 +61,13 @@ personal data on the person's own device, and must prove it with measurements.
 | In scope | Out of scope (for now) |
 |---|---|
 | Synthetic 30-day personal-data traces (no real people) | Real user accounts, real mail servers, a real-user pilot |
-| Local model inference on one laptop | GPU servers, vLLM, FP16 weights |
+| On-device inference for the user's own data; GPU training and large-scale evaluation on synthetic data | Any real user's personal data in a cloud service (never) |
 | Generated workflows run under a privacy layer | A general-purpose automation product |
 | Four learned models compared with one reproduced baseline | Models beyond A–D |
-| Local SQLite storage, FastAPI backend, web front end | Public cloud deployment (needs the team's GCP access) |
-| Benchmark harness, metrics, statistics, report | Mobile apps |
+| Device app (SQLite, FastAPI, web front end) and a deployed cloud demo on synthetic personas | Connectors to real mail and calendar accounts (298B, local only) |
+| Data-warehouse pipeline (lake, warehouse, orchestration, quality gates, dashboards) | Mobile apps |
+| ML platform: GPU training, tracking, registry, evaluation at scale, packaging for devices | Selling or hosting the assistant for the public |
+| Benchmark harness, metrics, statistics, report | |
 
 ### 1.4 Stakeholders
 
@@ -126,7 +137,25 @@ personal data on the person's own device, and must prove it with measurements.
 | C22 | Model B | slot `model_b` | Routine and preference model | Planned 298B |
 | C23 | Model C | slot `model_c` | Contextual-bandit suggestion policy | Planned 298B |
 | C24 | Model D | hook before action nodes | Safety critic | Planned 298B |
-| C25 | Cloud pipeline | — | GCS/BigQuery layers, Airflow DAG, deployment | Pending (needs GCP access) |
+| C25 | Cloud pipeline (v1 placeholder) | — | Superseded by C26–C42 | — |
+| C26 | Infrastructure as code | `infra/terraform/` | Buckets, datasets, service accounts, VMs, Cloud Run, IAP, budgets | Pending |
+| C27 | Orchestrator | `pipeline/dags/` | Airflow DAGs with schedules, retries, alerts | Pending |
+| C28 | Data lake | GCS `bronze/`, `silver/` | Raw and cleaned files, partitioned by dataset version, persona and day | Pending |
+| C29 | Warehouse | BigQuery `p17_gold`, `p17_labels`, `p17_eval` | Gold tables, restricted labels, evaluation results | Pending |
+| C30 | Transformations | `pipeline/dbt/` | Silver → gold models, training marts, metric views | Pending |
+| C31 | Data quality | dbt tests + `gen2` validators + Presidio | Gates that stop the DAG and name the failing check | Partial (validators built) |
+| C32 | GPU rendering | vLLM batch jobs | Renders 220+ personas in hours instead of days | Pending |
+| C33 | Training jobs | `training/` | GPU training for Models A–D from versioned marts | Pending |
+| C34 | Experiment tracking | MLflow server | Parameters, metrics, curves, GPU hours, artifacts | Pending |
+| C35 | Model registry | MLflow registry | Candidate → validated → released stages with gates | Pending |
+| C36 | Evaluation at scale | harness workers + vLLM | Baseline (9B FP16) and models on all personas and seeds | Pending |
+| C37 | Device packaging | quantize + sign | Models exported for Ollama/MLX within the device budget | Pending |
+| C38 | Cloud demo | Cloud Run + IAP | The same app on synthetic personas, reachable by the instructor and ISA | Pending |
+| C39 | Demo inference endpoint | vLLM on a GPU VM | Model calls for the cloud demo (synthetic data only) | Pending |
+| C40 | CI/CD | GitHub Actions | Tests on every PR, image build, deploy on merge, Terraform plan | Pending |
+| C41 | Monitoring and alerts | Cloud Logging/Monitoring, Airflow alerts | Pipeline and demo health, budget alerts | Pending |
+| C42 | Dashboards | Looker Studio on BigQuery | Data statistics (EDA), pipeline health, benchmark results | Pending |
+| C43 | Cloud vector index (optional) | Pinecone or Vertex Vector Search | Large-scale retrieval experiments on synthetic data only | Could |
 
 ### 2.3 Services, tools and models used
 
@@ -143,6 +172,15 @@ personal data on the person's own device, and must prove it with measurements.
 | Baseline source | OpenJarvis | commit `e97088f` | Agent loop being reproduced | Reference only |
 | Benchmark | PinchBench, 23 tasks | snapshot `0c419e45` | Published-number reproduction (`baseline/`) | Reference only |
 | Reference data | Enron corpus sample | 9,300 rows, aggregates only | Timing and length calibration | One-time fetch |
+| Cloud (planned) | GCP: Cloud Storage, BigQuery, Compute Engine, Cloud Run, Artifact Registry, Secret Manager, IAP, Logging/Monitoring | — | Data platform, demo, operations | Cloud |
+| Orchestration (planned) | Apache Airflow | 2.x in Docker | DAGs, schedules, retries, alerts | Cloud VM |
+| Transformations (planned) | dbt (BigQuery adapter) | — | Gold models and tests | Cloud |
+| PII detection (planned) | Microsoft Presidio | — | Named-entity PII scan in the silver layer | Cloud |
+| GPU inference (planned) | vLLM | — | Rendering at scale; 9B FP16 baseline (the paper's engine); demo endpoint | Team GPU / GPU VM |
+| ML ops (planned) | MLflow | — | Tracking and registry | Cloud VM |
+| Infrastructure (planned) | Terraform, GitHub Actions | — | Reproducible infrastructure, CI/CD | Cloud / GitHub |
+| Dashboards (planned) | Looker Studio | — | Charts on BigQuery | Cloud |
+| Vector DB (optional) | Pinecone | — | Only for synthetic-data retrieval experiments | Cloud |
 
 **Agent tools** (identical for every generator, defined in `system/shell.py`, executed as engine nodes):
 
@@ -156,6 +194,37 @@ personal data on the person's own device, and must prove it with measurements.
 | `cancel_event(event_id)` | `action.cancel_event` | `calendar.create` | — |
 | `send_email(to, subject, body)` | `action.send_email` | `mail.send` | no |
 | `delete_records(ids)` | `action.delete_records` | `memory.forget` | no |
+
+### 2.4 Deployment planes and the privacy boundary
+
+The system runs in two planes. Personal data lives only in the device plane.
+
+```
+┌──────────── Device plane (the user's computer) ────────────┐      ┌──────────────── Cloud plane (GCP project) ─────────────────┐
+│ Web app on localhost ─ FastAPI ─ Workspace                  │      │ DATA PLATFORM                                              │
+│   privacy layer · workflow engine · SQLite · local models   │      │  Airflow DAG: generate → render (GPU) → clean/validate →   │
+│   (Ollama: qwen3.5:4b, all-minilm; Model A/B/C/D when ready)│      │   leakage → load → transform (dbt) → quality gates →       │
+│                                                             │      │   training marts → metrics                                 │
+│ Personal data never leaves this box.                        │      │  GCS lake: bronze (JSONL) / silver (Parquet)               │
+│                                                             │      │  BigQuery warehouse: gold tables, restricted labels        │
+│  ◄── pulls signed model artifacts (release channel) ────────┼──────┤ ML PLATFORM                                                │
+│  ──► opt-in aggregate counts only (off by default) ─────────┼─────►│  Training on GPU (team GPU, or Vertex AI as fallback)      │
+└─────────────────────────────────────────────────────────────┘      │  MLflow tracking + model registry (stages, gates)          │
+                                                                     │  Evaluation at scale: vLLM on GPU + harness workers        │
+                                                                     │ USER-FACING DEMO                                           │
+                                                                     │  Same container as the device app, on Cloud Run,           │
+                                                                     │   synthetic personas only, IAP sign-in                     │
+                                                                     │  Looker Studio dashboards on BigQuery                      │
+                                                                     └────────────────────────────────────────────────────────────┘
+```
+
+| What may cross the boundary | Direction | Rule |
+|---|---|---|
+| Synthetic benchmark data, labels, metrics | stays in the cloud plane | Generated there; never mixed with a user's data |
+| Code and container images | cloud → device | From CI, signed |
+| Trained model artifacts | cloud → device | Registry release channel, checksummed |
+| Aggregate, non-personal usage counts | device → cloud | Opt-in, off by default; no text, ids or values |
+| Raw personal records, text, embeddings of personal text | **never** | Enforced on the device by the egress gateway (FR-PRV-5) |
 
 ---
 
@@ -302,9 +371,79 @@ personal data on the person's own device, and must prove it with measurements.
 |---|---|---|---|---|---|
 | FR-OPS-1 | Each pipeline step shall have a CLI command (§6.2). | M | Built | `p17sim --help` | [D51](#d51) |
 | FR-OPS-2 | Long model jobs shall run under a guard that restarts them when the model server passes 5 GB or free disk drops below 2.5 GB. | M | Built | `scripts/guarded_run.py` (2 restarts during the render) | [D36](#d36) |
-| FR-OPS-3 | A cloud pipeline shall move synthetic benchmark data to GCS and BigQuery on an Airflow schedule, with a failing sanity check on corrupted input. | M (Checkpoint 3) | Pending | needs GCP access | [D38](#d38) |
-| FR-OPS-4 | The prototype shall be deployed and reachable beyond one laptop. | M (Checkpoint 3) | Pending | needs a host | [D39](#d39) |
-| FR-OPS-5 | A Dockerfile shall build the backend and front end. | S | Pending | — | [D39](#d39) |
+| FR-OPS-3 | A cloud pipeline shall move synthetic benchmark data to GCS and BigQuery on an Airflow schedule, with a failing sanity check on corrupted input. | M (Checkpoint 3) | Superseded by §3.12–3.13 | FR-PIPE-*, FR-DQ-* | [D53](#d53) |
+| FR-OPS-4 | The prototype shall be deployed and reachable beyond one laptop. | M (Checkpoint 3) | Superseded by §3.15 | FR-USR-* | [D66](#d66) |
+| FR-OPS-5 | A Dockerfile shall build the backend and front end. | S | Superseded by §3.16 | FR-DEP-1 | [D66](#d66) |
+
+### 3.12 Data-warehouse pipeline (C26–C30, C32)
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| FR-PIPE-1 | An Airflow DAG `p17_build` shall run generate → render → clean/validate → leakage → load bronze → silver → gold → dbt → quality gates → training marts → metrics, as containerized `p17sim` steps. | M | Pending | DAG run log, task graph | [D53](#d53), [D56](#d56) |
+| FR-PIPE-2 | A scheduled DAG `p17_daily` shall append one simulated day to a rolling cohort (continual operation) and rerun the downstream steps. | M | Pending | schedule in Airflow, run history | [D53](#d53) |
+| FR-PIPE-3 | Bronze: raw JSONL in GCS, partitioned `dataset_version/persona_id/day`, write-once. | M | Pending | bucket layout, retention lock | [D54](#d54) |
+| FR-PIPE-4 | Silver: cleaned Parquet with schema v2, deduplicated, PII-scanned. | M | Pending | dbt source tests | [D54](#d54), [D58](#d58) |
+| FR-PIPE-5 | Gold (BigQuery): `personas`, `records`, `tasks`, `split_manifest`, training marts (`model_a_examples`, `model_b_sequences`, `model_c_bandit_log`), `eval_runs`, `eval_rows`, `metrics`, `model_profiles`. | M | Pending | dbt models; table schemas (IR-5) | [D55](#d55), [D56](#d56) |
+| FR-PIPE-6 | Labels shall live in a separate dataset `p17_labels`, readable only by the evaluation and training service accounts. | M | Pending | IAM test: generator account denied | [D55](#d55), [D70](#d70) |
+| FR-PIPE-7 | Rendering shall run on GPU (vLLM) with the same prompts, fact check and cache keys as the laptop renderer. | M | Pending | cache-key parity test | [D59](#d59) |
+| FR-PIPE-8 | Every DAG step shall be idempotent: rerunning a date overwrites its partitions with identical output. | M | Pending | rerun + table checksum | [D54](#d54) |
+| FR-PIPE-9 | Each row in silver and gold shall carry `dataset_version`, `generator_version`, `seed` and the manifest hash (lineage). | M | Pending | dbt column tests | [D56](#d56) |
+| FR-PIPE-10 | The cohort shall scale to the design target of 220 personas (≈62k events) per dataset version. | S | Pending | row counts in gold | [D59](#d59) |
+
+### 3.13 Data quality and governance (C31)
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| FR-DQ-1 | The validators already built (schema, ids, windows, deletion targets, PII, six leakage checks) shall run as DAG gates and stop the DAG on any failure. | M | Partial (built locally) | `gen2/trace.py`, DAG | [D57](#d57) |
+| FR-DQ-2 | dbt tests shall check uniqueness, not-null, accepted values, referential integrity and row-count ranges in gold. | M | Pending | `dbt test` | [D57](#d57) |
+| FR-DQ-3 | Presidio shall scan silver text; any finding not on the synthetic allowlist stops the DAG. | M | Pending | planted-PII test | [D58](#d58) |
+| FR-DQ-4 | Corruption demo: a DAG run on deliberately corrupted input shall fail at the named check, with the log shown. | M (Checkpoint 3) | Pending | demo runbook | [D57](#d57) |
+| FR-DQ-5 | Volume and distribution drift checks (events per persona-day, type mix, text length) shall raise alerts outside set ranges. | S | Pending | alert on planted drift | [D57](#d57), [D74](#d74) |
+
+### 3.14 ML platform (C33–C37)
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| FR-ML-1 | Training jobs shall run on GPU, read a gold mart by `dataset_version`, and write artifacts to the registry. | M | Pending | MLflow run with data version | [D60](#d60), [D62](#d62) |
+| FR-ML-2 | Every training run shall log parameters, metrics, learning curves, GPU type and hours, code commit, data version and container digest. | M | Pending | MLflow UI | [D61](#d61) |
+| FR-ML-3 | Hyperparameter search shall be run and logged (Optuna or a grid), choosing on val only. | M | Pending | MLflow parent/child runs | [D61](#d61) |
+| FR-ML-4 | The registry shall have stages candidate → validated → released; promotion requires the gates in MR-ALL-4. | M | Pending | registry history | [D62](#d62) |
+| FR-ML-5 | Evaluation at scale shall run the harness on all test/OOD personas and seeds in parallel workers, serving models with vLLM, and write rows to `p17_eval`. | M | Pending | BigQuery `eval_rows` counts | [D63](#d63), [D36](#d36) |
+| FR-ML-6 | Released models shall be packaged for the device (quantized for Ollama or MLX), checksummed and signed, within the device budget (NFR-DEV-1). | M | Pending | package test on the laptop | [D72](#d72) |
+| FR-ML-7 | Gated retraining (298B): a new dataset version triggers retraining; a model is promoted only through the gates and can be rolled back. | S | Planned 298B | registry and DAG | [D62](#d62) |
+
+### 3.15 User-facing system: device app and cloud demo (C18, C38, C39)
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| FR-USR-1 | Device app: the web app on localhost (built) shall run fully offline once models are downloaded. | M | Built (offline except model download) | §3.10, NFR-UX-1 | [D72](#d72) |
+| FR-USR-2 | Cloud demo: the same container shall be deployed with synthetic personas only, at a stable URL. | M (Checkpoint 3) | Pending | URL reachable from another network | [D66](#d66) |
+| FR-USR-3 | The cloud demo shall require sign-in; access for the team, instructor and ISA. | M | Pending | IAP policy | [D68](#d68) |
+| FR-USR-4 | The app shall run in one of two modes: `device` (personal data, egress allowlist = localhost) or `demo` (synthetic data only, allowlist adds the demo inference endpoint). Demo mode shall refuse to start unless the dataset manifest says `synthetic: true`. | M | Pending | startup test with a non-synthetic manifest | [D67](#d67), [D52](#d52) |
+| FR-USR-5 | The demo shall show a persona switcher and let the audience type any request (Checkpoint 3: run live on an input the audience chooses). | M | Built (UI); deploy pending | §3.10 | [D33](#d33) |
+| FR-USR-6 | The demo shall show which model version and dataset version are running. | S | Pending | header badge | [D62](#d62) |
+| FR-USR-7 | Model updates on the device shall come from the registry's release channel, verified by checksum before use. | S | Pending | tampered-file test | [D72](#d72) |
+| FR-USR-8 | Opt-in usage telemetry shall send only aggregate counts (no text, ids or values) and be off by default. | C | Pending | payload contract test | [D73](#d73) |
+| FR-USR-9 | Connectors to real mail and calendar accounts shall be local-only and pass through the same privacy layer. | C | Planned 298B | — | [D52](#d52) |
+
+### 3.16 Deployment, CI/CD and infrastructure (C26, C40)
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| FR-DEP-1 | A Dockerfile shall build one image with the backend, front end and CLI; `docker compose` shall run it with Ollama on a device. | M | Pending | image build in CI | [D66](#d66), [D72](#d72) |
+| FR-DEP-2 | Terraform shall create every cloud resource (buckets, datasets, service accounts, VMs, Cloud Run, IAP, budgets). | M | Pending | `terraform plan` clean | [D70](#d70) |
+| FR-DEP-3 | GitHub Actions shall run the tests on every pull request, build and push the image on merge to `main`, and deploy the demo. | M | Pending | workflow runs | [D69](#d69) |
+| FR-DEP-4 | CI shall authenticate to the cloud with workload identity federation, without long-lived keys. | M | Pending | no keys in repo secrets | [D69](#d69), [D70](#d70) |
+| FR-DEP-5 | Secrets (API keys, judge keys) shall be in Secret Manager and injected at runtime. | M | Pending | secret scan in CI | [D70](#d70) |
+
+### 3.17 Monitoring and dashboards (C41, C42)
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| FR-MON-1 | Airflow shall retry failed tasks and alert by email on failure or SLA miss; a real run log shall be showable. | M (Checkpoint 3) | Pending | planted failure | [D74](#d74) |
+| FR-MON-2 | The demo shall have an uptime check, error-log alerts and latency charts. | S | Pending | Cloud Monitoring | [D74](#d74) |
+| FR-MON-3 | A budget alert shall fire at 50%, 80% and 100% of the monthly cap; GPU VMs shall shut down when idle. | M | Pending | budget policy; idle-stop script | [D70](#d70) |
+| FR-DSH-1 | Dashboards shall show data statistics (EDA), pipeline health and benchmark results from BigQuery. | S | Pending | Looker Studio report | [D71](#d71) |
 
 ---
 
@@ -321,6 +460,12 @@ All generator models share the baseline's model settings unless a requirement sa
 | MR-BL-2 | Re-implement the `native_openhands` loop (prompt, native tools, text fallback, 4,000-char observations, 3,000-token trimming, 10 turns). | M | Built | `test_system.py::test_openjarvis_truncation_rule`, `test_baseline_loop_*` | [D23](#d23), [D27](#d27) |
 | MR-BL-3 | Run on the 30-day harness with the same tools, shell and tasks as every other generator. | M | Built; runs pending | FR-EVA-9 | [D25](#d25) |
 
+Added in 2.0:
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| MR-BL-4 | Run the baseline also with the paper's model and engine (qwen3.5:9b FP16 on vLLM, GPU), on PinchBench (5 runs) and on the 30-day harness (3 seeds). | M | Pending | MLflow runs, `p17_eval` | [D64](#d64), [D63](#d63) |
+
 ### 4.2 Model A: retrieval-augmented hierarchical planner (298A)
 
 | ID | Requirement | Pri | Status | Decision |
@@ -335,6 +480,13 @@ All generator models share the baseline's model settings unless a requirement sa
 | MR-A-8 | Privacy leakage no higher than the baseline's; 0 bytes of raw personal data exported (H3). | M | Pending | [D40](#d40) |
 | MR-A-9 | Each pre-registered component shall help its target task kind (four ablations, H4). | M | Pending | [D40](#d40) |
 | MR-A-10 | Drop on held-out conditions (OOD archetypes, held-out wordings, second renderer, regions) of at most 10 pp (H5). | S | Pending | [D40](#d40) |
+
+Added in 2.0:
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| MR-A-11 | Train on GPU through the ML platform (FR-ML-1..4); report the GPU hours. | M | Pending | MLflow | [D60](#d60), [D61](#d61) |
+| MR-A-12 | Ship a device build within the device budget and meet the on-device latency target (NFR-PERF-1). | M | Pending | laptop profile | [D72](#d72), [D64](#d64) |
 
 ### 4.3 Model B: routine and preference model (298B)
 
@@ -359,6 +511,16 @@ All generator models share the baseline's model settings unless a requirement sa
 | MR-D-1 | Score each planned action for privacy and irreversibility risk before it runs; veto or ask the user. | M | Planned 298B | [D43](#d43) |
 | MR-D-2 | Plug into the engine as an extra check before action nodes (FR-PRV-10). | M | Planned 298B | [D43](#d43) |
 | MR-D-3 | High recall on unsafe actions at a fixed false-refusal rate. The target is set in the 298B pre-registration. | S | Planned 298B | [D43](#d43) |
+
+### 4.6 Requirements shared by all trained models (A–D)
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| MR-ALL-1 | Train only on train-persona marts; choose on val; evaluate on test/OOD once per pre-registered run. | M | Pending | data versions in MLflow | [D07](#d07), [D44](#d44) |
+| MR-ALL-2 | Run on the device within the budget (NFR-DEV-1); the cloud copy of a model may only ever see synthetic data. | M | Pending | package test; mode check (FR-USR-4) | [D52](#d52), [D72](#d72) |
+| MR-ALL-3 | Plug in through the generator interface (IR-4) or, for Model D, the pre-action check (FR-PRV-10), with no change to the engine, harness or UI. | M | Built (interfaces) | NFR-MNT-2 | [D49](#d49) |
+| MR-ALL-4 | Release gates: on val, task success not below the released model by more than the margin, deletion compliance 100%, leakage not above it, p95 latency on the laptop ≤ 600 s. | M | Pending | registry promotion log | [D62](#d62) |
+| MR-ALL-5 | Each model has a model card: data versions, training compute, metrics with CIs, known failure modes, fairness slices. | S | Pending | `models/<name>/MODEL_CARD.md` | [D44](#d44) |
 
 ---
 
@@ -458,6 +620,22 @@ All generator models share the baseline's model settings unless a requirement sa
 | NFR-CMP-2 | Every demo shall be runnable again on request; anything mocked shall be said out loud. | M | Built (commands in README) | [D44](#d44) |
 | NFR-CMP-3 | Written reports shall be the students' own writing. | M | Team responsibility | [D44](#d44) |
 
+### 5.11 Cloud boundary, cost, security, availability and scale
+
+| ID | Requirement | Pri | Status | Verified by | Decision |
+|---|---|---|---|---|---|
+| NFR-BND-1 | No real user's personal data (records, text, embeddings, labels about them) shall be stored or processed in any cloud service, including a cloud vector database. | M | Built on device (egress gateway); cloud contracts pending | egress log; data-contract tests in CI | [D52](#d52), [D65](#d65) |
+| NFR-BND-2 | Everything in the cloud plane shall be marked synthetic in its manifest, and the pipeline shall refuse unmarked input. | M | Pending | pipeline test | [D52](#d52) |
+| NFR-COST-1 | Monthly cloud spend shall stay under the team's credit cap, with budget alerts (FR-MON-3); idle GPUs stop automatically. | M | Pending | billing report | [D53](#d53), [D60](#d60) |
+| NFR-SEC-4 | Each service shall have its own least-privilege service account; the labels dataset is restricted; data is encrypted at rest and in transit (TLS). | M | Pending | IAM review; Terraform | [D70](#d70) |
+| NFR-SEC-5 | The cloud demo shall only be reachable after sign-in (IAP). | M | Pending | unauthenticated request rejected | [D68](#d68) |
+| NFR-AV-1 | The cloud demo shall be up during checkpoint windows (warm instance scheduled for those hours). | S | Pending | uptime check history | [D66](#d66) |
+| NFR-SCL-1 | One dataset version of 220 personas shall be rendered and loaded to gold within one working day on the GPU. | S | Pending | DAG duration | [D59](#d59) |
+| NFR-SCL-2 | A full evaluation (all systems × seeds × test/OOD personas) shall finish overnight on the GPU workers. | S | Pending | run timestamps | [D63](#d63) |
+| NFR-PORT-1 | Pipeline steps shall be containerized CLI commands, so moving to AWS (S3, Redshift, MWAA, SageMaker, ECS) changes deployment, not code. | S | Pending | AWS mapping (D52) | [D52](#d52) |
+| NFR-REP-7 | A training run shall be reproducible from its data version, code commit, seed and container digest, within a stated tolerance. | M | Pending | rerun comparison | [D61](#d61) |
+| NFR-DEV-1 | Device budget: every model the device runs fits the 8 GB laptop (resident ≤ 4 GB per model, one at a time) and meets NFR-PERF-1. | M | Built for the baseline (4B); pending for A–D | `p17sim profile-models` | [D64](#d64), [D72](#d72) |
+
 ---
 
 ## 6. Interface requirements
@@ -531,6 +709,45 @@ class Generator(Protocol):
 A model may run a full graph with `ws.engine.run(workflow, name, approver=approver)`, or work step by step
 with `ws.engine.open / step / record / close`.
 
+### 6.5 Warehouse tables (IR-5)
+
+| Dataset.table | Grain | Key columns |
+|---|---|---|
+| `p17_gold.personas` | persona × dataset version | persona_id, split, archetype, region, locale, name_list, renderer, start_weekday |
+| `p17_gold.records` | record | event_id, persona_id, ts, end_ts, event_type, channel, sender, text, permission_label, data_class, day, window |
+| `p17_gold.tasks` | scored request | event_id, persona_id, kind, wording, window, request text (no answer) |
+| `p17_labels.labels` (restricted) | record | event_id, provenance, fact_id, fact_value, canary, checker (JSON) |
+| `p17_gold.split_manifest` | dataset version | sha256, seed, sizes, windows |
+| `p17_gold.model_a_examples`, `model_b_sequences`, `model_c_bandit_log` | as in FR-TRN-2..4 | + dataset_version |
+| `p17_eval.eval_runs` | run | run_id, system, model, model_version, seed, dataset_version, commit, hardware |
+| `p17_eval.eval_rows` | task or deletion audit | run_id, task_id, kind, passed, reward, leak, latency_s, interventions, tokens |
+| `p17_eval.metrics` | run × metric | the seven metrics with CIs |
+| `p17_eval.model_profiles` | model × machine | load, resident memory, TTFT, prefill/decode tok/s |
+
+All gold rows carry `dataset_version`, `generator_version`, `seed` and `manifest_sha256` (FR-PIPE-9).
+
+### 6.6 Pipeline DAG (IR-6)
+
+`p17_build` (on demand) and `p17_daily` (schedule):
+
+```
+generate2 ─► render (GPU) ─► build-trace2 (validate + leakage) ─► load_bronze ─► presidio_scan ─► load_silver
+   ─► dbt run (gold) ─► dbt test ─► export_training_marts ─► publish_metrics ─► refresh_dashboards
+on failure: stop downstream, retry ×2, email alert with the failing check
+```
+
+### 6.7 Model artifact contract (IR-7)
+
+A released model is a folder in the registry with:
+- the weights, in a device format (GGUF for Ollama, or MLX);
+- `generator.py`, implementing IR-4, or `critic.py` for Model D;
+- `MODEL_CARD.md`;
+- `metrics.json` (gates passed);
+- `data_version`;
+- `sha256`.
+
+The device verifies the checksum before loading (FR-USR-7).
+
 ---
 
 ## 7. Data requirements
@@ -541,8 +758,13 @@ with `ws.engine.open / step / record / close`.
 | DR-2 | Splits in two layers: persona-level (train/val/test/OOD), and day windows inside each persona (1–20, 21–24, 25–30). | M | Built | [D07](#d07) |
 | DR-3 | Headline scores only on days 25–30 of test personas; OOD reported separately. | M | Built | [D07](#d07) |
 | DR-4 | Data stays out of git (`data/` ignored); manifests, reference statistics and code are committed. | M | Built | [D37](#d37) |
-| DR-5 | Only synthetic benchmark data may ever go to a cloud pipeline; runtime user data never does. | M | Built (policy); pipeline pending | [D38](#d38) |
+| DR-5 | Only synthetic benchmark data may ever go to a cloud pipeline; runtime user data never does. | M | Built on device (policy); pipeline pending | [D52](#d52) |
 | DR-6 | Retention: each dataset version keeps its manifest and hashes; deletions write receipts. | M | Built | [D16](#d16) |
+| DR-7 | Design-scale cohort: 200 in-distribution + 20 OOD personas (≈62k events) per dataset version, rendered on GPU. | S | Pending | [D59](#d59) |
+| DR-8 | Lake layers: bronze write-once JSONL; silver Parquet; gold BigQuery; each versioned. | M | Pending | [D54](#d54) |
+| DR-9 | Labels stored apart from the data models see, readable only by evaluation and training accounts. | M | Pending (built locally as a separate file) | [D55](#d55) |
+| DR-10 | Retention in the cloud: keep every released dataset version; delete unreleased intermediate versions after 30 days. | S | Pending | [D54](#d54) |
+| DR-11 | Only synthetic data in the cloud plane (NFR-BND-1, NFR-BND-2). | M | Pending (policy) | [D52](#d52) |
 
 ---
 
@@ -555,8 +777,10 @@ with `ws.engine.open / step / record / close`.
    under the guard.
 3. **Synthetic text:** it may be easier than real mail. The audit and the held-out conditions measure how
    far v2 is from the real reference and how results hold on unseen conditions.
-4. **Cloud:** GCS, BigQuery and deployment depend on the team's GCP access, which is not set up on this
-   machine.
+4. **Cloud and GPU:** the team has GPU access and can get cloud accounts (2026-10-15). GCP is the default
+   because Workbook 1 chose it; the AWS mapping is in D52.
+   - Spending is capped by the team's credits.
+   - The device plane stays the 8 GB laptop, so device-side models must fit it (NFR-DEV-1).
 5. **Tests:** the simulated user approves every "ask" action in the harness, and each approval is counted
    as an intervention.
 
@@ -573,16 +797,46 @@ with `ws.engine.open / step / record / close`.
 | Generalizes to held-out conditions (H5) | MR-A-10, NFR-GEN-1, FR-DAT-9, FR-DAT-11 | report "Generalization" |
 | v2 data less biased than v1 (H6) | NFR-DQ-1, FR-DAT-3..11, FR-DAT-16 | `research/results/audit.json` |
 | p95 ≤ 600 s, cost ≤ $0.10 per user-day (H7) | NFR-PERF-1, NFR-PERF-2, FR-EVA-8 | report, model profile |
-| Live, repeatable demo (course) | FR-UI-*, FR-API-*, NFR-CMP-2 | `p17sim serve` |
+| Live, repeatable demo (course) | FR-UI-*, FR-API-*, NFR-CMP-2, FR-USR-2..5 | `p17sim serve`; cloud demo URL |
+| Checkpoint 3: pipeline to a warehouse, scheduled, monitored, failing on corrupt input | FR-PIPE-1..9, FR-DQ-1..4, FR-MON-1 | DAG runs, BigQuery tables, real log |
+| Checkpoint 3: prototype deployed and run live on an audience input | FR-USR-2..5, FR-DEP-1..3 | demo URL |
+| Checkpoint 3: first model trained, with curves, search and compute | MR-A-4, MR-A-11, FR-ML-1..3 | MLflow |
+| Baseline fidelity to the paper | MR-BL-1, MR-BL-4 | PinchBench and harness on 9B FP16 |
 
-## 10. Open items
+## 10. Roadmap and access needed
+
+### 10.1 Milestones (course cycles)
+
+| When | Cycle | Deliver | Requirements |
+|---|---|---|---|
+| Oct 15–21 | 4 | Terraform foundation (project, buckets, datasets, service accounts, budget); Airflow VM; `p17_build` v1 with existing CLI steps in containers; Presidio gate; corruption demo; Looker dashboard v1; baseline 4B runs on the laptop | FR-PIPE-1,3–6,8–9, FR-DQ-1–4, FR-DEP-2, FR-MON-1,3, FR-EVA-9 |
+| Oct 22–Nov 4 | 5 | GPU rendering of the 220-persona cohort; vLLM evaluation workers; baseline 9B FP16 (PinchBench + harness); Docker image; CI/CD; cloud demo on Cloud Run with IAP; MLflow | FR-PIPE-7,10, FR-ML-5, MR-BL-4, FR-DEP-1,3–5, FR-USR-2–6 |
+| Nov 5–11 | 6 | Model A trained on GPU (tracked, registered, gated); Workbook 2 | MR-A-1–5, MR-A-11, FR-ML-1–4 |
+| Nov 12–25 | 7 | Benchmark table v1 (3 seeds), 4 ablations, Model A device build | MR-A-6–10, MR-A-12, FR-ML-6 |
+| Nov 26–Dec 8 | 8 | Failure study; reproducibility check (rebuild from Terraform + DAG + registry); final report | NFR-REP-*, MR-ALL-5 |
+| 298B | — | Models B, C, D; gated retraining; connectors (local only) | MR-B/C/D-*, FR-ML-7, FR-USR-9 |
+
+### 10.2 Access checklist
+
+| Need | For | Notes |
+|---|---|---|
+| GCP project with billing or credits; a budget cap figure | everything in the cloud plane | Owner role for setup, then least privilege |
+| APIs: Cloud Storage, BigQuery, Compute Engine, Cloud Run, Artifact Registry, Secret Manager, IAP, Logging/Monitoring (Vertex AI optional) | C26–C42 | enabled by Terraform |
+| GPU: the team's GPU machine (SSH, CUDA, ≥24 GB VRAM for 9B FP16) or GPU quota (L4/A100) in one region | rendering, baseline 9B, training, demo endpoint | 9B FP16 needs about 18 GB of weights plus cache |
+| GitHub: Actions enabled on the team repo; workload identity federation to GCP | CI/CD | no long-lived keys |
+| Google accounts of the instructor and ISA | demo sign-in (IAP) | |
+| OpenAI key (judge) and Tavily key | PinchBench reruns only | in Secret Manager |
+| Pinecone account | optional, synthetic-data experiments only | not needed for the core system |
+
+### 10.3 Open items
 
 | Item | Owner | Blocked by |
 |---|---|---|
-| Baseline runs on the 30-day harness, audit table, model profile, `RESULTS.md` | Savitha | v2 render (in progress) |
+| Baseline runs on the laptop, audit table, model profile, `RESULTS.md` | Savitha | v2 render (in progress) |
+| Cloud foundation, pipeline, demo deployment | Team | GCP project and budget figure |
+| Baseline 9B FP16 and GPU rendering | Team | GPU access details |
 | Model A design, training and evaluation | Phase 3 owner | — (data and slot ready) |
-| Presidio in the PII scan | Data owner | — |
-| GCS/BigQuery/Airflow pipeline; deployed prototype; Dockerfile | Team | GCP access |
+| Pre-registration amendment for D64 (official comparison on 9B FP16) | Savitha | team decision |
 | Models B, C, D | 298B | — |
 | PR for `savitha/research-pipeline` and its Linear issue | Savitha | review |
 
@@ -1041,7 +1295,7 @@ not settled yet, and the recommended option is marked ➜.
 | Makefile | Familiar | Poor arguments; macOS/Linux only |
 | ✅ One `p17sim` command with sub-commands | Every step repeatable with one line; documented in README | Must be kept in sync with the code |
 
-<a id="d38"></a>**D38 · Cloud pipeline (pending, needs GCP)** — serves FR-OPS-3, DR-5
+<a id="d38"></a>**D38 · Cloud pipeline (v1 note, superseded by D53–D57)** — served FR-OPS-3, DR-5
 
 | Option | Upside | Downside |
 |---|---|---|
@@ -1049,7 +1303,7 @@ not settled yet, and the recommended option is marked ➜.
 | ➜ Airflow in Docker on a small GCE VM, GCS + BigQuery | Real scheduler, logs, retries; cheap | We run the VM |
 | Cron scripts | Simple | Not an automated, monitored pipeline (the rubric asks for one) |
 
-<a id="d39"></a>**D39 · Deployment (pending)** — serves FR-OPS-4, FR-OPS-5
+<a id="d39"></a>**D39 · Deployment (v1 note, superseded by D66–D68)** — served FR-OPS-4, FR-OPS-5
 
 | Option | Upside | Downside |
 |---|---|---|
@@ -1058,3 +1312,217 @@ not settled yet, and the recommended option is marked ➜.
 | Laptop behind a tunnel | Free | Not "deployed"; laptop must stay on |
 
 Note for both: only synthetic data and code would be deployed, never a real user's data (DR-5).
+
+### Cloud data platform, ML platform and user-facing deployment (added in 2.0)
+
+<a id="d52"></a>**D52 · Cloud provider and the privacy boundary** — serves FR-USR-4, FR-USR-9, MR-ALL-2, NFR-BND-1, NFR-BND-2, NFR-PORT-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ GCP (Cloud Storage, BigQuery, Compute Engine, Cloud Run, IAP) | Chosen in Workbook 1; BigQuery is serverless (no cluster to run); IAP gives sign-in with no code | Team must manage credits |
+| AWS (S3, Redshift Serverless, MWAA, SageMaker, ECS/App Runner) | Widely used; SageMaker training | Redshift and MWAA cost more to keep running; differs from Workbook 1 |
+| Azure (Blob, Synapse, Data Factory, Azure ML) | Strong enterprise tools | Not used by the team; no course examples |
+
+**Why:** continuity with Workbook 1 and the lowest always-on cost. Pipeline steps are containerized CLI
+commands, so a move to AWS changes deployment only.
+
+| GCP | AWS equivalent |
+|---|---|
+| Cloud Storage | S3 |
+| BigQuery | Redshift Serverless / Athena |
+| Airflow on a VM (or Cloud Composer) | MWAA or Airflow on EC2 |
+| Cloud Run | App Runner / ECS Fargate |
+| IAP | Cognito + ALB auth |
+| Secret Manager | Secrets Manager |
+
+Whatever the provider, the boundary in §2.4 holds: the cloud only ever sees synthetic data, code, model
+artifacts and opt-in aggregate counts.
+
+<a id="d53"></a>**D53 · Orchestrator** — serves FR-OPS-3, FR-PIPE-1, FR-PIPE-2, NFR-COST-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| Cloud Composer (managed Airflow) | No servers to run; built-in logs | Always-on environment costs a few hundred dollars a month |
+| ✅ Airflow in Docker on a small Compute Engine VM | Same Airflow UI, logs, retries and schedules; low cost; can stop the VM | We patch and back up the VM |
+| Dagster or Prefect | Modern developer experience | The course rubric names Airflow/Composer; less familiar to graders |
+
+**Why:** meets the rubric ("Airflow or Cloud Composer, with logs, status, retries and alerts") at a
+fraction of the cost. Switch to Composer if credits allow.
+
+<a id="d54"></a>**D54 · Lake file formats** — serves FR-PIPE-3, FR-PIPE-4, FR-PIPE-8
+
+| Option | Upside | Downside |
+|---|---|---|
+| JSONL everywhere | Same as today | Slow to query; no types |
+| ✅ Bronze JSONL (as generated), silver Parquet, gold in BigQuery | Raw kept exactly; typed, compressed columns for analysis; native load into BigQuery | Two formats to manage |
+| Delta Lake / Iceberg tables | Time travel and ACID on the lake | Extra engine (Spark) for a small dataset |
+
+<a id="d55"></a>**D55 · Warehouse** — serves FR-PIPE-5, FR-PIPE-6
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ BigQuery | Serverless, pay per query, column-level and dataset-level access, native Looker Studio | GCP-specific SQL details |
+| Redshift Serverless | Good on AWS | Minimum charges; cluster concepts |
+| Snowflake | Excellent separation of compute/storage | Separate vendor and billing |
+
+<a id="d56"></a>**D56 · Transformations** — serves FR-PIPE-1, FR-PIPE-5, FR-PIPE-9
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ dbt on BigQuery | Versioned SQL models, lineage graph, built-in tests and docs | One more tool to learn |
+| SQL inside Airflow operators | Nothing new | No lineage or tests; SQL scattered in DAG code |
+| Dataflow / Apache Beam | Scales to huge data | Overkill for tens of thousands of rows |
+
+<a id="d57"></a>**D57 · Data-quality gates** — serves FR-DQ-1, FR-DQ-2, FR-DQ-4, FR-DQ-5
+
+| Option | Upside | Downside |
+|---|---|---|
+| Great Expectations | Rich expectation library and reports | Heavy setup; duplicates our existing validators |
+| ✅ Our validators (already built) as DAG gates + dbt tests in the warehouse | Reuses tested code; warehouse checks live next to the models | Two places for checks (documented) |
+| Soda | Simple YAML checks | Another vendor |
+
+<a id="d58"></a>**D58 · PII scan in the pipeline** — serves FR-PIPE-4, FR-DQ-3
+
+| Option | Upside | Downside |
+|---|---|---|
+| Pattern rules only (today) | Fast | Misses names in free text |
+| ✅ Presidio on silver text, with an allowlist for synthetic forms | Named-entity detection, as promised in Workbook 1; runs on a cloud worker, not the 8 GB laptop | Tuning to avoid flagging synthetic names |
+| Cloud DLP API | Managed, many detectors | Per-byte cost; sends data to another API (fine for synthetic, but not portable) |
+
+<a id="d59"></a>**D59 · Rendering at scale** — serves FR-PIPE-7, FR-PIPE-10, NFR-SCL-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| Laptop Ollama (today) | Free | ~15 texts/min: the 220-persona cohort would take days |
+| ✅ vLLM batch inference on the team GPU (llama3.2 and phi3 as today) | Thousands of texts per minute; same model families, so the held-out-renderer test stays valid | GPU time; cache keys must match the laptop's |
+| A hosted API (Gemini Flash) | No GPU needed | A third model family; key and cost |
+
+<a id="d60"></a>**D60 · Training compute** — serves FR-ML-1, MR-A-11, NFR-COST-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ The team's GPU machine | No cloud GPU cost; full control | Shared queue; must log the hardware |
+| Vertex AI custom training jobs | Managed, on-demand GPUs, logs | Quota requests; cost per hour |
+| A GPU VM on Compute Engine | Simple to reason about | Pay while it runs; must stop it |
+
+**Why:** use what the team already has; Vertex AI is the fallback when the team GPU is busy.
+
+<a id="d61"></a>**D61 · Experiment tracking** — serves FR-ML-2, FR-ML-3, MR-A-11, NFR-REP-7
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ MLflow (self-hosted on the Airflow VM, artifacts in Cloud Storage) | Open source; tracking and registry in one; no data leaves our project | We host it |
+| Weights & Biases | Polished UI; free for academics | Third-party service holds run metadata |
+| Vertex AI Experiments | Native to GCP | Ties tracking to Vertex training |
+
+<a id="d62"></a>**D62 · Model registry and release gates** — serves FR-ML-1, FR-ML-4, FR-ML-7, FR-USR-6, MR-ALL-4
+
+| Option | Upside | Downside |
+|---|---|---|
+| Files in a bucket with naming rules | Simple | No stages, no history of promotions |
+| ✅ MLflow model registry with stages and scripted gates | Stages, lineage to runs, promotion only after gates | Gate scripts to maintain |
+| Vertex AI Model Registry | Managed | Separate from MLflow tracking |
+
+<a id="d63"></a>**D63 · Inference engine for evaluation** — serves FR-ML-5, MR-BL-4, NFR-SCL-2
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ vLLM on GPU | The paper's engine (FP16), fast batching, OpenAI-compatible API | Needs a CUDA GPU |
+| Ollama on GPU | Same server as the laptop | Quantized weights only; slower batching |
+| Hugging Face TGI | Production-grade | Less common in the OpenJarvis setup |
+
+<a id="d64"></a>**D64 · Model size for the official comparison** — serves MR-BL-4, MR-A-12, NFR-DEV-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| 4B on the laptop only (current plan) | Matches the device; already set up | Not the paper's model; slow (hours per run) |
+| 9B FP16 on GPU only | Faithful to the paper (Table 1 condition (c)) | Says nothing about running on the device |
+| ➜ Both: 9B FP16 on GPU for task quality (H1–H5); 4B on the laptop for the local-path numbers (latency, cost, egress, H7) | Faithful and realistic; the gap between them is itself a finding | Twice the runs; needs a dated pre-registration amendment before any 9B result |
+
+**Status:** recommended, waiting for the team's agreement (amendment pending).
+
+<a id="d65"></a>**D65 · Vector database** — serves NFR-BND-1, C43
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ Local vectors in SQLite (device) | Deleted with the record; nothing leaves the device | Brute-force search (fine for one person's data) |
+| Pinecone (managed, cloud) | Fast at large scale; no ops | A cloud copy of embeddings: **never allowed for a real user's data**; for synthetic-scale experiments only |
+| Vertex AI Vector Search | Native to GCP | Same boundary rule; cost when idle |
+
+**Why:** the privacy claim rules out personal vectors in the cloud. Pinecone stays optional, for retrieval
+experiments on the synthetic cohort only.
+
+<a id="d66"></a>**D66 · Hosting the user-facing demo** — serves FR-OPS-4, FR-OPS-5, FR-USR-2, FR-DEP-1, NFR-AV-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ Cloud Run (the app container) | Managed HTTPS, scales to zero, revisions and rollback, IAP support | Cold starts (a warm instance is scheduled for demos) |
+| GKE | Full control | Cluster to manage for one app |
+| A Compute Engine VM | Simple | Patching; manual HTTPS |
+
+<a id="d67"></a>**D67 · Model inference for the cloud demo** — serves FR-USR-4
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ vLLM on a GPU VM, started for demo windows | Fast answers live; same engine as the evaluation | Must be started and stopped (scripted) |
+| Cloud Run with a GPU | Scales to zero | GPU quota; model load on cold start |
+| Ollama CPU inside the Cloud Run container | One service | Too slow for a live demo |
+
+**Why:** the demo serves synthetic personas only, so using a cloud model there does not break the boundary.
+The app's `demo` mode enforces this (FR-USR-4).
+
+<a id="d68"></a>**D68 · Sign-in for the demo** — serves FR-USR-3, NFR-SEC-5
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ Identity-Aware Proxy (Google accounts) | No auth code in the app; per-person access list | GCP-specific |
+| Firebase Authentication | Flexible sign-in methods | Code in the app |
+| Basic auth / shared password | Quick | Weak; shared secret |
+
+<a id="d69"></a>**D69 · CI/CD** — serves FR-DEP-3, FR-DEP-4
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ GitHub Actions | The repo is on GitHub; PR checks next to reviews (ruleset `team1`) | Minutes limits on private repos |
+| Cloud Build | Native to GCP | Separate from PR reviews |
+| Manual deploys | Nothing to set up | Not repeatable; the rubric asks for automation |
+
+<a id="d70"></a>**D70 · Infrastructure as code and secrets** — serves FR-PIPE-6, FR-DEP-2, FR-DEP-4, FR-DEP-5, FR-MON-3, NFR-SEC-4
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ Terraform + Secret Manager + workload identity federation | Rebuild the whole cloud setup from git; no long-lived keys | Learning curve |
+| gcloud shell scripts | Quick | Drifts; hard to review |
+| Pulumi | Real programming language | Smaller community in the course |
+
+<a id="d71"></a>**D71 · Dashboards** — serves FR-DSH-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ Looker Studio on BigQuery | Free; connects directly; shareable | Limited custom charts |
+| Grafana | Strong for operations metrics | Needs a data source and a server |
+| Streamlit app | Fully custom | Another service to host |
+
+<a id="d72"></a>**D72 · Packaging for the device** — serves FR-ML-6, FR-USR-1, FR-USR-7, FR-DEP-1, MR-A-12, MR-ALL-2, NFR-DEV-1
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ `uv` install + Ollama models, or `docker compose` (app + Ollama) | Works today; models updated from the registry with checksums | Two install paths to document |
+| Desktop app (Tauri/Electron) | Nicest for non-technical users | Build tooling; signing; time |
+| Browser-only (WebGPU models) | Nothing to install | Small models only; immature for tool calling |
+
+<a id="d73"></a>**D73 · Telemetry from devices** — serves FR-USR-8
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ None by default; opt-in aggregate counts only | Keeps the privacy promise | Less insight into real use |
+| Full logs | Easy debugging | Breaks the privacy promise |
+| Differentially private counts | Strong guarantee | Complex for this project |
+
+<a id="d74"></a>**D74 · Alerts** — serves FR-DQ-5, FR-MON-1, FR-MON-2
+
+| Option | Upside | Downside |
+|---|---|---|
+| ✅ Email from Airflow and Cloud Monitoring | Built in; free | Easy to miss |
+| Slack or WhatsApp webhook | Where the team talks | Webhook secret to manage |
+| PagerDuty | On-call grade | Overkill for a class project |

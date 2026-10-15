@@ -156,3 +156,15 @@ with the baseline column filled.
 
 GCS/BigQuery layers, the Airflow DAG and a public deployment (Checkpoint 3). A Dockerfile and the DAG
 code can be added later with a local fallback.
+
+## Addendum (2026-10-15): cloud and GPU now in scope
+
+The team has GPU access and can get cloud accounts. The out-of-scope items above (GCS/BigQuery, Airflow,
+deployment) are now planned, along with GPU rendering, training, evaluation at scale and a deployed demo.
+See `docs/REQUIREMENTS.md` version 2.0:
+- §2.4: deployment planes and the privacy boundary;
+- §3.12–3.17: the new requirements;
+- D52–D74: the decisions;
+- §10: roadmap and access checklist.
+
+The device-plane design in this document is unchanged.
