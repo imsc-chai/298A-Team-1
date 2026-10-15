@@ -4,7 +4,7 @@ Owner: Savitha Vijayarangan · Branch: `savitha/trace-v1` (from `main` at `1ec25
 
 Tick a box only when its evidence exists (a file, a test, a command output). Update the "Last updated" line each time.
 
-Last updated: 2026-10-08 01:10 PDT
+Last updated: 2026-10-15 10:35 PDT
 
 ## How the pipeline fits together
 
@@ -72,7 +72,7 @@ personas (seeded)  ->  skeleton events + labels  ->  LLM renders text  ->  clean
 ### 7. Git
 - [x] One commit per pipeline step, in execution order (12 commits, authored by Savitha)
 - [x] Pushed as a new branch `savitha/trace-v1-steps` (ruleset `team1` blocks updates to an existing branch, but allows creating one)
-- [ ] Open a PR from `savitha/trace-v1-steps` to `main`; merge after 1 approving review (required by the ruleset)
+- [x] Open a PR from `savitha/trace-v1-steps` to `main`; merged as PR #4 (`1cf65ed`)
 - [ ] Open a Linear issue for Phase 2 (one assignee) and link it in the PR as `Fixes 298-xx`
 - Note: `savitha/trace-v1` on GitHub holds only commit 1 and can't be deleted (ruleset); ignore it.
 - Note: later changes (the real trace, plots) can't be pushed onto this branch either: use a new branch per update, or a PR into this branch.
@@ -86,7 +86,55 @@ personas (seeded)  ->  skeleton events + labels  ->  LLM renders text  ->  clean
 - The LLM wrapped 495 texts (29%) in quotes despite "Output only the text".
 
 ## Next cycle (Cycle 4, Oct 8–21)
-- [ ] Preference signals across all 30 days; re-render
+- [x] Preference signals across all 30 days (v2 generator, `gen2/skeleton.py`); re-render in progress
 - [ ] Presidio in the PII scan
 - [ ] GCS + BigQuery layers, Airflow DAG on a schedule
-- [ ] Tool adapter and harness runs for the baseline and Model A
+- [x] Tool adapter (`system/shell.py`) and harness (`system/runner.py`); runs tracked below
+
+---
+
+# Research pipeline v2 — progress checklist (Phase 2b + Model A)
+
+Owner: Savitha Vijayarangan · Branch: `savitha/research-pipeline` (from `main` at `1cf65ed`) · Started 2026-10-14
+Plan and hypotheses: `research/PREREGISTRATION.md` (committed `efe545f` before any result). Stage map: `research/PIPELINE.md`.
+
+## A. Data quality (reviewer feedback: synthetic data may be biased and not generalize)
+- [x] Real-world reference: 9,300-row Enron sample reduced to aggregates (`gen2/reference_stats.json`, `7766e60`)
+- [x] v2 generator: per-person sampling, 16 locales / 6 regions, distractors, updates, natural dates, held-out wordings and renderer (`c1c19f4`)
+- [x] v1 still reproduces byte-identically (events, trace, labels, splits)
+- [x] Bias and shortcut audit, v1 vs v2 (`gen2/audit.py`, `3c8d897`)
+- [x] Split manifest committed (`manifests/v2_split_manifest.json`)
+- [ ] Render all ~5,500 v2 texts (llama3.2 for all, phi3 for half of test/OOD) — in progress
+- [ ] Export + validate + leakage on the real render: `p17sim build-trace2` shows 0 violations, 0 findings
+- [ ] Final audit table on rendered text: `p17sim audit`
+
+## B. System
+- [x] Local model client with per-call profiling and egress log (`system/llm.py`)
+- [x] Shared tool shell: permissions, confirmations, provenance, rollback, deletion receipts (`system/shell.py`)
+- [x] Replay harness with deletion storage audits (`system/runner.py`)
+- [x] Baseline agent = OpenJarvis native_openhands at `e97088f`, re-implemented (`agents/baseline.py`)
+- [x] Model A: retrieval-augmented hierarchical planner (`agents/model_a.py`, `agents/memory.py`)
+- [x] Oracle passes 100% and null fails all utility tasks on a test cohort (`tests/test_system.py`)
+- [x] 78 tests pass (`59fd25a`)
+
+## C. Experiments (qwen3.5:4b, same settings for every system)
+- [ ] Train Model A on train personas: `p17sim train-a` (report: `models/model_a/training_report.json`)
+- [ ] Smoke runs on val personas only (no test data looked at)
+- [ ] Harness sanity on real data: oracle and null on test personas
+- [ ] Main comparison: baseline and Model A, seeds 11, 22, 33, test personas, days 25–30
+- [ ] OOD personas: baseline and Model A, seeds 11, 22, 33
+- [ ] Ablations: 4 × seed 11, target task kinds
+- [ ] Model profiling: `p17sim profile-models`
+- [ ] `p17sim report` → `research/results/RESULTS.md`
+
+## D. Write-up
+- [x] Pipeline document with all 19 stages (`research/PIPELINE.md`)
+- [ ] Results, limitations, conclusion filled from RESULTS.md
+- [ ] Evidence folder for the presentation
+
+## Problems found (v2)
+- The python.org Python had no CA certificates; HTTPS failed until the system bundle was used.
+- Enron header hours carry a clock offset (5% of mail per hour at 01:00–05:00); corrected by a 7-hour shift, raw curve kept.
+- A health canary format (`patient no. 114-9441`) looked like a phone number and tripped the PII check; changed to 4+3 digits.
+- phi3 adds meta-notes ("(15 words, casual tone)") and "[Your Name]" placeholders, and can run until the timeout without an output cap.
+- The 8 GB laptop swaps heavily during the render (8 GB swap); the disk filled once and stopped the render. Caches cleared with permission; a disk guard now stops the render below 1.5 GB.
