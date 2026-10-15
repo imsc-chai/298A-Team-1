@@ -54,7 +54,8 @@ Checklist: [PROGRESS.md](PROGRESS.md)
 
 ## Run it
 
-Setup, once: Python 3.12, [uv](https://docs.astral.sh/uv/), [Ollama](https://ollama.com).
+Setup, once: Python 3.12, [uv](https://docs.astral.sh/uv/), [Ollama](https://ollama.com). All commands below run
+from `sandbox/` with the environment active (`source .venv/bin/activate`).
 
 ```bash
 uv sync
@@ -74,8 +75,13 @@ p17sim export-training           # training data for Models A, B, C (train + val
 The system:
 
 ```bash
-p17sim serve                     # http://localhost:8017  (API docs at /docs)
+source .venv/bin/activate        # once per terminal, so `p17sim` is found (or prefix commands with .venv/bin/)
+p17sim serve                     # http://localhost:8017  (API docs at /docs); needs the full v2 trace
+p17sim serve --trace data/demo/trace --data data/demo/data   # try it now with the two demo personas
 ```
+
+`data/demo/` holds the two personas whose text is fully rendered (q0000 Bà Hải Trần, q0001 Ekiya Ghose).
+It is not in git; rebuild it from the render cache if it is missing.
 
 Evaluation:
 

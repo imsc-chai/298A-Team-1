@@ -217,6 +217,12 @@ def cmd_export_training(a) -> int:
 def cmd_serve(a) -> int:
     from p17sim.aios.api import serve
 
+    missing = [str(f) for f in (a.trace / "trace.jsonl", a.data / "personas.jsonl") if not f.exists()]
+    if missing:
+        print("No dataset at " + ", ".join(missing) + ".\n"
+              "The full v2 trace exists after `p17sim build-trace2`. To try the app now with the two demo personas:\n"
+              "  p17sim serve --trace data/demo/trace --data data/demo/data")
+        return 1
     serve(a.trace, a.data, a.model, a.port, a.store_dir)
     return 0
 
