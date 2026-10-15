@@ -12,7 +12,7 @@ import re
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Protocol
+from typing import Callable, Protocol
 
 from p17sim.rng import derive_seed
 from p17sim.schema import RENDERED_TYPES, Event, EventType, Persona
@@ -108,8 +108,9 @@ def build_prompt(event: Event, persona: Persona) -> str:
     return "\n".join(lines)
 
 
-def render_event(event: Event, persona: Persona, backend: Backend, cache_dir: Path) -> Event:
-    prompt = build_prompt(event, persona)
+def render_event(event: Event, persona: Persona, backend: Backend, cache_dir: Path,
+                 prompt_fn: Callable[[Event, Persona], str] | None = None) -> Event:
+    prompt = (prompt_fn or build_prompt)(event, persona)
     key = hashlib.sha256(f"{event.event_id}|{hashlib.sha256(prompt.encode()).hexdigest()}|{backend.name}"
                          .encode()).hexdigest()
     path = cache_dir / f"{key}.json"
@@ -129,10 +130,11 @@ def render_event(event: Event, persona: Persona, backend: Backend, cache_dir: Pa
 
 
 def render_events(events: list[Event], personas: dict[str, Persona], backend: Backend,
-                  cache_dir: Path, workers: int = 8) -> list[Event]:
+                  cache_dir: Path, workers: int = 8,
+                  prompt_fn: Callable[[Event, Persona], str] | None = None) -> list[Event]:
     def one(e: Event) -> Event:
         if e.type in RENDERED_TYPES and e.render_status == "pending":
-            return render_event(e, personas[e.persona_id], backend, cache_dir)
+            return render_event(e, personas[e.persona_id], backend, cache_dir, prompt_fn)
         return e
 
     with ThreadPoolExecutor(max_workers=workers) as pool:

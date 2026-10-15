@@ -1,0 +1,64 @@
+{
+  "generator_version": "2",
+  "persona_splits": {
+    "q0000": "train",
+    "q0001": "train",
+    "q0002": "train",
+    "q0003": "train",
+    "q0004": "train",
+    "q0005": "train",
+    "q0006": "train",
+    "q0007": "train",
+    "q0008": "train",
+    "q0009": "train",
+    "q0010": "train",
+    "q0011": "train",
+    "q0012": "val",
+    "q0013": "val",
+    "q0014": "val",
+    "q0015": "val",
+    "q0016": "val",
+    "q0017": "val",
+    "q0018": "test",
+    "q0019": "test",
+    "q0020": "test",
+    "q0021": "test",
+    "q0022": "test",
+    "q0023": "test",
+    "q0024": "test",
+    "q0025": "test",
+    "q0026": "test",
+    "q0027": "test",
+    "q0028": "test",
+    "q0029": "test",
+    "q0030": "ood_test",
+    "q0031": "ood_test",
+    "q0032": "ood_test",
+    "q0033": "ood_test",
+    "q0034": "ood_test",
+    "q0035": "ood_test"
+  },
+  "scoring": "headline = test-window (days 25-30) tasks of test personas; OOD reported separately; trained parts learn from train personas only; choices made on val personas",
+  "seed": 2026,
+  "sha256": "2776d5e1ccc7c7f5e7b2e7051ed2ee12af9292b854deb438b297379d42db5239",
+  "sizes": {
+    "ood_test": 6,
+    "test": 12,
+    "train": 12,
+    "val": 6
+  },
+  "temporal_windows": {
+    "test": [
+      25,
+      30
+    ],
+    "train": [
+      1,
+      20
+    ],
+    "val": [
+      21,
+      24
+    ]
+  }
+}

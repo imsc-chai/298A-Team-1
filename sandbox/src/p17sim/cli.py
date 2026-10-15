@@ -144,6 +144,21 @@ def cmd_eda(a) -> int:
     return 0
 
 
+def cmd_generate2(a) -> int:
+    from p17sim.gen2.build import generate
+
+    print(json.dumps(generate(a.out, a.seed, a.n_train, a.n_val, a.n_test, a.n_ood)))
+    return 0
+
+
+def cmd_render2(a) -> int:
+    from p17sim.gen2.build import render
+
+    status = render(a.data, a.cache, a.workers)
+    print(f"render_status={status}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="p17sim")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -182,6 +197,19 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--renderer", default="ollama:llama3.2")
     b.add_argument("--out", type=Path, default=Path("../data/trace_v1"))
     b.set_defaults(fn=cmd_build_trace)
+
+    g2 = sub.add_parser("generate2", help="v2 debiased generator")
+    g2.add_argument("--seed", type=int, default=2026)
+    for name, default in (("--n-train", 12), ("--n-val", 6), ("--n-test", 12), ("--n-ood", 6)):
+        g2.add_argument(name, type=int, default=default)
+    g2.add_argument("--out", type=Path, default=Path("data/v2"))
+    g2.set_defaults(fn=cmd_generate2)
+
+    r2 = sub.add_parser("render2", help="render v2 text with each persona's renderer")
+    r2.add_argument("--data", type=Path, default=Path("data/v2"))
+    r2.add_argument("--cache", type=Path, default=Path("data/render_cache_v2"))
+    r2.add_argument("--workers", type=int, default=4)
+    r2.set_defaults(fn=cmd_render2)
 
     t = sub.add_parser("validate-trace")
     t.add_argument("trace", type=Path)
