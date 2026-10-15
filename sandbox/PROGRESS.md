@@ -159,7 +159,8 @@ Design approved 2026-10-15 (`docs/plans/2026-10-15-personal-ai-os-design.md`); p
 - [x] Task 10 — FastAPI backend (`1dede1f`, 6 API tests)
 - [x] Task 11 — web front end (`2505a22`, 3 front-end tests; checked live with the API)
 - [x] Live check found a deletion leak in the delete step's own log row; fixed with a regression test (`29763ca`)
-- [ ] Task 12 — after the render: build-trace2, audit, export-training, oracle/null, baseline × 3 seeds (test + OOD), profile-models, report
+- [ ] Task 12a (this laptop, data only) — after the render: build-trace2 (0 violations, 0 leakage findings), audit, export-training (gold check)
+- [ ] Task 12b (GPU, not this laptop; decided 2026-10-15) — oracle/null sanity, baseline runs (seeds 11, 22, 33; test + OOD), profile-models, report
 - [x] Task 13 — README, pipeline stages, pre-registration amendment (this commit); evidence folder after Task 12
 - [x] Requirements specification v2.0 (`docs/REQUIREMENTS.md`): 226 requirements, 74 decision records with trade-offs; adds the data-warehouse pipeline, ML platform (GPU), and the deployed user-facing demo, with the privacy boundary between device and cloud
 - [ ] Team decision on D64 (official comparison on 9B FP16 GPU + 4B on device); then a dated pre-registration amendment

@@ -833,7 +833,8 @@ The device verifies the checksum before loading (FR-USR-7).
 
 | Item | Owner | Blocked by |
 |---|---|---|
-| Baseline runs on the laptop, audit table, model profile, `RESULTS.md` | Savitha | v2 render (in progress) |
+| Full v2 trace, audit table, training export (laptop, data only) | Savitha | v2 render (in progress) |
+| Baseline runs, model profile, `RESULTS.md` — on the GPU, not the laptop (decided 2026-10-15) | Team | GPU access details |
 | Cloud foundation, pipeline, demo deployment | Team | GCP project and budget figure |
 | Baseline 9B FP16 and GPU rendering | Team | GPU access details |
 | Model A design, training and evaluation | Phase 3 owner | — (data and slot ready) |
