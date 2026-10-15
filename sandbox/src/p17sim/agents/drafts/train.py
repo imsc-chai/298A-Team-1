@@ -20,8 +20,8 @@ from pathlib import Path
 
 import numpy as np
 
-from p17sim.agents.memory import Memory, Reranker
-from p17sim.agents.model_a import MODEL_DIR, preference_window
+from p17sim.agents.drafts.memory import Memory, Reranker
+from p17sim.agents.drafts.model_a import MODEL_DIR, preference_window
 from p17sim.gen2 import phrasing as ph
 from p17sim.gen2.personas import pref_value
 from p17sim.system.llm import Profile, embed
@@ -126,7 +126,7 @@ def train_reranker(train_sets, val_sets, report: dict) -> tuple[Reranker, float,
     from sklearn.metrics import roc_auc_score
     from sklearn.preprocessing import StandardScaler
 
-    from p17sim.agents.memory import features
+    from p17sim.agents.drafts.memory import features
 
     scaler = StandardScaler().fit(np.vstack([features(q.text, c, q.time) for q, c, _ in train_sets]))
     rr = Reranker(None, scaler)

@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from p17sim.agents.baseline import BaselineAgent, strip_think
-from p17sim.agents.memory import Memory, Reranker
+from p17sim.agents.drafts.memory import Memory, Reranker
 from p17sim.gen2 import phrasing as ph
 from p17sim.schema import Persona
 from p17sim.system.llm import Chat, embed
@@ -32,7 +32,7 @@ from p17sim.system.runner import AgentResult
 from p17sim.system.shell import Shell
 from p17sim.system.text import tokens
 
-MODEL_DIR = Path(__file__).resolve().parents[3] / "models" / "model_a"
+MODEL_DIR = Path(__file__).resolve().parents[4] / "models" / "model_a"
 WINDOWS = {"morning": (480, 720), "afternoon": (720, 1020), "evening": (1020, 1260)}
 MONTHS = {m.lower(): i + 1 for i, m in enumerate(ph.MONTHS)}
 WEEKDAYS = {d.lower(): i for i, d in enumerate(ph.WEEKDAYS)}

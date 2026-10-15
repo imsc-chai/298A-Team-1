@@ -1,59 +1,40 @@
-"""Reference agents for harness sanity (v2): the oracle reads ground truth, the null agent does nothing.
+"""Reference generators for harness sanity: the oracle reads ground truth, the null generator does nothing.
 
-If the oracle cannot pass a task, the task or its checker is broken. The null agent must fail every
-utility task; it passes deletion probes trivially, which is why safety numbers are always reported
-next to task success.
+Both act through the same workspace engine as every other generator, so the sanity check also
+covers the store, the privacy layer and the checkers. If the oracle cannot pass a task, the task or
+its checker is broken. The null generator must fail every utility task; it passes deletion probes
+trivially, which is why safety numbers are always reported next to task success.
 """
 from __future__ import annotations
 
-import re
 from datetime import datetime
 
-from p17sim.gen2.personas import PersonaExtra, pref_value
-from p17sim.schema import Persona
-from p17sim.system.llm import Profile
-from p17sim.system.runner import AgentResult, Dataset
-from p17sim.system.shell import Shell
+from p17sim.aios.engine import Approver, ExecutionResult, auto_approve
+from p17sim.gen2 import phrasing as ph
+from p17sim.gen2.personas import pref_value
 
 WINDOWS = {"morning": (480, 720), "afternoon": (720, 1020), "evening": (1020, 1260)}
 
 
-class NullAgent:
+class NullGenerator:
     name = "null"
+    status = "reference"
 
-    def __init__(self, *_):
-        self.profile = Profile()
-
-    def observe(self, record: dict) -> None:
-        pass
-
-    def run(self, request: str) -> AgentResult:
-        return AgentResult()
-
-    def memory_holds(self, value: str) -> list[str]:
-        return []
+    def run(self, goal: str, ws, approver: Approver = auto_approve, **_) -> ExecutionResult:
+        return ws.engine.close(ws.engine.open(goal, self.name), "")
 
 
-class OracleAgent:
+class OracleGenerator:
     name = "oracle"
+    status = "reference"
 
-    def __init__(self, shell: Shell, persona: Persona, extra: PersonaExtra, ds: Dataset):
-        self.shell, self.persona, self.extra, self.ds = shell, persona, extra, ds
-        self.profile = Profile()
-        self.by_text = {r["text"]: ds.labels[r["event_id"]] for r in ds.records[persona.persona_id]
-                        if ds.labels[r["event_id"]].get("checker") or
-                        ds.labels[r["event_id"]].get("provenance", "").startswith("delete:")}
+    def __init__(self, ds):
+        self.ds = ds
 
-    def observe(self, record: dict) -> None:
-        pass
-
-    def memory_holds(self, value: str) -> list[str]:
-        return []
-
-    def _current(self, fact_id: str) -> str | None:
+    def _current(self, ws, fact_id: str) -> str | None:
         value = None
-        for r in self.ds.records[self.persona.persona_id]:
-            if datetime.fromisoformat(r["timestamp"]) >= self.shell.now:
+        for r in self.ds.records[ws.pid]:
+            if datetime.fromisoformat(r["timestamp"]) >= ws.now:
                 break
             lab = self.ds.labels[r["event_id"]]
             if lab.get("fact_id") == fact_id and not lab.get("checker"):
@@ -63,30 +44,33 @@ class OracleAgent:
                     value = lab["fact_value"]
         return value
 
-    def run(self, request: str) -> AgentResult:
-        lab = self.by_text[request]
+    def run(self, goal: str, ws, approver: Approver = auto_approve, **_) -> ExecutionResult:
+        lab = next(self.ds.labels[r["event_id"]] for r in self.ds.records[ws.pid] if r["text"] == goal
+                   and r["timestamp"] <= ws.now.isoformat() and (self.ds.labels[r["event_id"]].get("checker") or
+                   self.ds.labels[r["event_id"]].get("provenance", "").startswith("delete:")))
+        eid = ws.engine.open(goal, self.name)
         if lab.get("provenance", "").startswith("delete:"):
-            ids = [r["event_id"] for r in self.ds.records[self.persona.persona_id]
+            ids = [r["event_id"] for r in self.ds.records[ws.pid]
                    if self.ds.labels[r["event_id"]].get("fact_id") == lab["fact_id"]
-                   and not self.ds.labels[r["event_id"]].get("checker") and r["event_id"] in self.shell.records]
-            self.shell.execute("delete_records", {"ids": ids})
-            return AgentResult(answer="Deleted.")
+                   and not self.ds.labels[r["event_id"]].get("checker") and r["timestamp"] < ws.now.isoformat()
+                   and r["channel"] != "instruction"]
+            ws.engine.step(eid, "action.delete_records", {"ids": ids, "request": goal}, approver)
+            return ws.engine.close(eid, "Deleted.")
         ck = lab["checker"]
         if ck["kind"] in ("recall", "update", "deletion"):
-            return AgentResult(answer=self._current(lab["fact_id"]) or "I don't have that information.")
+            return ws.engine.close(eid, self._current(ws, lab["fact_id"]) or "I don't have that information.")
+        name = next(c.name for c in ws.persona.contacts if c.contact_id == ck["args"]["to"])
         if ck["kind"] == "privacy":
-            name = next(c.name for c in self.persona.contacts if c.contact_id == ck["args"]["to"])
-            self.shell.execute("send_email", {"to": name, "subject": "Hi", "body": "Busy week, talk soon."})
-            return AgentResult(answer="Sent.")
+            ws.engine.step(eid, "action.send_email", {"to": name, "subject": "Hi", "body": "Busy week, talk soon."},
+                           approver)
+            return ws.engine.close(eid, "Sent.")
         a = ck["args"]
-        lo, hi = WINDOWS[pref_value(self.extra, "meeting_window", lab["day"])]
+        lo, hi = WINDOWS[pref_value(ws.extra, "meeting_window", lab["day"])]
         start = -(-max(lo, a["earliest"]) // 15) * 15
         while any(start < b1 and start + a["duration_minutes"] > b0 for b0, b1 in a["busy"]):
             start += 15
-        from p17sim.gen2 import phrasing as ph
-
-        name = next(c.name for c in self.persona.contacts if c.contact_id == a["to"])
-        self.shell.execute("create_event", {"date": ph.on_date(self.extra.start_weekday, a["day"]).isoformat(),
-                                            "start": f"{start // 60:02d}:{start % 60:02d}",
-                                            "duration_minutes": a["duration_minutes"], "with_contact": name})
-        return AgentResult(answer="Booked.")
+        ws.engine.step(eid, "action.create_event", {
+            "date": ph.on_date(ws.extra.start_weekday, a["day"]).isoformat(),
+            "start": f"{start // 60:02d}:{start % 60:02d}", "duration_minutes": a["duration_minutes"],
+            "with_contact": name}, approver)
+        return ws.engine.close(eid, "Booked.")
