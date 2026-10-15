@@ -137,7 +137,7 @@ Plan and hypotheses: `research/PREREGISTRATION.md` (committed `efe545f` before a
 - Enron header hours carry a clock offset (5% of mail per hour at 01:00–05:00); corrected by a 7-hour shift, raw curve kept.
 - A health canary format (`patient no. 114-9441`) looked like a phone number and tripped the PII check; changed to 4+3 digits.
 - phi3 adds meta-notes ("(15 words, casual tone)") and "[Your Name]" placeholders, and can run until the timeout without an output cap.
-- The 8 GB laptop swaps heavily during the render (8 GB swap); the disk filled once and stopped the render. Caches cleared with permission; a disk guard now stops the render below 1.5 GB.
+- The 8 GB laptop swaps heavily during the render; the disk filled twice and stopped it. Root cause found on 2026-10-15: Ollama's llama-server grew to 10 GB over a few thousand requests (swap reached 13 GB, 15 GB of swap files). Unloading the model freed it (swap 13 → 3 GB, disk 1 → 11 GB free). `scripts/guarded_run.py` now runs long jobs, unloading the model and resuming when the server passes 5 GB or free disk drops below 2.5 GB.
 
 ---
 
