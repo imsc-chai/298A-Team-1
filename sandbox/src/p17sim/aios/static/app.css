@@ -43,9 +43,10 @@ label.check { display: flex; align-items: center; gap: 6px; } label.check input 
 main { padding: 16px; max-width: 1280px; margin: 0 auto; }
 .tab { display: none; } .tab.active { display: block; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; min-width: 0; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; } .grid2 > .card { margin-bottom: 0; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; } .grid2 > .card { margin-bottom: 0; }
 .grid2 + .card, .grid2 + .grid2 { margin-top: 14px; }
-@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+@media (max-width: 860px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+html, body { max-width: 100%; } .answer, .prose { overflow-wrap: anywhere; } td { overflow-wrap: break-word; }
 .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; } .row input { flex: 1; min-width: 160px; }
 .pill { display: inline-block; min-width: 18px; padding: 0 6px; border-radius: 99px; background: var(--danger); color: #fff; font-size: 11px; text-align: center; }
 
@@ -78,3 +79,7 @@ details { border-top: 1px solid var(--line); padding: 6px 0; } summary { cursor:
 .md table { margin: 8px 0 16px; } .md h1 { font-size: 18px; } .md h2 { font-size: 13px; margin-top: 18px; }
 .md img { max-width: 100%; border: 1px solid var(--line); border-radius: 6px; }
 .toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--surface); padding: 8px 14px; border-radius: 8px; max-width: calc(100% - 32px); }
+
+ol.steps { margin: 4px 0 10px; padding-left: 20px; } ol.steps li { margin: 2px 0; }
+.okText { color: var(--ok); } .warnText { color: var(--warn); }
+.prose { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; margin: 6px 0 10px; }

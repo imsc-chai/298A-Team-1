@@ -31,7 +31,7 @@ function bindRows(el, rows, onClick) {
   el.querySelectorAll("tr.clickable").forEach((tr) => tr.addEventListener("click", () => onClick(rows[+tr.dataset.i])));
 }
 const cls = (c) => `<span class="badge cls-${esc(c)}">${esc(c)}</span>`;
-const statusBadge = (s) => `<span class="badge ${s === "succeeded" || s === "ok" ? "ok" : ["waiting_approval", "waiting"].includes(s) ? "warn" : "bad"}">${esc(s)}</span>`;
+const statusBadge = (s) => `<span class="badge ${["succeeded", "ok", "approved"].includes(s) ? "ok" : ["waiting_approval", "waiting", "pending", "skipped"].includes(s) ? "warn" : "bad"}">${esc(s)}</span>`;
 
 // ------------------------------------------------------------------ workflow canvas
 function drawCanvas(el, wf, runs = [], onSelect) {
@@ -99,8 +99,20 @@ async function init() {
   $("#dataDelete").addEventListener("click", deleteSelected);
   $("#calShow").addEventListener("click", showCalendar);
   $("#auditGo").addEventListener("click", storageAudit);
+  // Deep links (demos, screenshots): ?persona=&day=&time=&tab=&generator=&goal=&run=1&load=0&exec=
+  const q = new URLSearchParams(location.search);
+  if (q.get("persona")) $("#persona").value = q.get("persona");
+  if (q.get("day")) $("#day").value = q.get("day");
+  if (q.get("time")) $("#time").value = q.get("time");
+  if (q.get("generator")) $("#generator").value = q.get("generator");
+  if (q.get("goal")) $("#goal").value = q.get("goal");
   genChanged();
-  await load();
+  if (q.get("load") === "0") { S.pid = $("#persona").value; setClock(await api(`/api/ws/${S.pid}/state`)); }
+  else await load();
+  if (q.get("tab")) showTab(q.get("tab"));
+  if (q.get("exec")) { showTab("executions"); await showExecution({ id: q.get("exec") }); }
+  if (q.get("audit")) { showTab("privacy"); $("#auditValue").value = q.get("audit"); await storageAudit(); }
+  if (q.get("run") === "1") await runGoal();
 }
 
 async function load() {
@@ -160,11 +172,55 @@ async function runGoal() {
   } catch (e) { $("#answerCard").innerHTML = `<h2>Result</h2><p class="badge bad">${esc(e.message)}</p>`; }
   finally { btn.disabled = false; $("#runStatus").textContent = ""; refreshApprovalCount(); }
 }
+// Plain-language description of each step, for the person using the assistant.
+function describe(r) {
+  const inp = parse(r.input) || {}, out = parse(r.output) || {};
+  const n = (x) => (Array.isArray(x) ? x.length : 0);
+  const priv = (items) => (items || []).filter((i) => i.permission === "deny").length;
+  if (r.status === "blocked") return `Stopped a step that would have sent ${r.data_class} data off this device`;
+  if (r.status === "denied") return `Did not ${r.type.split(".")[1].replace(/_/g, " ")}: your settings do not allow it`;
+  if (r.status === "waiting") return "Waiting for your OK before going on (see Approvals)";
+  if (r.status === "rejected") return "You said no, so this step did not run";
+  if (r.status === "failed") return `A step could not finish: ${r.error || ""}`;
+  switch (r.type) {
+    case "trigger.chat": return "Received your request";
+    case "trigger.time": return "Started on schedule";
+    case "trigger.event": return "Started because a new message arrived";
+    case "reason.agent_step": {
+      const calls = out.tool_calls || [];
+      return calls.length ? `Decided to ${calls.map((c) => c.name.replace(/_/g, " ")).join(", then ")}` : "Wrote the answer";
+    }
+    case "reason.llm": return "Wrote a draft with the on-device model";
+    case "context.search": {
+      const where = !inp.kind || inp.kind === "all" ? "records" : `${inp.kind === "note" ? "notes" : inp.kind === "message" ? "messages" : inp.kind + " entries"}`;
+      return `Searched your ${where} for "${inp.query}" — found ${n(out.items)}${priv(out.items) ? ` (${priv(out.items)} marked private)` : ""}`;
+    }
+    case "context.read": return "Opened one record";
+    case "context.recent": return `Looked at your last ${inp.days || 7} days — ${n(out.items)} records${inp.exclude_private ? ", private ones left out" : ""}`;
+    case "context.calendar": return `Checked your calendar for ${out.date || inp.date}`;
+    case "context.contacts": return "Looked up your contacts";
+    case "context.preferences": return "Checked how you like your meetings";
+    case "human.approval": return "You approved it";
+    case "action.send_email": return `Emailed ${out.to}`;
+    case "action.create_event": return `Booked "${out.title}" on ${out.date} at ${out.start}`;
+    case "action.cancel_event": return "Cancelled an event";
+    case "action.delete_records": return `Deleted ${n(out.deleted)} record(s) and every copy of what they said`;
+    case "output.respond": return "Gave you the answer";
+    default: return r.type;
+  }
+}
+function parse(s) { try { return JSON.parse(s); } catch { return null; } }
+const inlineMd = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`([^`]+)`/g, "<code>$1</code>");
+
 function renderResult(res, secs) {
   const llmCalls = res.node_runs.filter((r) => r.type === "reason.agent_step" || r.type === "reason.llm").length;
   const blocked = res.node_runs.filter((r) => ["blocked", "denied"].includes(r.status)).length;
-  $("#answerCard").innerHTML = `<h2>Result</h2><div class="answer">${esc(res.answer || "(no answer)")}</div>
-    <div class="badges">${statusBadge(res.status)}<span class="badge">${secs.toFixed(1)} s</span><span class="badge">${llmCalls} model step(s)</span>
+  const local = res.node_runs.every((r) => r.location === "local");
+  const steps = res.node_runs.filter((r) => r.status !== "skipped").map((r) => `<li>${esc(describe(r))}</li>`).join("");
+  $("#answerCard").innerHTML = `<h2>Result</h2><div class="answer">${inlineMd(res.answer || "(no answer)")}</div>
+    <h3>What I did</h3><ol class="steps">${steps}</ol>
+    <p class="small ${local ? "okText" : "warnText"}">${local ? "🔒 Everything ran on this device. Nothing was sent to the internet." : "Some steps were blocked from leaving this device."}</p>
+    <div class="badges">${statusBadge(res.status)}<span class="badge">${(res.latency_s ?? secs).toFixed(1)} s</span><span class="badge">${llmCalls} model step(s)</span>
     <span class="badge">${res.node_runs.length} node runs</span><span class="badge">${res.interventions} confirmation(s)</span>
     ${blocked ? `<span class="badge bad">${blocked} blocked by policy</span>` : ""}
     ${res.approval_id ? `<span class="badge warn">waiting in Approvals</span>` : ""}</div>
@@ -258,12 +314,24 @@ async function storageAudit() {
 }
 
 // ------------------------------------------------------------------ approvals
+function approvalBody(a) {
+  const p = a.request.params || {};
+  const field = (k, v) => `<p class="small"><b>${esc(k)}:</b> ${esc(v)}</p>`;
+  const prose = (t) => `<div class="prose">${esc(String(t).replace(/\\n/g, "\n"))}</div>`;
+  if (a.tool === "mail.send") return `<h3>Send this email?</h3>${field("To", p.to)}${field("Subject", p.subject || "(none)")}${prose(p.body || "")}`;
+  if (a.tool === "calendar.create") return `<h3>Book this meeting?</h3>${field("With", p.with_contact)}${field("When", `${p.date} at ${p.start}, ${p.duration_minutes} min`)}`;
+  if (a.tool === "memory.forget") return `<h3>Delete these records everywhere?</h3>${field("Records", (p.ids || []).map((i) => i.id || i).join(", "))}`;
+  const msg = String(p.message || "Continue?");
+  const [q, ...rest] = msg.split("? ");
+  return `<h3>${esc(rest.length ? q + "?" : "Continue?")}</h3>${prose(rest.length ? rest.join("? ") : msg)}`;
+}
 async function refreshApprovalCount() { if (S.pid) setClock(await api(`/api/ws/${S.pid}/state`)); }
 async function refreshApprovals() {
   const xs = await api(`/api/ws/${S.pid}/approvals`);
   $("#approvals").innerHTML = xs.length ? xs.map((a) => `<div class="card"><div class="badges">${statusBadge(a.status === "pending" ? "waiting" : a.status)}
-    <span class="badge">${esc(a.tool)}</span><span class="muted small">${esc(a.ts.replace("T", " ").slice(0, 16))}</span></div>
-    <pre>${esc(JSON.stringify(a.request.params, null, 1))}</pre>
+    <span class="muted small">${esc(a.ts.replace("T", " ").slice(0, 16))}</span></div>
+    ${approvalBody(a)}
+    <details><summary class="small muted">Technical details</summary><pre>${esc(JSON.stringify(a.request, null, 1))}</pre></details>
     ${a.status === "pending" ? `<div class="row"><button class="primary" data-ok="${esc(a.id)}">Approve</button><button data-no="${esc(a.id)}">Reject</button></div>` : ""}</div>`).join("")
     : '<p class="muted">No approvals yet. Actions the policy marks "ask" wait here.</p>';
   const decide = async (id, decision) => {

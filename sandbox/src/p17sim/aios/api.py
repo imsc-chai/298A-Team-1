@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import threading
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -164,13 +165,15 @@ def create_app(ds: Dataset, model: str = "qwen3.5:4b", store_dir: Path | None = 
         except KeyError as exc:
             raise HTTPException(404, str(exc))
         with hub.lock:
+            t = time.perf_counter()
             try:
                 res = gen.run(body.text, ws, approver=queue_approval, params=body.params)
             except NotTrained as exc:
                 raise HTTPException(409, str(exc))
             except (KeyError, TypeError, ValueError) as exc:
                 raise HTTPException(400, str(exc))
-        return _result(res)
+            wall = time.perf_counter() - t
+        return {**_result(res), "latency_s": round(wall, 2)}
 
     @app.get("/api/templates")
     def templates():

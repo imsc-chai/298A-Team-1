@@ -33,9 +33,11 @@ def weekly_recap(to: str, **_) -> Workflow:
     return _wf(f"Weekly recap to {to}", "weekly_recap", f"Email {to} a recap of my week", [
         ("trigger", "trigger.chat", {"goal": f"Email {to} a recap of my week"}),
         ("week", "context.recent", {"days": 7, "kind": "all", "exclude_private": True, "limit": 15}),
-        ("draft", "reason.llm", {"prompt": "Write a short, friendly email to " + to + " that recaps the user's week "
-                                           "from these records. At most four sentences. Leave out codes and private "
-                                           "details. Output only the body.\nRecords: {{week.items}}",
+        ("draft", "reason.llm", {"prompt": "You are writing as the user, in the first person (I, my). Write a short, "
+                                           "friendly email to " + to + " telling them how your week went, based on "
+                                           "these records of your week. At most four sentences. Leave out codes and "
+                                           "private details. Output only the body, no subject line.\n"
+                                           "Records: {{week.items}}",
                                  "max_tokens": 300}),
         ("approve", "human.approval", {"message": "Send this recap? {{draft.text}}"}),
         ("send", "action.send_email", {"to": to, "subject": "My week", "body": "{{draft.text}}"}),
