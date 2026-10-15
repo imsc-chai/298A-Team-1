@@ -13,6 +13,7 @@ Everything runs on one laptop (Apple M1, 8 GB):
 The data is synthetic, so no real person's mail is used. Models A, B and C are the only parts still to build:
 their slots exist, report "pending training", and their training data is exported.
 
+Architecture at a glance: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) ·
 Requirements and design decisions: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) ·
 Design: [docs/plans/2026-10-15-personal-ai-os-design.md](docs/plans/2026-10-15-personal-ai-os-design.md) ·
 Research pipeline: [research/PIPELINE.md](research/PIPELINE.md) ·

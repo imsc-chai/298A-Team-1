@@ -20,6 +20,7 @@ Related documents:
 - Hypotheses and metrics, fixed before any result: [../research/PREREGISTRATION.md](../research/PREREGISTRATION.md).
 - Research stages: [../research/PIPELINE.md](../research/PIPELINE.md).
 - How to run: [../README.md](../README.md).
+- Architecture at a glance (tiers and request flows): [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## How to read this document
 
