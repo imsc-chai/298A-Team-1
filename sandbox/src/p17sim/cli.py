@@ -144,6 +144,105 @@ def cmd_eda(a) -> int:
     return 0
 
 
+def cmd_generate2(a) -> int:
+    from p17sim.gen2.build import generate
+
+    print(json.dumps(generate(a.out, a.seed, a.n_train, a.n_val, a.n_test, a.n_ood)))
+    return 0
+
+
+def cmd_render2(a) -> int:
+    from p17sim.gen2.build import render
+
+    status = render(a.data, a.cache, a.workers)
+    print(f"render_status={status}")
+    return 0
+
+
+def cmd_build_trace2(a) -> int:
+    from p17sim.gen2.build import export
+
+    res = export(a.data, a.out)
+    print("clean   " + ", ".join(f"{k}={v}" for k, v in sorted(res["log"].items())))
+    print(f"validate {len(res['violations'])} violations")
+    for v in res["violations"][:20]:
+        print("       " + v)
+    print(f"leakage  {len(res['leakage'])} findings")
+    for f in res["leakage"][:20]:
+        print("       " + f)
+    print(f"manifest {a.out / 'manifest.json'}")
+    return 1 if res["violations"] or res["leakage"] else 0
+
+
+def cmd_audit(a) -> int:
+    from p17sim.gen2 import audit
+
+    results = [audit.run(audit.view_v1(a.v1, a.v1 / "events_rendered.jsonl")),
+               audit.run(audit.view_v2(a.v2, "events_rendered.jsonl" if (a.v2 / "events_rendered.jsonl").exists()
+                                       else "events.jsonl"))]
+    a.out.parent.mkdir(parents=True, exist_ok=True)
+    a.out.write_text(json.dumps(results, indent=1) + "\n")
+    print(audit.table(results))
+    return 0
+
+
+def cmd_eval(a) -> int:
+    from p17sim.agents.registry import run_meta, system
+    from p17sim.system.runner import Dataset, evaluate
+
+    ds = Dataset.load(a.trace, a.data)
+    pids = sorted(p for p, s in ds.splits.items() if s in a.personas.split(","))
+    if a.limit:
+        pids = pids[: a.limit]
+    windows = tuple(a.windows.split(","))
+    kinds = set(a.kinds.split(",")) if a.kinds else None
+    out = a.out / f"{a.system}_s{a.seed}_{a.personas.replace(',', '+')}_{a.windows.replace(',', '+')}.jsonl"
+    meta = run_meta(a.system, a.model, a.seed, pids, windows)
+    meta["kinds"] = sorted(kinds) if kinds else "all"
+    rows = evaluate(ds, system(a.system, ds, a.model, a.seed), pids, windows, out, meta, kinds)
+    tasks = [r for r in rows if r.get("kind") and r["kind"] != "deletion_audit"]
+    print(f"{out}: {sum(r['passed'] for r in tasks)}/{len(tasks)} tasks passed in this call")
+    return 0
+
+
+def cmd_export_training(a) -> int:
+    from p17sim.aios.export import export_all
+    from p17sim.system.runner import Dataset
+
+    m = export_all(Dataset.load(a.trace, a.data), a.out, verify=not a.no_verify)
+    print(json.dumps({k: m[k] for k in ("files", "gold_check") if k in m}, indent=1))
+    return 1 if m.get("gold_check", {}).get("failed") else 0
+
+
+def cmd_serve(a) -> int:
+    from p17sim.aios.api import serve
+
+    missing = [str(f) for f in (a.trace / "trace.jsonl", a.data / "personas.jsonl") if not f.exists()]
+    if missing:
+        print("No dataset at " + ", ".join(missing) + ".\n"
+              "The full v2 trace exists after `p17sim build-trace2`. To try the app now with the two demo personas:\n"
+              "  p17sim serve --trace data/demo/trace --data data/demo/data")
+        return 1
+    serve(a.trace, a.data, a.model, a.port, a.store_dir)
+    return 0
+
+
+def cmd_report(a) -> int:
+    from p17sim.analysis.report import build
+
+    build(a.results)
+    print(f"wrote {a.results / 'RESULTS.md'}")
+    return 0
+
+
+def cmd_profile_models(a) -> int:
+    from p17sim.analysis.profile_models import run
+
+    for r in run(a.out):
+        print(json.dumps(r))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="p17sim")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -182,6 +281,66 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--renderer", default="ollama:llama3.2")
     b.add_argument("--out", type=Path, default=Path("../data/trace_v1"))
     b.set_defaults(fn=cmd_build_trace)
+
+    g2 = sub.add_parser("generate2", help="v2 debiased generator")
+    g2.add_argument("--seed", type=int, default=2026)
+    for name, default in (("--n-train", 12), ("--n-val", 6), ("--n-test", 12), ("--n-ood", 6)):
+        g2.add_argument(name, type=int, default=default)
+    g2.add_argument("--out", type=Path, default=Path("data/v2"))
+    g2.set_defaults(fn=cmd_generate2)
+
+    r2 = sub.add_parser("render2", help="render v2 text with each persona's renderer")
+    r2.add_argument("--data", type=Path, default=Path("data/v2"))
+    r2.add_argument("--cache", type=Path, default=Path("data/render_cache_v2"))
+    r2.add_argument("--workers", type=int, default=4)
+    r2.set_defaults(fn=cmd_render2)
+
+    b2 = sub.add_parser("build-trace2", help="v2 rendered events -> cleaned trace, labels, checks")
+    b2.add_argument("--data", type=Path, default=Path("data/v2"))
+    b2.add_argument("--out", type=Path, default=Path("../data/trace_v2"))
+    b2.set_defaults(fn=cmd_build_trace2)
+
+    au = sub.add_parser("audit", help="bias and shortcut audit, v1 vs v2")
+    au.add_argument("--v1", type=Path, default=Path("data/v1"))
+    au.add_argument("--v2", type=Path, default=Path("data/v2"))
+    au.add_argument("--out", type=Path, default=Path("research/results/audit.json"))
+    au.set_defaults(fn=cmd_audit)
+
+    ev = sub.add_parser("eval", help="run one system on the v2 harness")
+    ev.add_argument("--system", required=True)
+    ev.add_argument("--seed", type=int, default=11)
+    ev.add_argument("--model", default="qwen3.5:4b")
+    ev.add_argument("--personas", default="test", help="comma list of persona splits")
+    ev.add_argument("--windows", default="test", help="comma list of day windows: val, test")
+    ev.add_argument("--kinds", default="", help="only these task kinds (comma list)")
+    ev.add_argument("--limit", type=int, default=0, help="first N personas only (smoke runs)")
+    ev.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    ev.add_argument("--data", type=Path, default=Path("data/v2"))
+    ev.add_argument("--out", type=Path, default=Path("research/results/runs"))
+    ev.set_defaults(fn=cmd_eval)
+
+    ex = sub.add_parser("export-training", help="training data for Models A, B, C (train and val personas only)")
+    ex.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    ex.add_argument("--data", type=Path, default=Path("data/v2"))
+    ex.add_argument("--out", type=Path, default=Path("../data/training_v2"))
+    ex.add_argument("--no-verify", action="store_true")
+    ex.set_defaults(fn=cmd_export_training)
+
+    sv = sub.add_parser("serve", help="Personal AI OS: API and web app on localhost")
+    sv.add_argument("--trace", type=Path, default=Path("../data/trace_v2"))
+    sv.add_argument("--data", type=Path, default=Path("data/v2"))
+    sv.add_argument("--model", default="qwen3.5:4b")
+    sv.add_argument("--port", type=int, default=8017)
+    sv.add_argument("--store-dir", type=Path, default=Path("data/aios"))
+    sv.set_defaults(fn=cmd_serve)
+
+    rp = sub.add_parser("report", help="build research/results/RESULTS.md from the run files")
+    rp.add_argument("--results", type=Path, default=Path("research/results"))
+    rp.set_defaults(fn=cmd_report)
+
+    pm = sub.add_parser("profile-models", help="measure each local model alone (load, memory, speed)")
+    pm.add_argument("--out", type=Path, default=Path("research/results/model_profile.json"))
+    pm.set_defaults(fn=cmd_profile_models)
 
     t = sub.add_parser("validate-trace")
     t.add_argument("trace", type=Path)

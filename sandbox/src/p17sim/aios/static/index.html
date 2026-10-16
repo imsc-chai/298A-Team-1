@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personal AI OS</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><strong>Personal AI OS</strong><span class="muted">local-first · Topic 17</span></div>
+  <div class="controls">
+    <label>Persona <select id="persona"></select></label>
+    <label>Day <input id="day" type="number" min="1" max="30" value="25"></label>
+    <label>Time <input id="time" type="time" value="09:00"></label>
+    <label class="check"><input id="handle" type="checkbox"> act on past instructions</label>
+    <button id="load" class="primary">Load</button>
+    <span id="clock" class="clock">—</span>
+    <button id="plus1h" title="Advance the clock one hour">+1 h</button>
+    <button id="plus1d" title="Advance the clock one day">+1 day</button>
+  </div>
+</header>
+<nav class="tabs" role="tablist">
+  <button data-tab="assistant" class="active">Assistant</button>
+  <button data-tab="workflows">Workflows</button>
+  <button data-tab="executions">Executions</button>
+  <button data-tab="data">Data</button>
+  <button data-tab="privacy">Privacy</button>
+  <button data-tab="approvals">Approvals <span id="approvalCount" class="pill hidden">0</span></button>
+  <button data-tab="benchmark">Benchmark</button>
+</nav>
+<main>
+  <section id="tab-assistant" class="tab active">
+    <div class="grid2">
+      <div class="card">
+        <h2>Goal</h2>
+        <label>Generator <select id="generator"></select></label>
+        <p id="genDesc" class="muted small"></p>
+        <div id="genParams"></div>
+        <label id="goalLabel">What should the assistant do?
+          <textarea id="goal" rows="3">What is my gate code?</textarea></label>
+        <button id="run" class="primary">Generate and run</button>
+        <p id="runStatus" class="muted small"></p>
+      </div>
+      <div class="card" id="answerCard"><h2>Result</h2><p class="muted">Load a persona, then run a goal.</p></div>
+    </div>
+    <div class="card"><h2>Workflow</h2><div id="assistantCanvas" class="canvas"></div>
+      <div id="assistantNodes"></div></div>
+  </section>
+
+  <section id="tab-workflows" class="tab">
+    <div class="grid2">
+      <div class="card"><h2>Saved workflows</h2><div id="wfList"></div></div>
+      <div class="card"><h2>Templates</h2><div id="tplList"></div>
+        <p class="muted small">Templates are workflows a person builds by hand, like in n8n. Generated workflows come
+          from the generator on the Assistant tab.</p></div>
+    </div>
+    <div class="card"><h2 id="wfTitle">Workflow</h2><div id="wfCanvas" class="canvas"></div><div id="wfInspector"></div></div>
+  </section>
+
+  <section id="tab-executions" class="tab">
+    <div class="card"><h2>Executions</h2><div id="exList"></div></div>
+    <div class="card"><h2 id="exTitle">Execution</h2><div id="exCanvas" class="canvas"></div><div id="exDetail"></div></div>
+  </section>
+
+  <section id="tab-data" class="tab">
+    <div class="card">
+      <div class="row">
+        <select id="dataChannel">
+          <option value="message">Messages</option><option value="notification">Notifications</option>
+          <option value="note">Notes</option><option value="calendar">Calendar</option>
+          <option value="preference">Preferences</option><option value="instruction">Instructions</option>
+        </select>
+        <input id="dataQuery" placeholder="Search (full-text)">
+        <button id="dataSearch">Search</button>
+        <button id="dataDelete" class="danger">Delete selected</button>
+      </div>
+      <p class="muted small">Only records up to the persona's current time are shown. Deleting removes the record and
+        every copy of what it said (indexes, logs, approvals) and writes a receipt.</p>
+      <div id="dataRows"></div>
+    </div>
+    <div class="card"><h2>Calendar</h2><div class="row"><input id="calDate" type="date"><button id="calShow">Show</button></div>
+      <div id="calendar"></div></div>
+  </section>
+
+  <section id="tab-privacy" class="tab">
+    <div class="grid2">
+      <div class="card"><h2>Tool policy</h2><div id="toolPolicy"></div>
+        <h3>Where data may be processed</h3><div id="locPolicy"></div></div>
+      <div class="card"><h2>Data leaving this device</h2><div id="egress"></div>
+        <h3>Data classes held</h3><div id="classes"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h2>Storage audit</h2>
+        <div class="row"><input id="auditValue" placeholder="A value to look for, e.g. a code"><button id="auditGo">Search every store</button></div>
+        <div id="auditOut"></div>
+        <h3>Deletion receipts</h3><div id="receipts"></div></div>
+      <div class="card"><h2>Audit log</h2><div id="auditLog" class="scroll"></div></div>
+    </div>
+  </section>
+
+  <section id="tab-approvals" class="tab">
+    <div class="card"><h2>Your approvals</h2><div id="approvals"></div></div>
+  </section>
+
+  <section id="tab-benchmark" class="tab">
+    <div class="grid2">
+      <div class="card"><h2>Generators</h2><div id="generators"></div></div>
+      <div class="card"><h2>Suggestions (Model B and C slots)</h2><div id="suggestions"></div></div>
+    </div>
+    <div class="card"><h2>Benchmark runs</h2><div id="runs"></div></div>
+    <div class="card"><h2>Model profile</h2><div id="profile"></div></div>
+    <div class="card"><h2>Results report</h2><div id="results" class="md"></div></div>
+  </section>
+</main>
+<div id="toast" class="toast hidden"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
