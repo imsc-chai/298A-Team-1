@@ -1,0 +1,120 @@
+{
+  "persona_id": "persona_05_sophia",
+  "name": "Sophia Martinez, M.Ed.",
+  "role": "High School AP Biology Teacher & Science Department Chair",
+  "school": "Oakridge High School (Oakridge Unified School District)",
+  "email": "smartinez@oakridge-hs.edu",
+  "phone": "+1-555-019-3311",
+  "classroom": "Room 214 (Science Wing)",
+  "teaching_schedule": "Periods 1, 2, 4, 5 (AP Biology); Period 3 (Prep / Department Chair Office Hour)",
+  "contacts": [
+    {
+      "id": "c_dr_jenkins_principal",
+      "name": "Dr. Marcus Jenkins",
+      "email": "m.jenkins@oakridge-hs.edu",
+      "role": "Principal, Oakridge High School",
+      "relation": "supervisor",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_mr_henderson",
+      "name": "Robert Henderson",
+      "email": "r.henderson@oakridge-hs.edu",
+      "role": "Chemistry Teacher & Lab Safety Officer",
+      "relation": "coworker",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_mrs_ramos_parent",
+      "name": "Elena Ramos",
+      "email": "elena.ramos.sf@gmail.com",
+      "role": "Parent of Lucas Ramos (Student)",
+      "relation": "student_parent",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_greg_vendor",
+      "name": "Greg Miller",
+      "email": "g.miller@biosciencesdirect.com",
+      "role": "Educational Sales Rep, BioSciences Direct",
+      "relation": "vendor",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_david_husband",
+      "name": "David Martinez",
+      "phone": "+1-555-012-6688",
+      "role": "Husband",
+      "relation": "family",
+      "preferred_channel": "sms"
+    }
+  ],
+  "preferences": {
+    "meeting_window": "prep_period_and_after_school",
+    "meeting_window_rationale": "Cannot meet during instructional periods (08:30 - 11:30 and 12:30 - 15:15). Available only during Period 3 Prep (11:35 - 12:25) or after school (15:20 - 16:30).",
+    "parent_conference_buffer_minutes": 10,
+    "max_parent_conferences_per_day": 4
+  },
+  "routines": [
+    {
+      "name": "Period 1 & 2 AP Biology Instruction",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "start": "08:30",
+      "duration_minutes": 180,
+      "location": "Room 214",
+      "strict_conflict": true
+    },
+    {
+      "name": "Period 3 Prep & Department Office Hour",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "start": "11:35",
+      "duration_minutes": 50,
+      "location": "Room 214 Prep Office",
+      "strict_conflict": false,
+      "notes": "Available for administrative syncs and parent conferences"
+    },
+    {
+      "name": "Period 4 & 5 Laboratory & AP Biology",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "start": "12:30",
+      "duration_minutes": 165,
+      "location": "Room 214 Lab",
+      "strict_conflict": true
+    }
+  ],
+  "action_execution_policy": {
+    "allowed_autonomous_tools": [
+      "read_local_file",
+      "search_calendar",
+      "read_messages",
+      "lookup_contact",
+      "create_calendar_event",
+      "draft_email",
+      "draft_sms",
+      "update_profile"
+    ],
+    "restricted_confirmation_tools": [
+      "send_email",
+      "send_sms",
+      "delete_calendar_event"
+    ]
+  }
+}

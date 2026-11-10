@@ -1,0 +1,449 @@
+[
+  {
+    "id": "cal_p4_001",
+    "day": 2,
+    "date": "2026-11-02",
+    "weekday": "Monday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_002",
+    "day": 2,
+    "date": "2026-11-02",
+    "weekday": "Monday",
+    "start_time": "13:30",
+    "end_time": "14:30",
+    "duration_minutes": 60,
+    "title": "Weekly All-Hands & Sprint Planning",
+    "category": "engineering",
+    "location": "Boardroom Alpha",
+    "busy": true,
+    "attendees": [
+      "rachel@nexacore.ai",
+      "jason@nexacore.ai"
+    ]
+  },
+  {
+    "id": "cal_p4_003",
+    "day": 2,
+    "date": "2026-11-02",
+    "weekday": "Monday",
+    "start_time": "15:00",
+    "end_time": "16:00",
+    "duration_minutes": 60,
+    "title": "Thomas Thorne Investor Monthly Check-In",
+    "category": "investor",
+    "location": "Zoom",
+    "busy": true,
+    "attendees": [
+      "t.thorne@apexvp.com"
+    ]
+  },
+  {
+    "id": "cal_p4_004",
+    "day": 3,
+    "date": "2026-11-03",
+    "weekday": "Tuesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_005",
+    "day": 4,
+    "date": "2026-11-04",
+    "weekday": "Wednesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_006",
+    "day": 4,
+    "date": "2026-11-04",
+    "weekday": "Wednesday",
+    "start_time": "14:00",
+    "end_time": "15:00",
+    "duration_minutes": 60,
+    "title": "Priya Patel Technical Architecture Interview",
+    "category": "hiring",
+    "location": "Google Meet",
+    "busy": true,
+    "attendees": [
+      "p.patel.ai@gmail.com"
+    ]
+  },
+  {
+    "id": "cal_p4_007",
+    "day": 5,
+    "date": "2026-11-05",
+    "weekday": "Thursday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_008",
+    "day": 6,
+    "date": "2026-11-06",
+    "weekday": "Friday",
+    "start_time": "13:00",
+    "end_time": "16:00",
+    "duration_minutes": 180,
+    "title": "Friday Cluster Infrastructure Optimization",
+    "category": "engineering",
+    "location": "Server Room",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_009",
+    "day": 9,
+    "date": "2026-11-09",
+    "weekday": "Monday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_010",
+    "day": 9,
+    "date": "2026-11-09",
+    "weekday": "Monday",
+    "start_time": "13:30",
+    "end_time": "14:30",
+    "duration_minutes": 60,
+    "title": "Weekly All-Hands & Sprint Planning",
+    "category": "engineering",
+    "location": "Boardroom Alpha",
+    "busy": true,
+    "attendees": [
+      "rachel@nexacore.ai",
+      "jason@nexacore.ai"
+    ]
+  },
+  {
+    "id": "cal_p4_011",
+    "day": 10,
+    "date": "2026-11-10",
+    "weekday": "Tuesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_012",
+    "day": 10,
+    "date": "2026-11-10",
+    "weekday": "Tuesday",
+    "start_time": "14:00",
+    "end_time": "15:30",
+    "duration_minutes": 90,
+    "title": "Karen Vance Legal Review of Seed Term Sheet",
+    "category": "legal",
+    "location": "Zoom",
+    "busy": true,
+    "attendees": [
+      "karen@vancemillerlaw.com"
+    ],
+    "is_sensitive": true
+  },
+  {
+    "id": "cal_p4_013",
+    "day": 11,
+    "date": "2026-11-11",
+    "weekday": "Wednesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_014",
+    "day": 12,
+    "date": "2026-11-12",
+    "weekday": "Thursday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_015",
+    "day": 12,
+    "date": "2026-11-12",
+    "weekday": "Thursday",
+    "start_time": "15:00",
+    "end_time": "16:00",
+    "duration_minutes": 60,
+    "title": "Rachel & Marcus Executive 1:1",
+    "category": "executive",
+    "location": "Office Suite 500",
+    "busy": true,
+    "attendees": [
+      "rachel@nexacore.ai"
+    ]
+  },
+  {
+    "id": "cal_p4_016",
+    "day": 16,
+    "date": "2026-11-16",
+    "weekday": "Monday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_017",
+    "day": 16,
+    "date": "2026-11-16",
+    "weekday": "Monday",
+    "start_time": "13:30",
+    "end_time": "14:30",
+    "duration_minutes": 60,
+    "title": "Weekly All-Hands & Sprint Planning",
+    "category": "engineering",
+    "location": "Boardroom Alpha",
+    "busy": true,
+    "attendees": [
+      "rachel@nexacore.ai",
+      "jason@nexacore.ai"
+    ]
+  },
+  {
+    "id": "cal_p4_018",
+    "day": 17,
+    "date": "2026-11-17",
+    "weekday": "Tuesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_019",
+    "day": 17,
+    "date": "2026-11-17",
+    "weekday": "Tuesday",
+    "start_time": "14:00",
+    "end_time": "15:00",
+    "duration_minutes": 60,
+    "title": "Candidate Priya Patel Offer Discussion",
+    "category": "hiring",
+    "location": "Zoom",
+    "busy": true,
+    "attendees": [
+      "p.patel.ai@gmail.com"
+    ],
+    "is_sensitive": true
+  },
+  {
+    "id": "cal_p4_020",
+    "day": 18,
+    "date": "2026-11-18",
+    "weekday": "Wednesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_021",
+    "day": 19,
+    "date": "2026-11-19",
+    "weekday": "Thursday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_022",
+    "day": 19,
+    "date": "2026-11-19",
+    "weekday": "Thursday",
+    "start_time": "15:00",
+    "end_time": "16:30",
+    "duration_minutes": 90,
+    "title": "AWS Enterprise Architecture Account Review",
+    "category": "infrastructure",
+    "location": "Zoom",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_023",
+    "day": 23,
+    "date": "2026-11-23",
+    "weekday": "Monday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_024",
+    "day": 23,
+    "date": "2026-11-23",
+    "weekday": "Monday",
+    "start_time": "13:30",
+    "end_time": "14:30",
+    "duration_minutes": 60,
+    "title": "Weekly All-Hands & Sprint Planning",
+    "category": "engineering",
+    "location": "Boardroom Alpha",
+    "busy": true,
+    "attendees": [
+      "rachel@nexacore.ai",
+      "jason@nexacore.ai"
+    ]
+  },
+  {
+    "id": "cal_p4_025",
+    "day": 24,
+    "date": "2026-11-24",
+    "weekday": "Tuesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_026",
+    "day": 24,
+    "date": "2026-11-24",
+    "weekday": "Tuesday",
+    "start_time": "14:00",
+    "end_time": "15:00",
+    "duration_minutes": 60,
+    "title": "Apex Ventures Pre-Holiday Board Catchup",
+    "category": "investor",
+    "location": "Zoom",
+    "busy": true,
+    "attendees": [
+      "t.thorne@apexvp.com"
+    ]
+  },
+  {
+    "id": "cal_p4_027",
+    "day": 25,
+    "date": "2026-11-25",
+    "weekday": "Wednesday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_028",
+    "day": 26,
+    "date": "2026-11-26",
+    "weekday": "Thursday",
+    "start_time": "12:00",
+    "end_time": "18:00",
+    "duration_minutes": 360,
+    "title": "Thanksgiving Family Dinner",
+    "category": "personal",
+    "location": "Home",
+    "busy": true,
+    "notes": "Company holiday"
+  },
+  {
+    "id": "cal_p4_029",
+    "day": 30,
+    "date": "2026-11-30",
+    "weekday": "Monday",
+    "start_time": "08:30",
+    "end_time": "12:00",
+    "duration_minutes": 210,
+    "title": "Core Architecture Deep Work & PR Reviews",
+    "category": "deep_work",
+    "location": "NexaCore Office",
+    "busy": true
+  },
+  {
+    "id": "cal_p4_030",
+    "day": 30,
+    "date": "2026-11-30",
+    "weekday": "Monday",
+    "start_time": "13:30",
+    "end_time": "14:30",
+    "duration_minutes": 60,
+    "title": "Weekly All-Hands & Sprint Planning",
+    "category": "engineering",
+    "location": "Boardroom Alpha",
+    "busy": true,
+    "attendees": [
+      "rachel@nexacore.ai",
+      "jason@nexacore.ai"
+    ]
+  },
+  {
+    "id": "cal_p4_031",
+    "day": 30,
+    "date": "2026-11-30",
+    "weekday": "Monday",
+    "start_time": "15:00",
+    "end_time": "16:30",
+    "duration_minutes": 90,
+    "title": "End-of-Month Infrastructure Budget Review",
+    "category": "finance",
+    "location": "Boardroom Alpha",
+    "busy": true,
+    "attendees": [
+      "rachel@nexacore.ai"
+    ]
+  }
+]

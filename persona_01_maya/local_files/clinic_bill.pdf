@@ -1,0 +1,77 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 2100 >>
+stream
+BT
+/F1 16 Tf
+50 730 Td
+(BAY PHYSICAL THERAPY & SPORTS REHABILITATION) Tj
+/F2 10 Tf
+0 -18 Td
+(1420 University Avenue, Suite 300 | Phone: +1-555-016-8800 | NPI #194820192) Tj
+0 -25 Td
+/F1 12 Tf
+(PATIENT STATEMENT & REHABILITATION INVOICE) Tj
+/F2 10 Tf
+0 -18 Td
+(Patient Name: Maya Lin                     Patient Chart ID: PT-882109) Tj
+0 -14 Td
+(Statement Date: Nov 01, 2026               Account Number: Acct #8849-2041) Tj
+0 -14 Td
+(Attending Physical Therapist: Dr. Robert Keller, PT, DPT) Tj
+0 -14 Td
+(Primary Clinical Diagnosis: L5-S1 Radiculopathy & Lumbar Spine Rehabilitation) Tj
+0 -25 Td
+/F1 10 Tf
+(Date          Service Description                  Billed       Insurance Paid    Patient Due) Tj
+/F2 10 Tf
+0 -16 Td
+(10/06/2026    Evaluation & Lumbar Mobilization     $220.00      $160.00           $60.00) Tj
+0 -14 Td
+(10/13/2026    Therapeutic Exercise & Traction      $180.00      $130.00           $50.00) Tj
+0 -14 Td
+(10/20/2026    Neuromuscular Re-education           $190.00      $140.00           $50.00) Tj
+0 -14 Td
+(10/27/2026    Manual Therapy & Posture Retrain     $210.00      $150.00           $60.00) Tj
+0 -25 Td
+/F1 11 Tf
+(Total Billed: $800.00  |  BlueCross Insurance Paid (Claim #BC-490218): $580.00) Tj
+0 -16 Td
+(Total Outstanding Patient Balance Due: $220.00) Tj
+/F2 9 Tf
+0 -25 Td
+(CONFIDENTIAL MEDICAL RECORD: Protected under HIPAA standards. Do not distribute without consent.) Tj
+0 -12 Td
+(Next recurring session scheduled: Tuesday, Nov 10, 2026 at 08:30 AM.) Tj
+ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000344 00000 n 
+0000000244 00000 n 
+0000000294 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2500
+%%EOF

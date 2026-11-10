@@ -1,0 +1,75 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 1900 >>
+stream
+BT
+/F1 16 Tf
+50 740 Td
+(MUTUAL NON-DISCLOSURE & PROPRIETARY RIGHTS AGREEMENT) Tj
+/F2 10 Tf
+0 -18 Td
+(ApexFintech Inc. and Studio Gomez Design LLC | Contract Ref: NDA-2026-APX-88) Tj
+0 -22 Td
+/F1 11 Tf
+(Parties & Scope of Engagement) Tj
+/F2 10 Tf
+0 -16 Td
+(Disclosing Party: ApexFintech Inc. (San Francisco, CA)) Tj
+0 -14 Td
+(Receiving Contractor: Elena Gomez d/b/a Studio Gomez Design LLC) Tj
+0 -14 Td
+(Project Scope: Nova Mobile Wealth Management Platform & Cryptocurrency Wallet) Tj
+0 -14 Td
+(Effective Date: September 15, 2026 | Term: Two (2) Years from Effective Date) Tj
+0 -22 Td
+/F1 11 Tf
+(Strict Confidentiality & Non-Disclosure Obligations) Tj
+/F2 9 Tf
+0 -16 Td
+(1. Contractor shall hold all technical designs, wireframes, code, and trade secrets in strict confidence.) Tj
+0 -14 Td
+(2. Contractor shall not disclose Nova Mobile features, API endpoints, or client identity to third parties.) Tj
+0 -14 Td
+(3. Contractor shall not use Disclosing Party assets in public portfolio case studies without written signoff.) Tj
+0 -14 Td
+(4. Standard Contractor Retainer Rate: $125.00 per billed hour, settled net-30 upon monthly invoice.) Tj
+0 -22 Td
+/F1 11 Tf
+(Remedies for Breach) Tj
+/F2 9 Tf
+0 -16 Td
+(Any unauthorized disclosure of proprietary materials shall constitute immediate irreparable harm) Tj
+0 -12 Td
+(entitling ApexFintech Inc. to injunctive relief, statutory damages, and legal fee recovery.) Tj
+ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000344 00000 n 
+0000000244 00000 n 
+0000000294 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2300
+%%EOF

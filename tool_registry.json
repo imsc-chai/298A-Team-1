@@ -1,0 +1,119 @@
+{
+  "version": "1.0",
+  "description": "Canonical tool registry shared by all 6 candidate models (M1-M6) and all 5 personas.",
+  "tools": [
+    {
+      "name": "read_local_file",
+      "description": "Reads raw content from an unstructured document, image, PDF, or markdown file in local_files/.",
+      "arguments": {
+        "path": "string (relative path under persona directory, e.g. local_files/flight_ticket.png)"
+      },
+      "permission": "autonomous",
+      "reversible": true
+    },
+    {
+      "name": "search_calendar",
+      "description": "Queries the persona's calendar stream for events matching a date or query.",
+      "arguments": {
+        "date": "string (optional, format YYYY-MM-DD)",
+        "query": "string (optional, search keywords)"
+      },
+      "permission": "autonomous",
+      "reversible": true
+    },
+    {
+      "name": "read_messages",
+      "description": "Queries past messages and email threads for a given contact, date range, or keyword.",
+      "arguments": {
+        "contact": "string (optional, email or phone or contact ID)",
+        "query": "string (optional, search keywords)",
+        "day_range": "array of integers [start_day, end_day] (optional)"
+      },
+      "permission": "autonomous",
+      "reversible": true
+    },
+    {
+      "name": "lookup_contact",
+      "description": "Retrieves contact metadata, relation, and preferred communication channel from user_profile.json.",
+      "arguments": {
+        "name": "string (contact name or identifier)"
+      },
+      "permission": "autonomous",
+      "reversible": true
+    },
+    {
+      "name": "create_calendar_event",
+      "description": "Schedules a new event block on the persona's calendar stream.",
+      "arguments": {
+        "title": "string",
+        "date": "string (YYYY-MM-DD)",
+        "start_time": "string (HH:MM)",
+        "end_time": "string (HH:MM)",
+        "busy": "boolean",
+        "notes": "string (optional)"
+      },
+      "permission": "autonomous",
+      "reversible": true
+    },
+    {
+      "name": "draft_email",
+      "description": "Creates an outbound email draft for human inspection prior to sending.",
+      "arguments": {
+        "to": "string (recipient email address)",
+        "subject": "string",
+        "body": "string"
+      },
+      "permission": "autonomous",
+      "reversible": true,
+      "status_output": "DRAFT"
+    },
+    {
+      "name": "draft_sms",
+      "description": "Creates an outbound text message draft for human inspection prior to sending.",
+      "arguments": {
+        "to": "string (recipient phone number)",
+        "body": "string"
+      },
+      "permission": "autonomous",
+      "reversible": true,
+      "status_output": "DRAFT"
+    },
+    {
+      "name": "update_profile",
+      "description": "Updates persistent preferences, routines, or contact rules in user_profile.json.",
+      "arguments": {
+        "field": "string (dot-notation path, e.g. preferences.meeting_window)",
+        "value": "any (new value or constraint rule)"
+      },
+      "permission": "autonomous",
+      "reversible": true
+    },
+    {
+      "name": "send_email",
+      "description": "Transmits a drafted email message. Restricted action requiring explicit user confirmation.",
+      "arguments": {
+        "draft_id": "string"
+      },
+      "permission": "requires_confirmation",
+      "reversible": false
+    },
+    {
+      "name": "send_sms",
+      "description": "Transmits a drafted SMS message. Restricted action requiring explicit user confirmation.",
+      "arguments": {
+        "draft_id": "string"
+      },
+      "permission": "requires_confirmation",
+      "reversible": false
+    },
+    {
+      "name": "delete_calendar_event",
+      "description": "Permanently deletes an event from the calendar stream. Restricted action requiring confirmation.",
+      "arguments": {
+        "event_id": "string"
+      },
+      "permission": "requires_confirmation",
+      "reversible": false
+    }
+  ]
+}

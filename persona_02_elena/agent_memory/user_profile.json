@@ -1,0 +1,155 @@
+{
+  "persona_id": "persona_02_elena",
+  "name": "Elena Gomez",
+  "role": "Senior Freelance Product & UX Designer",
+  "company": "Studio Gomez Design LLC",
+  "email": "elena@studiogomez.design",
+  "phone": "+1-555-014-8833",
+  "home_studio": "Suite 302, 1200 Market Street, San Francisco, CA",
+  "active_clients": [
+    {
+      "client_id": "client_apex",
+      "company_name": "ApexFintech Inc.",
+      "primary_contact": "David Sterling (VP Product)",
+      "contact_email": "d.sterling@apexfintech.io",
+      "project": "Nova Mobile Wealth Management App",
+      "retainer_rate": "$125.00/hr",
+      "status": "Active (Sprint 4)",
+      "confidentiality_level": "Strict NDA"
+    },
+    {
+      "client_id": "client_horizon",
+      "company_name": "HorizonHealth Technologies",
+      "primary_contact": "Sarah Jenkins (Head of Design)",
+      "contact_email": "s.jenkins@horizonhealth.co",
+      "project": "CarePortal Telehealth Redesign",
+      "retainer_rate": "$135.00/hr",
+      "status": "Active (Design QA & Handoff)",
+      "confidentiality_level": "Strict NDA"
+    },
+    {
+      "client_id": "client_lumina",
+      "company_name": "LuminaAI Analytics",
+      "primary_contact": "Kenji Sato (CTO)",
+      "contact_email": "k.sato@lumina-ai.com",
+      "project": "Executive Business Intelligence Dashboard",
+      "retainer_rate": "$140.00/hr",
+      "status": "Discovery & Wireframing",
+      "confidentiality_level": "Strict NDA"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "c_david_apex",
+      "name": "David Sterling",
+      "email": "d.sterling@apexfintech.io",
+      "role": "VP Product, ApexFintech",
+      "relation": "client",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_sarah_horizon",
+      "name": "Sarah Jenkins",
+      "email": "s.jenkins@horizonhealth.co",
+      "role": "Head of Design, HorizonHealth",
+      "relation": "client",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_kenji_lumina",
+      "name": "Kenji Sato",
+      "email": "k.sato@lumina-ai.com",
+      "role": "CTO, LuminaAI",
+      "relation": "client",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_carlos_cpa",
+      "name": "Carlos Rivera",
+      "email": "carlos@riveracpa.com",
+      "role": "Certified Public Accountant",
+      "relation": "accountant",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_alex_dev",
+      "name": "Alex Mercer",
+      "email": "alex@mercerdev.io",
+      "phone": "+1-555-018-7711",
+      "role": "Contract Frontend Engineer",
+      "relation": "collaborator",
+      "preferred_channel": "sms"
+    },
+    {
+      "id": "c_marco",
+      "name": "Marco Gomez",
+      "phone": "+1-555-012-3399",
+      "role": "Brother",
+      "relation": "family",
+      "preferred_channel": "sms"
+    }
+  ],
+  "preferences": {
+    "meeting_window": "afternoon",
+    "meeting_window_rationale": "Mornings reserved for deep Figma design sprints (09:00 - 12:30). Client syncs strictly afternoons 13:30 - 17:00.",
+    "focus_days": [
+      "Friday"
+    ],
+    "focus_day_rule": "No client syncs on Fridays under any circumstances.",
+    "buffer_between_meetings_minutes": 20,
+    "max_client_syncs_per_day": 3
+  },
+  "routines": [
+    {
+      "name": "Morning Design Sprint & Wireframing",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "start": "09:00",
+      "duration_minutes": 210,
+      "location": "Home Studio (Figma)",
+      "strict_conflict": true
+    },
+    {
+      "name": "Friday Complete Focus Day",
+      "weekdays": [
+        5
+      ],
+      "start": "09:00",
+      "duration_minutes": 480,
+      "location": "Home Studio",
+      "strict_conflict": true
+    },
+    {
+      "name": "Pilates & Core Training",
+      "weekdays": [
+        2,
+        4
+      ],
+      "start": "07:30",
+      "duration_minutes": 60,
+      "location": "CoreBalance Studio",
+      "strict_conflict": false
+    }
+  ],
+  "action_execution_policy": {
+    "allowed_autonomous_tools": [
+      "read_local_file",
+      "search_calendar",
+      "read_messages",
+      "lookup_contact",
+      "create_calendar_event",
+      "draft_email",
+      "draft_sms",
+      "update_profile"
+    ],
+    "restricted_confirmation_tools": [
+      "send_email",
+      "send_sms",
+      "delete_calendar_event"
+    ]
+  }
+}

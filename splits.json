@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "description": "Experimental splits for comparative evaluation across candidate models M1 through M6.",
+  "dev_personas": [
+    "persona_01_maya",
+    "persona_02_elena"
+  ],
+  "test_personas": [
+    "persona_03_david",
+    "persona_04_marcus",
+    "persona_05_sophia"
+  ],
+  "protocol": {
+    "dev_use": "Prompt tuning, retrieval threshold calibration, error analysis, and constraint checker validation.",
+    "test_use": "Held-out zero-shot benchmark evaluation for reporting final statistical comparisons (mean +- std over 5 runs). No tuning permitted on test personas."
+  }
+}

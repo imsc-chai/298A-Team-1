@@ -1,0 +1,5 @@
+shareholder_name,shareholder_type,share_count,ownership_pct,vesting_terms
+Rachel Sterling,Founder & CEO,3500000,35.0%,4-Year Vesting (1-Year Cliff)
+Marcus Vance,Founder & CTO,3500000,35.0%,4-Year Vesting (1-Year Cliff)
+Apex Venture Partners,Series Seed Investor,1500000,15.0%,Preferred Stock (1.0x Non-Participating)
+Employee Incentive Option Pool,Stock Option Pool,1500000,15.0%,Standard 4-Year Option Vesting

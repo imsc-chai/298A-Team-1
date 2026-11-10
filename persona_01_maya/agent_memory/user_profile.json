@@ -1,0 +1,153 @@
+{
+  "persona_id": "persona_01_maya",
+  "name": "Maya Lin",
+  "role": "Graduate Student & Teaching Assistant (Computer Science)",
+  "institution": "State University",
+  "email": "maya.lin@grad.univ.edu",
+  "phone": "+1-555-019-4821",
+  "home_address": "Apt 4B, 842 College Avenue, University District",
+  "contacts": [
+    {
+      "id": "c_dr_chen",
+      "name": "Dr. Arthur Chen",
+      "email": "a.chen@univ.edu",
+      "role": "Faculty Advisor & Professor",
+      "relation": "academic_advisor",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_marcus",
+      "name": "Marcus Vance",
+      "email": "m.vance@grad.univ.edu",
+      "phone": "+1-555-014-9932",
+      "role": "PhD Colleague & Lab Partner",
+      "relation": "coworker",
+      "preferred_channel": "sms"
+    },
+    {
+      "id": "c_chloe",
+      "name": "Chloe Bennett",
+      "email": "chloe.b@gmail.com",
+      "phone": "+1-555-018-2201",
+      "role": "Roommate",
+      "relation": "roommate",
+      "preferred_channel": "sms"
+    },
+    {
+      "id": "c_priya",
+      "name": "Priya Lin",
+      "email": "priya.lin@outlook.com",
+      "phone": "+1-555-012-7744",
+      "role": "Sister",
+      "relation": "family",
+      "preferred_channel": "sms"
+    },
+    {
+      "id": "c_liam",
+      "name": "Liam Scott",
+      "email": "l.scott@designstudio.io",
+      "phone": "+1-555-017-3388",
+      "role": "Friend (Undergrad friend)",
+      "relation": "friend",
+      "preferred_channel": "sms"
+    },
+    {
+      "id": "c_dr_keller",
+      "name": "Dr. Robert Keller",
+      "email": "info@bayptcare.clinic",
+      "phone": "+1-555-016-8800",
+      "role": "Physical Therapist",
+      "relation": "healthcare_provider",
+      "preferred_channel": "email"
+    }
+  ],
+  "preferences": {
+    "meeting_window": "afternoon",
+    "meeting_window_rationale": "Commutes in mornings; prefers no scheduled syncs before 10:00 AM",
+    "buffer_between_meetings_minutes": 15,
+    "max_meetings_per_day": 4,
+    "primary_channels": {
+      "academic_and_work": "email",
+      "social_and_urgent": "sms"
+    },
+    "reminder_lead_minutes": 30,
+    "working_days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "deep_work_focus_slots": [
+      {
+        "weekday": 5,
+        "name": "Friday Deep Research",
+        "start": "13:00",
+        "end": "17:00"
+      }
+    ]
+  },
+  "routines": [
+    {
+      "name": "CS 601 Advanced ML Lecture",
+      "weekdays": [
+        2,
+        4
+      ],
+      "start": "13:30",
+      "duration_minutes": 90,
+      "location": "Science Hall 204",
+      "strict_conflict": true
+    },
+    {
+      "name": "CS 401 TA Office Hours",
+      "weekdays": [
+        4
+      ],
+      "start": "11:00",
+      "duration_minutes": 120,
+      "location": "Grad Commons 3B",
+      "strict_conflict": true
+    },
+    {
+      "name": "Physical Therapy Rehabilitation",
+      "weekdays": [
+        2
+      ],
+      "start": "08:30",
+      "duration_minutes": 60,
+      "location": "Bay PT & Sports Rehab",
+      "strict_conflict": true,
+      "is_sensitive": true
+    },
+    {
+      "name": "Campus Gym & Strength Training",
+      "weekdays": [
+        1,
+        3,
+        5
+      ],
+      "start": "07:30",
+      "duration_minutes": 60,
+      "location": "Recreation Center",
+      "strict_conflict": false
+    }
+  ],
+  "action_execution_policy": {
+    "allowed_autonomous_tools": [
+      "read_local_file",
+      "search_calendar",
+      "read_messages",
+      "lookup_contact",
+      "create_calendar_event",
+      "draft_email",
+      "draft_sms",
+      "update_profile"
+    ],
+    "restricted_confirmation_tools": [
+      "send_email",
+      "send_sms",
+      "delete_calendar_event"
+    ]
+  }
+}

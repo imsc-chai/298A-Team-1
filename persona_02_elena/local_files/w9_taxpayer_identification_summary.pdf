@@ -1,0 +1,67 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 2200 >>
+stream
+BT
+/F1 16 Tf
+50 740 Td
+(DEPARTMENT OF THE TREASURY - IRS FORM W-9 SUMMARY) Tj
+/F2 10 Tf
+0 -18 Td
+(Request for Taxpayer Identification Number & Certification) Tj
+0 -22 Td
+/F1 11 Tf
+(Entity & Business Information) Tj
+/F2 10 Tf
+0 -16 Td
+(Name of Entity: Studio Gomez Design LLC) Tj
+0 -14 Td
+(Business Owner / Sole Proprietor: Elena Gomez) Tj
+0 -14 Td
+(Federal Tax Classification: Single-Member LLC (Disregarded Entity)) Tj
+0 -14 Td
+(Employer Identification Number (EIN): 94-8841291) Tj
+0 -14 Td
+(Studio Address: Suite 302, 1200 Market Street, San Francisco, CA 94102) Tj
+0 -22 Td
+/F1 11 Tf
+(Certification & Withholding Exemption) Tj
+/F2 9 Tf
+0 -16 Td
+(Under penalties of perjury, I certify that the number shown on this form is my correct EIN,) Tj
+0 -14 Td
+(and I am not subject to backup withholding because I have not been notified by the IRS.) Tj
+0 -14 Td
+(Signature: Elena Gomez (Certified Electronically on October 15, 2026)) Tj
+ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000344 00000 n 
+0000000244 00000 n 
+0000000294 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2700
+%%EOF
