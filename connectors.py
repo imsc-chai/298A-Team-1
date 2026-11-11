@@ -18,6 +18,19 @@ class CalendarEvent:
     is_sensitive: bool = False
     notes: str = ""
     attendees: List[str] = field(default_factory=list)
+    ends_next_day: bool = False  # overnight event, e.g. 19:00-07:30 night shift
+
+
+def is_overnight(start_time: str, end_time: str) -> bool:
+    """An end time at or before the start time means the event runs past midnight."""
+    return end_time <= start_time
+
+
+def duration_minutes(start_time: str, end_time: str) -> int:
+    sh, sm = map(int, start_time.split(":"))
+    eh, em = map(int, end_time.split(":"))
+    minutes = (eh * 60 + em) - (sh * 60 + sm)
+    return minutes + 24 * 60 if minutes <= 0 else minutes
 
 @dataclass
 class Message:
@@ -94,51 +107,80 @@ class LocalBenchmarkConnector(BaseCalendarConnector, BaseMailConnector, BaseFile
         self._draft_counter = 1
 
     def search_events(self, date=None, query=None, reference_time=None):
+        """reference_time is accepted but ignored: future events are known plans.
+        A date search also returns overnight events from the previous day, because they
+        still occupy that date's early morning (e.g. a 19:00-07:30 shift)."""
+        previous_day = None
+        if date:
+            previous_day = (datetime.date.fromisoformat(date) - datetime.timedelta(days=1)).isoformat()
         results = []
         for e in self._events:
-            if date and e["date"] != date: continue
+            overnight = is_overnight(e["start_time"], e["end_time"])
+            if date and e["date"] != date and not (overnight and e["date"] == previous_day): continue
             if query and (query.lower() not in e["title"].lower() and query.lower() not in e.get("notes", "").lower()): continue
-            results.append(CalendarEvent(
-                id=e["id"], date=e["date"], weekday=e["weekday"],
-                start_time=e["start_time"], end_time=e["end_time"],
-                duration_minutes=e.get("duration_minutes", 0),
-                title=e["title"], category=e.get("category", "general"),
-                location=e.get("location", ""), busy=e.get("busy", True),
-                is_sensitive=e.get("is_sensitive", False), notes=e.get("notes", ""),
-                attendees=e.get("attendees", [])
-            ))
+            results.append(self._to_event(e))
         return results
 
+    def _to_event(self, e):
+        return CalendarEvent(
+            id=e["id"], date=e["date"], weekday=e["weekday"],
+            start_time=e["start_time"], end_time=e["end_time"],
+            duration_minutes=e.get("duration_minutes") or duration_minutes(e["start_time"], e["end_time"]),
+            title=e["title"], category=e.get("category", "general"),
+            location=e.get("location", ""), busy=e.get("busy", True),
+            is_sensitive=e.get("is_sensitive", False), notes=e.get("notes", ""),
+            attendees=e.get("attendees", []),
+            ends_next_day=is_overnight(e["start_time"], e["end_time"]),
+        )
+
+    def _next_event_id(self) -> str:
+        """Unique id in the persona's own scheme (cal_048, cal_p3_034). len+1 is NOT safe:
+        Maya has 47 events but ids up to cal_048, and deletions leave gaps."""
+        prefix, width, highest = "cal_", 3, 0
+        for e in self._events:
+            m = re.match(r"^(.*?_)(\d+)$", e["id"])
+            if m and int(m.group(2)) >= highest:
+                prefix, width, highest = m.group(1), len(m.group(2)), int(m.group(2))
+        existing = {e["id"] for e in self._events} | getattr(self, "_issued_ids", set())
+        n = highest + 1
+        while f"{prefix}{n:0{width}d}" in existing:
+            n += 1
+        new_id = f"{prefix}{n:0{width}d}"
+        self._issued_ids = existing | {new_id}  # never reuse an id, even after delete
+        return new_id
+
     def create_event(self, title, date, start_time, end_time, busy=True, notes=""):
-        sh, sm = map(int, start_time.split(":"))
-        eh, em = map(int, end_time.split(":"))
-        dur = (eh * 60 + em) - (sh * 60 + sm)
+        """end_time <= start_time is an overnight event ending the next day."""
+        if start_time == end_time:
+            raise ValueError("start_time and end_time are equal (zero-length event)")
+        dur = duration_minutes(start_time, end_time)
         dt = datetime.datetime.strptime(date, "%Y-%m-%d")
         new_event = {
-            "id": f"cal_{len(self._events) + 1:03d}",
+            "id": self._next_event_id(),
             "day": dt.day, "date": date, "weekday": dt.strftime("%A"),
             "start_time": start_time, "end_time": end_time, "duration_minutes": dur,
             "title": title, "category": "personal", "location": "Local",
             "busy": busy, "notes": notes
         }
         self._events.append(new_event)
-        return CalendarEvent(
-            id=new_event["id"], date=new_event["date"], weekday=new_event["weekday"],
-            start_time=new_event["start_time"], end_time=new_event["end_time"],
-            duration_minutes=dur, title=new_event["title"], category=new_event["category"],
-            location=new_event["location"], busy=busy, notes=notes
-        )
+        return self._to_event(new_event)
 
     def delete_event(self, event_id: str) -> bool:
         initial_len = len(self._events)
         self._events = [e for e in self._events if e["id"] != event_id]
         return len(self._events) < initial_len
 
-    def search_messages(self, contact=None, query=None, reference_time=None):
+    def search_messages(self, contact=None, query=None, reference_time=None, day_range=None):
+        """day_range = [start_day, end_day] inclusive, matching tool_registry.json read_messages."""
+        if day_range is not None and (len(day_range) != 2 or day_range[0] > day_range[1]):
+            raise ValueError(f"day_range must be [start_day, end_day] with start <= end, got {day_range}")
         with open(self.messages_file, "r") as f: raw_msgs = json.load(f)
         results = []
         for m in raw_msgs:
             if reference_time and m.get("timestamp", "") > reference_time: continue
+            if day_range is not None:
+                day = m.get("day") or int(m["timestamp"][8:10])
+                if not (day_range[0] <= day <= day_range[1]): continue
             if contact:
                 c_low = contact.lower()
                 if c_low not in m.get("sender", "").lower() and c_low not in m.get("recipient", "").lower(): continue
@@ -201,8 +243,10 @@ class GoogleWorkspaceLiveAdapter(BaseCalendarConnector, BaseMailConnector):
     def create_draft(self, to, subject, body, channel="email"): pass
 
 def get_connector(persona_id_or_path: str, mode: str = "benchmark", data_root: Optional[str] = None):
+    # Precedence: explicit argument > DATA_ROOT env var > this file's folder (legacy default,
+    # kept so existing M1 calls still work when the dataset sits next to connectors.py).
     if data_root is None:
-        data_root = os.path.dirname(os.path.abspath(__file__))
+        data_root = os.environ.get("DATA_ROOT") or os.path.dirname(os.path.abspath(__file__))
     if mode == "benchmark":
         if os.path.isabs(persona_id_or_path):
             p_dir = persona_id_or_path

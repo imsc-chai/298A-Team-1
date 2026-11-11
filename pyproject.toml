@@ -6,5 +6,5 @@ requires-python = ">=3.11"
 [tool.pytest.ini_options]
 # Repo root on sys.path so `connectors` (teammate's module) and `model_a` import cleanly.
 pythonpath = ["."]
-testpaths = ["model_a/tests", "model3/tests"]
+testpaths = ["tests", "model_a/tests", "model3/tests"]
 markers = ["slow: loads the embedding model or runs OCR over many files"]
