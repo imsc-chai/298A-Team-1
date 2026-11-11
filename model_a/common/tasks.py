@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 
 from model_a.common.schemas import AgentTask
-from model_a.config import load_splits, persona_dir
+from model_a.common.config import load_splits, persona_dir
 
 
 def load_agent_tasks(persona_id: str, task_ids: list[str] | None = None) -> list[AgentTask]:

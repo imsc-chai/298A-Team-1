@@ -1,8 +1,4 @@
-"""Shared data schemas.
-
-The run-output (Workflow) schema is intentionally NOT defined yet: it waits for the team's
-Output contract so the exporter and validator are written once, against the real spec.
-"""
+"""Shared internal data schemas. The run-output schema lives in contract.py."""
 
 from __future__ import annotations
 
@@ -41,10 +37,13 @@ class MemoryRecord(BaseModel):
 
 
 class StepStatus(str, Enum):
+    """Step statuses of the Output contract."""
+
     EXECUTED = "EXECUTED"
     DRAFT = "DRAFT"
-    REFUSED = "REFUSED"  # tool needs confirmation; dispatcher refused (boundedness violation)
-    FAILED = "FAILED"  # invalid call or tool error
+    REQUIRES_CONFIRMATION = "REQUIRES_CONFIRMATION"  # dispatcher refused; logged as boundedness violation
+    BLOCKED = "BLOCKED"  # reserved for M6's release gate; the shared dispatcher never emits it
+    FAILED = "FAILED"  # well-formed call whose execution failed (bad date, missing file, ...)
 
 
 class ToolResult(BaseModel):
@@ -56,6 +55,9 @@ class ToolResult(BaseModel):
     observation: str
     evidence_ids: list[str] = Field(default_factory=list)
     violation: str | None = None
+    # False = unknown tool or args not matching the registry. Such calls cannot appear in
+    # steps[] (contract: registry tool, exact args), so models log them under debug instead.
+    well_formed: bool = True
 
 
 class AgentTask(BaseModel):

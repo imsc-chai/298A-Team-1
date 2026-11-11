@@ -17,9 +17,9 @@ from model_a.common.context import PersonaContext
 from model_a.common.sandbox import task_sandbox
 from model_a.common.schemas import AgentTask
 from model_a.common.tools import ToolDispatcher
-from model_a.config import load_tool_registry, persona_dir
-from model_a.ingestion.ingest import build_records
-from model_a.retrieval.index import BgeEmbedder, Embedder, HybridRetriever
+from model_a.common.config import load_tool_registry, persona_dir
+from model_a.common.ingest import build_records
+from model_a.common.retriever import BgeEmbedder, Embedder, HybridRetriever
 
 
 @dataclass

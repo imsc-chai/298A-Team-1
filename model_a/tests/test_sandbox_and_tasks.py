@@ -3,8 +3,8 @@ import re
 from pathlib import Path
 
 from model_a.common.sandbox import task_sandbox
-from model_a.config import REPO_ROOT, persona_dir
-from model_a.eval.tasks import load_agent_tasks, personas_for_split
+from model_a.common.config import REPO_ROOT, persona_dir
+from model_a.common.tasks import load_agent_tasks, personas_for_split
 
 
 def tree_digest(root: Path) -> str:
@@ -43,8 +43,9 @@ def test_only_eval_code_mentions_ground_truth_files():
     offenders = []
     for py in list((REPO_ROOT / "model_a").rglob("*.py")) + list((REPO_ROOT / "model3").rglob("*.py")):
         rel = py.relative_to(REPO_ROOT).as_posix()
-        allowed = {"model3/validate_output.py", "model3/run.py", "model_a/common/sandbox.py"}  # sandbox enforces exclusion
-        if rel.startswith(("model_a/eval/", "model_a/tests/", "model3/tests/")) or rel in allowed:
+        # tasks.py strips tasks to query+time; sandbox enforces exclusion; validator checks ids/times.
+        allowed = {"model_a/common/tasks.py", "model_a/common/sandbox.py", "model3/validate_output.py"}
+        if rel.startswith(("model_a/tests/", "model3/tests/")) or rel in allowed:
             continue
         # String literals only: docstrings may mention the folder, code must not path to it.
         if re.search(r"""["'](test_suite|eval_tasks(\.json)?)["'/]""", py.read_text()):

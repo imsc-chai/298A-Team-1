@@ -15,10 +15,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
 
-from model_a.common.connectors import LocalBenchmarkConnector, persist_profile
+from model_a.common.connectors import LocalBenchmarkConnector
 from model_a.common.schemas import StepStatus, ToolResult
-from model_a.ingestion.ingest import render_event, render_message
-from model_a.ingestion.parsers import ParsedFile, file_record_id, parse_file
+from model_a.common.ingest import render_event, render_message
+from model_a.common.parsers import ParsedFile, file_record_id, parse_file
 
 MAX_OBSERVATION_CHARS = 6000
 MAX_MESSAGES = 25
@@ -131,21 +131,22 @@ class ToolDispatcher:
         args_dict = args if isinstance(args, dict) else {"_raw": args}
         spec = self.specs.get(tool)
         if spec is None:
-            return self._fail(tool, args_dict, f"unknown tool '{tool}'. Available: {sorted(self.specs)}")
+            return self._fail(tool, args_dict, f"unknown tool '{tool}'. Available: {sorted(self.specs)}", well_formed=False)
+        # Validate first so every call that reaches steps[] has contract-exact args.
+        try:
+            validate_args(spec, args)
+        except ArgError as exc:
+            return self._fail(tool, args_dict, f"invalid arguments: {exc}", well_formed=False)
         if spec.permission == "requires_confirmation":
             violation = f"{tool} requires user confirmation; refused by dispatcher"
             self.violations.append({"type": "boundedness", "tool": tool, "args": args_dict, "detail": violation})
             return ToolResult(
                 tool=tool,
                 args=args_dict,
-                status=StepStatus.REFUSED,
-                observation=f"REFUSED: {violation}. Outbound actions must stay as drafts.",
+                status=StepStatus.REQUIRES_CONFIRMATION,
+                observation=f"NOT EXECUTED: {violation}. Outbound actions must stay as drafts.",
                 violation=violation,
             )
-        try:
-            validate_args(spec, args)
-        except ArgError as exc:
-            return self._fail(tool, args_dict, f"invalid arguments: {exc}")
         handler = self._handlers.get(tool)
         if handler is None:  # registry tool with autonomous permission but no implementation
             return self._fail(tool, args_dict, f"tool '{tool}' is not implemented by the dispatcher")
@@ -253,8 +254,7 @@ class ToolDispatcher:
         field = args["field"].strip()
         if not field or any(not part for part in field.split(".")):
             raise ValueError(f"field must be a dot path like preferences.meeting_window, got {field!r}")
-        self.conn.update_profile(field, args["value"])
-        persist_profile(self.conn)
+        self.conn.update_profile(field, args["value"])  # in memory only (CLAUDE.md rule 1)
         return self._ok("update_profile", args, f"Profile field {field} set to {args['value']!r}.", ["profile_updated"])
 
     # ---- helpers --------------------------------------------------------------------------
@@ -289,8 +289,10 @@ class ToolDispatcher:
     def _draft_result(self, tool: str, args: dict[str, Any], draft_id: str, observation: str) -> ToolResult:
         return ToolResult(tool=tool, args=args, status=StepStatus.DRAFT, observation=observation, evidence_ids=[draft_id])
 
-    def _fail(self, tool: str, args: dict[str, Any], message: str) -> ToolResult:
-        return ToolResult(tool=tool, args=args, status=StepStatus.FAILED, observation=f"ERROR: {message}")
+    def _fail(self, tool: str, args: dict[str, Any], message: str, well_formed: bool = True) -> ToolResult:
+        return ToolResult(
+            tool=tool, args=args, status=StepStatus.FAILED, observation=f"ERROR: {message}", well_formed=well_formed
+        )
 
 
 def _matches(query: str, text: str) -> bool:

@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from model_a.common.schemas import MemoryRecord, RecordType
-from model_a.ingestion.parsers import file_record_id, parse_file
+from model_a.common.parsers import file_record_id, parse_file
 
 WEEKDAY_NAMES = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"}
 
