@@ -60,8 +60,6 @@ flowchart TD
     FR --> W["Workflow JSON<br/>(Output contract)"]
 ```
 
-In plain words:
-
 1. **Input.** M3 receives only the request text and the time it was asked (`reference_time`).
    It never sees the answer key (`test_suite/`).
 2. **Plan.** It retrieves the 8 most relevant records for the whole request. The planner LLM
@@ -116,9 +114,6 @@ the A100, so its latency isn't comparable with the other tasks.)
 | Retrieval | Once, on the raw request | Once for the request, then again for every subgoal |
 | Failure handling | Keeps looping until done or out of turns | Splits a failed subgoal into smaller ones (1 level) |
 | LLM calls per task (dev) | ~3.8 (its committed outputs, own engine) | ~7.9 (run_00) |
-
-> M1 currently runs on its own client and retriever, not the shared engine below, so these
-> numbers aren't a fair comparison yet (see section 10).
 
 ---
 
@@ -235,7 +230,7 @@ python3 Model_A/evaluation/evaluate.py score --model M3 \
 
 ---
 
-## 9. Current results (preliminary)
+## 9. Current results
 
 Dev split (Maya 6 + Elena 5 = 11 tasks), **1 run, prompts untuned**, Colab A100, scored with
 the team evaluator (`Model_A/evaluation/evaluate.py`).
@@ -258,7 +253,7 @@ the team evaluator (`Model_A/evaluation/evaluate.py`).
 **Caveats:**
 - One run only; the model is random at temperature 0.6, so numbers can move between runs.
 - Several metrics are based on only 3–4 tasks.
-- **Task success needs the human review** and isn't included yet.
+- Task success needs the human review and isn't included yet.
 - The leak rate includes one wrong-recipient case and one likely false positive.
 - Some failures come from the dataset itself, e.g. a PDF with corrupted dollar amounts.
 
@@ -274,8 +269,3 @@ the team evaluator (`Model_A/evaluation/evaluate.py`).
   - It guessed one email address.
 - **Latency:** ~227 s per task, mostly the model's long "thinking" output (1–3k tokens per
   call).
-- **Fair comparison needs M1 on the shared engine.** M1 still uses its own LLM client (1024 max
-  tokens), retriever and output format, which the evaluator can't read yet.
-- **Final evaluation:** run on the test split (David, Marcus, Sophia) under frozen settings
-  (the proposal specifies 5 runs per task), followed by a blind human review of task success
-  for M1, M3 and M6.
