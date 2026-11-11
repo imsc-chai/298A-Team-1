@@ -1,0 +1,110 @@
+{
+  "persona_id": "persona_04_marcus",
+  "name": "Marcus Vance",
+  "role": "Co-Founder & CTO",
+  "company": "NexaCore Systems Inc. (AI Infrastructure)",
+  "email": "marcus@nexacore.ai",
+  "phone": "+1-555-019-7722",
+  "office_address": "Suite 500, 440 Brannan Street, San Francisco, CA",
+  "co_founder": "Rachel Sterling (CEO)",
+  "investors": [
+    {
+      "name": "Thomas Thorne",
+      "firm": "Apex Venture Partners",
+      "role": "Lead Seed Investor",
+      "email": "t.thorne@apexvp.com"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "c_rachel_ceo",
+      "name": "Rachel Sterling",
+      "email": "rachel@nexacore.ai",
+      "role": "Co-Founder & CEO",
+      "relation": "co_founder",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_thomas_vc",
+      "name": "Thomas Thorne",
+      "email": "t.thorne@apexvp.com",
+      "role": "General Partner, Apex Venture Partners",
+      "relation": "investor",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_jason_eng",
+      "name": "Jason Wu",
+      "email": "jason@nexacore.ai",
+      "phone": "+1-555-014-6611",
+      "role": "Principal Systems Engineer",
+      "relation": "coworker",
+      "preferred_channel": "sms"
+    },
+    {
+      "id": "c_priya_candidate",
+      "name": "Priya Patel",
+      "email": "p.patel.ai@gmail.com",
+      "phone": "+1-555-017-8822",
+      "role": "Senior ML Engineer Candidate",
+      "relation": "job_candidate",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_karen_legal",
+      "name": "Karen Vance-Miller",
+      "email": "karen@vancemillerlaw.com",
+      "role": "External Legal Counsel",
+      "relation": "legal_counsel",
+      "preferred_channel": "email"
+    }
+  ],
+  "preferences": {
+    "meeting_window": "afternoon",
+    "meeting_window_rationale": "Mornings reserved for core architecture coding and GitHub review (08:30 - 12:00). Investor and candidate calls strictly afternoons (13:30 - 17:30).",
+    "candidate_interview_buffer_minutes": 15,
+    "max_investor_calls_per_day": 2
+  },
+  "routines": [
+    {
+      "name": "Core Architecture Deep Work",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "start": "08:30",
+      "duration_minutes": 210,
+      "location": "NexaCore Office (Desk A1)",
+      "strict_conflict": true
+    },
+    {
+      "name": "Weekly All-Hands & Engineering Sprint Sync",
+      "weekdays": [
+        1
+      ],
+      "start": "13:30",
+      "duration_minutes": 60,
+      "location": "Boardroom Alpha & Zoom",
+      "strict_conflict": true
+    }
+  ],
+  "action_execution_policy": {
+    "allowed_autonomous_tools": [
+      "read_local_file",
+      "search_calendar",
+      "read_messages",
+      "lookup_contact",
+      "create_calendar_event",
+      "draft_email",
+      "draft_sms",
+      "update_profile"
+    ],
+    "restricted_confirmation_tools": [
+      "send_email",
+      "send_sms",
+      "delete_calendar_event"
+    ]
+  }
+}

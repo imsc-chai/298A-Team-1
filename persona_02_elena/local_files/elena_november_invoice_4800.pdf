@@ -1,0 +1,73 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 1800 >>
+stream
+BT
+/F1 16 Tf
+50 740 Td
+(STUDIO GOMEZ DESIGN LLC - INVOICE) Tj
+/F2 10 Tf
+0 -18 Td
+(Suite 302, 1200 Market Street, San Francisco, CA | elena@studiogomez.design) Tj
+0 -22 Td
+/F1 11 Tf
+(Invoice Details & Client Information) Tj
+/F2 10 Tf
+0 -16 Td
+(Billed To: HorizonHealth Technologies       Invoice Number: INV-2026-118) Tj
+0 -14 Td
+(Attn: Sarah Jenkins, Head of Design        Invoice Date: November 01, 2026) Tj
+0 -14 Td
+(Project: CarePortal UX Redesign            Payment Terms: Net 15 (Due Nov 15)) Tj
+0 -22 Td
+/F1 10 Tf
+(Date          Description                          Hours    Hourly Rate    Amount) Tj
+/F2 10 Tf
+0 -16 Td
+(10/05/2026    Telehealth Appointment Booking UX    12.0     35.00        ,620.00) Tj
+0 -14 Td
+(10/12/2026    Patient EHR Records Flow & Modals    10.0     35.00        ,350.00) Tj
+0 -14 Td
+(10/19/2026    Mobile Responsive Breakpoints        8.0      35.00        ,080.00) Tj
+0 -14 Td
+(10/26/2026    Design System Token Documentation    5.0      35.00          75.00) Tj
+0 -14 Td
+(10/30/2026    Figma Component Library Maintenance  0.5      50.00           5.00) Tj
+0 -22 Td
+/F1 11 Tf
+(Subtotal: ,800.00  |  Tax (0% Service): /bin/sh.00  |  Total Balance Due: ,800.00) Tj
+0 -20 Td
+/F2 9 Tf
+(Payment Instructions: ACH Direct Deposit to Studio Gomez Design LLC, Chase Business Checking.) Tj
+ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000344 00000 n 
+0000000244 00000 n 
+0000000294 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2200
+%%EOF

@@ -1,0 +1,9 @@
+token_name,category,light_value,dark_value,css_variable,wcag_contrast_ratio
+color-primary-600,brand,#1E3A8A,#3B82F6,--color-primary-600,7.2:1
+color-accent-500,accent,#0EA5E9,#38BDF8,--color-accent-500,4.9:1
+color-success-500,feedback,#14B8A6,#2DD4BF,--color-success-500,5.1:1
+color-warning-500,feedback,#F59E0B,#FBBF24,--color-warning-500,4.8:1
+color-surface-bg,background,#F8FAFC,#0F172A,--color-surface-bg,15.4:1
+font-family-body,typography,Inter,Inter,--font-body,N/A
+font-family-heading,typography,Plus Jakarta Sans,Plus Jakarta Sans,--font-heading,N/A
+radius-container-lg,geometry,12px,12px,--radius-lg,N/A

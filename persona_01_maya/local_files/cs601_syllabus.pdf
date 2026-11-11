@@ -1,0 +1,89 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 1800 >>
+stream
+BT
+/F1 16 Tf
+50 740 Td
+(CS 601: ADVANCED MACHINE LEARNING & MULTIMODAL AGENTS) Tj
+/F2 10 Tf
+0 -18 Td
+(Department of Computer Science | Fall Semester 2026 | Credits: 4.0) Tj
+0 -20 Td
+/F1 11 Tf
+(Course Information & Staff) Tj
+/F2 10 Tf
+0 -16 Td
+(Instructor: Prof. Elena Rostova (e.rostova@univ.edu) | Office: Gates Hall 428) Tj
+0 -14 Td
+(Teaching Assistant: Maya Lin (maya.lin@grad.univ.edu) | Office: Grad Commons 3B) Tj
+0 -14 Td
+(Lectures: Tuesdays & Thursdays, 1:30 PM - 3:00 PM | Location: Science Hall 204) Tj
+0 -14 Td
+(TA Office Hours: Thursdays 11:00 AM - 1:00 PM (Grad Commons 3B)) Tj
+0 -22 Td
+/F1 11 Tf
+(Grading Distribution & Weighting) Tj
+/F2 10 Tf
+0 -16 Td
+(- Research Term Project & Presentation: 40% (Milestone 1: 10%, Checkpoint: 10%, Final: 20%)) Tj
+0 -14 Td
+(- Homework Assignments (4 problem sets): 25%) Tj
+0 -14 Td
+(- Midterm Examination (In-class, Thursday Oct 29): 20%) Tj
+0 -14 Td
+(- Class Participation & Reading Discussions: 15%) Tj
+0 -22 Td
+/F1 11 Tf
+(Key Semester Dates & Milestones) Tj
+/F2 10 Tf
+0 -16 Td
+(- Nov 03: Guest Lecture on Vision-Language Planning) Tj
+0 -14 Td
+(- Nov 12: No Class - Midwest CS Graduate Symposium Travel Days) Tj
+0 -14 Td
+(- Nov 21: Project Checkpoint Presentations (Zoom)) Tj
+0 -14 Td
+(- Nov 25: Revised Project Milestone Submission Deadline (11:59 PM)) Tj
+0 -14 Td
+(- Dec 08: Final Project Report Due & Poster Session) Tj
+0 -22 Td
+/F1 11 Tf
+(Academic Integrity & Collaboration Policy) Tj
+/F2 9 Tf
+0 -16 Td
+(All project implementations must cite third-party packages. Code submission is screened via MOSS.) Tj
+0 -12 Td
+(Late submissions are subject to a 10% penalty per 24-hour period. No work accepted after 72 hours.) Tj
+ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000344 00000 n 
+0000000244 00000 n 
+0000000294 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2200
+%%EOF

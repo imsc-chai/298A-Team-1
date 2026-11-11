@@ -1,0 +1,119 @@
+{
+  "persona_id": "persona_03_david",
+  "name": "David Kim, BSN, RN",
+  "role": "Emergency Department Registered Nurse & Single Parent",
+  "employer": "Valley Memorial Hospital (Emergency Dept, Unit 3B)",
+  "email": "david.kim@valleymemorial.org",
+  "personal_email": "dkim.nurse@gmail.com",
+  "phone": "+1-555-018-9922",
+  "home_address": "742 Willow Lane, Apt 2C, Valley City, CA",
+  "dependents": [
+    {
+      "name": "Leo Kim",
+      "relationship": "son",
+      "age": 7,
+      "school": "Oakridge Elementary School (Grade 2)",
+      "teacher": "Ms. Jenkins",
+      "medical_conditions": "Pediatric Asthma (Mild Intermittent)",
+      "emergency_contacts": [
+        "Hanna Kim (Aunt)",
+        "David Kim (Father)"
+      ]
+    }
+  ],
+  "contacts": [
+    {
+      "id": "c_rachel_charge",
+      "name": "Rachel Torres, MSN, RN",
+      "email": "r.torres@valleymemorial.org",
+      "role": "Nurse Manager & ED Shift Supervisor",
+      "relation": "supervisor",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_carlos_rn",
+      "name": "Carlos Mendez, RN",
+      "email": "c.mendez@valleymemorial.org",
+      "phone": "+1-555-017-4401",
+      "role": "Staff Nurse (ED Peer)",
+      "relation": "coworker",
+      "preferred_channel": "sms"
+    },
+    {
+      "id": "c_dr_gomez_ped",
+      "name": "Dr. Angela Gomez, MD",
+      "email": "records@valley-pediatrics.clinic",
+      "phone": "+1-555-016-1199",
+      "role": "Leo's Pediatrician",
+      "relation": "pediatrician",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_ms_jenkins",
+      "name": "Ms. Clara Jenkins",
+      "email": "c.jenkins@oakridge-elementary.edu",
+      "role": "Leo's 2nd Grade Homeroom Teacher",
+      "relation": "school_teacher",
+      "preferred_channel": "email"
+    },
+    {
+      "id": "c_hanna_sister",
+      "name": "Hanna Kim",
+      "phone": "+1-555-019-3388",
+      "role": "Sister & Backup Childcare",
+      "relation": "family",
+      "preferred_channel": "sms"
+    }
+  ],
+  "preferences": {
+    "shift_pattern": "Rotating 12-hour shifts: Day (07:00 - 19:30) and Night (19:00 - 07:30)",
+    "post_night_shift_sleep_rule": "After a night shift (ends 07:30 AM), must sleep undisturbed until 15:00. Zero calls, non-urgent texts, or appointments before 15:00.",
+    "childcare_pickup_deadline": "Must pick up Leo from Oakridge After-School Care by 17:30 on non-shift days",
+    "shift_swap_preferences": "Willing to swap weekend shifts for weekday shifts, but requires at least 24 hours between shift end and next shift start"
+  },
+  "routines": [
+    {
+      "name": "School Drop-Off (Leo)",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "start": "08:00",
+      "duration_minutes": 30,
+      "location": "Oakridge Elementary School",
+      "strict_conflict": true,
+      "notes": "Except on mornings following night shifts when Hanna drives Leo."
+    },
+    {
+      "name": "Leo Soccer Practice",
+      "weekdays": [
+        2,
+        4
+      ],
+      "start": "16:00",
+      "duration_minutes": 60,
+      "location": "Community Park Field 3",
+      "strict_conflict": false
+    }
+  ],
+  "action_execution_policy": {
+    "allowed_autonomous_tools": [
+      "read_local_file",
+      "search_calendar",
+      "read_messages",
+      "lookup_contact",
+      "create_calendar_event",
+      "draft_email",
+      "draft_sms",
+      "update_profile"
+    ],
+    "restricted_confirmation_tools": [
+      "send_email",
+      "send_sms",
+      "delete_calendar_event"
+    ]
+  }
+}

@@ -22,3 +22,11 @@ Project 17 Documents/
 *.gguf
 *.safetensors
 *.bin
+
+# From chai/model-1
+*.swp
+models/mac_ocr
+
+# Model A run outputs
+results/
+.cache/

@@ -1,0 +1,9 @@
+server_name,gpu_model,vram_gb,cluster_node,ssh_port,status,allocated_project,user_permission
+lambda-node-01,NVIDIA H100 PCIe,80,cluster-alpha,2201,running,Multimodal Agent Benchmark,read_write
+lambda-node-02,NVIDIA H100 PCIe,80,cluster-alpha,2202,running,Multimodal Agent Benchmark,read_write
+lambda-node-03,NVIDIA A100 SXM4,80,cluster-beta,2203,idle,CS 601 Class Infrastructure,read_only
+lambda-node-04,NVIDIA A100 SXM4,80,cluster-beta,2204,running,Vision-Language Distillation,read_only
+lambda-node-05,NVIDIA RTX 6000 Ada,48,cluster-gamma,2205,maintenance,Scheduled OS Kernel Upgrade,none
+lambda-node-06,NVIDIA RTX 4090,24,cluster-dev,2206,idle,Student Sandbox & Debugging,read_write
+lambda-node-07,NVIDIA RTX 4090,24,cluster-dev,2207,running,TA Homework Evaluation Autograder,read_write
+lambda-node-08,NVIDIA A10G,24,cluster-eval,2208,idle,Safety & Redaction Test Harness,read_write

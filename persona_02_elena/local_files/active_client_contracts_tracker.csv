@@ -1,0 +1,4 @@
+client_name,project_code,billing_rate,retainer_hours,monthly_value,nda_signed_date,nda_status,lead_contact
+ApexFintech Inc.,Nova-Mobile-v4,$125.00/hr,40,$5000.00,2026-09-15,Strict Confidential,David Sterling
+HorizonHealth Technologies,CarePortal-Redesign,$135.00/hr,35,$4725.00,2026-08-01,Strict Confidential,Sarah Jenkins
+LuminaAI Analytics,BI-Dashboard-v2,$140.00/hr,30,$4200.00,2026-10-10,Strict Confidential,Kenji Sato

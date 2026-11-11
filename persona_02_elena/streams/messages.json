@@ -1,0 +1,169 @@
+[
+  {
+    "id": "msg_p2_001",
+    "day": 1,
+    "timestamp": "2026-11-01T15:00:00",
+    "channel": "email",
+    "sender": "David Sterling <d.sterling@apexfintech.io>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "ApexFintech Sprint 4 Kickoff - Agenda",
+    "body": "Hi Elena, looking forward to our Sprint 4 kickoff tomorrow at 2 PM. We want to finalize the Nova Mobile wallet onboarding screens this week."
+  },
+  {
+    "id": "msg_p2_002",
+    "day": 1,
+    "timestamp": "2026-11-01T15:30:00",
+    "channel": "email",
+    "sender": "Elena Gomez <elena@studiogomez.design>",
+    "recipient": "David Sterling <d.sterling@apexfintech.io>",
+    "subject": "Re: ApexFintech Sprint 4 Kickoff - Agenda",
+    "body": "Hi David, sounds great! I have the updated wireframes ready and will present the onboarding flow at 2:00 PM."
+  },
+  {
+    "id": "msg_p2_003",
+    "day": 3,
+    "timestamp": "2026-11-03T11:00:00",
+    "channel": "email",
+    "sender": "Sarah Jenkins <s.jenkins@horizonhealth.co>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "CarePortal Handoff & November Invoice",
+    "body": "Hi Elena, the team loved your CarePortal patient dashboard designs. Please send over your November invoice for the 35 design hours so accounting can process payment."
+  },
+  {
+    "id": "msg_p2_004",
+    "day": 3,
+    "timestamp": "2026-11-03T14:15:00",
+    "channel": "email",
+    "sender": "Elena Gomez <elena@studiogomez.design>",
+    "recipient": "Sarah Jenkins <s.jenkins@horizonhealth.co>",
+    "subject": "Re: CarePortal Handoff & November Invoice",
+    "body": "Hi Sarah, thank you! I have attached invoice elena_november_invoice_4800.pdf for $4,800.00 reflecting the 35 retainer hours plus design system maintenance. Payment details are on the invoice."
+  },
+  {
+    "id": "msg_p2_005",
+    "day": 4,
+    "timestamp": "2026-11-04T10:00:00",
+    "channel": "email",
+    "sender": "Kenji Sato <k.sato@lumina-ai.com>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "LuminaAI Executive BI Dashboard - Wireframe Review",
+    "body": "Hi Elena, can we sync on Thursday at 2 PM to review the KPI card layouts for the executive analytics suite?"
+  },
+  {
+    "id": "msg_p2_006",
+    "day": 4,
+    "timestamp": "2026-11-04T11:20:00",
+    "channel": "email",
+    "sender": "Elena Gomez <elena@studiogomez.design>",
+    "recipient": "Kenji Sato <k.sato@lumina-ai.com>",
+    "subject": "Re: LuminaAI Executive BI Dashboard - Wireframe Review",
+    "body": "Hi Kenji, Thursday at 2:00 PM works perfectly. I will have the desktop and tablet breakpoint mocks ready for review."
+  },
+  {
+    "id": "msg_p2_007",
+    "day": 6,
+    "timestamp": "2026-11-06T16:00:00",
+    "channel": "sms",
+    "sender": "Alex Mercer (+1-555-018-7711)",
+    "recipient": "Elena Gomez",
+    "body": "Hey Elena, implementing the navigation bar component in React today. The Figma auto-layout tokens were super clean, thanks!"
+  },
+  {
+    "id": "msg_p2_008",
+    "day": 8,
+    "timestamp": "2026-11-08T18:00:00",
+    "channel": "sms",
+    "sender": "Marco Gomez (+1-555-012-3399)",
+    "recipient": "Elena Gomez",
+    "body": "Hey Elena! Mom said Thanksgiving is at my house this year on Nov 26. Are you bringing your famous sourdough bread?"
+  },
+  {
+    "id": "msg_p2_009",
+    "day": 8,
+    "timestamp": "2026-11-08T18:15:00",
+    "channel": "sms",
+    "sender": "Elena Gomez",
+    "recipient": "Marco Gomez (+1-555-012-3399)",
+    "body": "Yes! Sourdough and apple tart are already on my prep list. Count me in for 1 PM."
+  },
+  {
+    "id": "msg_p2_010",
+    "day": 10,
+    "timestamp": "2026-11-10T09:30:00",
+    "channel": "email",
+    "sender": "David Sterling <d.sterling@apexfintech.io>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "Can we sync Friday morning at 10 AM?",
+    "body": "Elena, our CEO wants to see a quick run-through of the Nova wallet prototype. Are you free this Friday Nov 13 at 10 AM?"
+  },
+  {
+    "id": "msg_p2_011",
+    "day": 10,
+    "timestamp": "2026-11-10T10:15:00",
+    "channel": "email",
+    "sender": "Elena Gomez <elena@studiogomez.design>",
+    "recipient": "David Sterling <d.sterling@apexfintech.io>",
+    "subject": "Re: Can we sync Friday morning at 10 AM?",
+    "body": "Hi David, Fridays are my dedicated studio focus days where I do not take client calls. I can do Monday Nov 16 at 2:00 PM or Tuesday Nov 17 at 2:30 PM. Let me know which of those works best for your CEO!"
+  },
+  {
+    "id": "msg_p2_012",
+    "day": 14,
+    "timestamp": "2026-11-14T11:00:00",
+    "channel": "email",
+    "sender": "Carlos Rivera CPA <carlos@riveracpa.com>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "Q4 Estimated Tax Filings & W-9 Review",
+    "body": "Hi Elena, friendly reminder to schedule our annual tax review before end of November so we can calculate your Q4 estimated payments and verify your studio W-9 records."
+  },
+  {
+    "id": "msg_p2_013",
+    "day": 15,
+    "timestamp": "2026-11-15T14:00:00",
+    "channel": "email",
+    "sender": "Elena Gomez <elena@studiogomez.design>",
+    "recipient": "Carlos Rivera CPA <carlos@riveracpa.com>",
+    "subject": "Re: Q4 Estimated Tax Filings & W-9 Review",
+    "body": "Hi Carlos, let us schedule our call for Wednesday Nov 25 at 2:00 PM. I will have my contract tracker and Q4 invoices compiled."
+  },
+  {
+    "id": "msg_p2_014",
+    "day": 20,
+    "timestamp": "2026-11-20T16:00:00",
+    "channel": "email",
+    "sender": "HorizonHealth Accounts Payable <ap@horizonhealth.co>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "Payment Remittance Confirmation - Invoice #INV-2026-118",
+    "body": "Dear Elena Gomez, your payment of $4,800.00 for Invoice #INV-2026-118 has been processed via ACH direct deposit to your business account. Reference: ACH-9921480."
+  },
+  {
+    "id": "msg_p2_015",
+    "day": 24,
+    "timestamp": "2026-11-24T15:00:00",
+    "channel": "email",
+    "sender": "David Sterling <d.sterling@apexfintech.io>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "Nova Mobile Beta Signoff Complete",
+    "body": "Elena, the executive team signed off on the beta screens today! Fantastic work on the interaction states. Enjoy your holiday weekend."
+  },
+  {
+    "id": "msg_p2_016",
+    "day": 28,
+    "timestamp": "2026-11-28T14:00:00",
+    "channel": "email",
+    "sender": "Kenji Sato <k.sato@lumina-ai.com>",
+    "recipient": "Elena Gomez <elena@studiogomez.design>",
+    "subject": "LuminaAI Phase 2 Scoping Call - Monday 2 PM",
+    "body": "Hi Elena, hope you had a great Thanksgiving! Looking forward to our Phase 2 scoping discussion Monday Nov 30 at 2:00 PM on Zoom."
+  },
+  {
+    "id": "msg_p2_017",
+    "day": 30,
+    "timestamp": "2026-11-30T16:00:00",
+    "channel": "email",
+    "sender": "Elena Gomez <elena@studiogomez.design>",
+    "recipient": "Kenji Sato <k.sato@lumina-ai.com>",
+    "subject": "Re: LuminaAI Phase 2 Scoping Call - Summary & Next Steps",
+    "body": "Hi Kenji, thanks for the great discussion today. I will deliver the initial interactive component library by mid-December."
+  }
+]

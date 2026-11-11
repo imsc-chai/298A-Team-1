@@ -1,0 +1,134 @@
+[
+  {
+    "id": "msg_p3_001",
+    "day": 1,
+    "timestamp": "2026-11-01T14:00:00",
+    "channel": "email",
+    "sender": "Rachel Torres <r.torres@valleymemorial.org>",
+    "recipient": "David Kim <david.kim@valleymemorial.org>",
+    "subject": "November ED Nursing Master Schedule Released",
+    "body": "Hi David, the November shift roster has been finalized. Attached is hospital_monthly_shift_roster.pdf. You are scheduled for day shifts the first and third weeks, and night shifts Nov 9 through 11."
+  },
+  {
+    "id": "msg_p3_002",
+    "day": 2,
+    "timestamp": "2026-11-02T20:15:00",
+    "channel": "sms",
+    "sender": "Hanna Kim (+1-555-019-3388)",
+    "recipient": "David Kim",
+    "body": "Hey David, picked up Leo from after-school care and he is having dinner at my place. How was your shift?"
+  },
+  {
+    "id": "msg_p3_003",
+    "day": 2,
+    "timestamp": "2026-11-02T20:25:00",
+    "channel": "sms",
+    "sender": "David Kim",
+    "recipient": "Hanna Kim (+1-555-019-3388)",
+    "body": "Shift was busy with triage admissions. Coming over to pick him up now, thanks so much Hanna!"
+  },
+  {
+    "id": "msg_p3_004",
+    "day": 5,
+    "timestamp": "2026-11-05T16:00:00",
+    "channel": "email",
+    "sender": "Valley Pediatrics <records@valley-pediatrics.clinic>",
+    "recipient": "David Kim <dkim.nurse@gmail.com>",
+    "subject": "Appointment Reminder: Leo Kim Tomorrow at 10:30 AM",
+    "body": "Dear David, this is a reminder for Leo Kim asthma follow-up with Dr. Angela Gomez tomorrow, Friday Nov 6 at 10:30 AM. Please bring his current inhaler."
+  },
+  {
+    "id": "msg_p3_005",
+    "day": 6,
+    "timestamp": "2026-11-06T12:30:00",
+    "channel": "email",
+    "sender": "Dr. Angela Gomez <records@valley-pediatrics.clinic>",
+    "recipient": "David Kim <dkim.nurse@gmail.com>",
+    "subject": "Leo Kim Clinic Visit Summary & Inhaler Action Plan",
+    "body": "Hi David, Leo lungs sounded clear today. I renewed his Albuterol sulfate 90mcg inhaler prescription. The clinic visit summary (pediatric_clinic_visit_summary.pdf) is attached for your records."
+  },
+  {
+    "id": "msg_p3_006",
+    "day": 7,
+    "timestamp": "2026-11-07T11:00:00",
+    "channel": "sms",
+    "sender": "Carlos Mendez (+1-555-017-4401)",
+    "recipient": "David Kim",
+    "body": "Hey David! Are you working night shift this coming Monday Nov 9? Would you be open to swapping your night shift for my day shift next weekend?"
+  },
+  {
+    "id": "msg_p3_007",
+    "day": 7,
+    "timestamp": "2026-11-07T11:20:00",
+    "channel": "sms",
+    "sender": "David Kim",
+    "recipient": "Carlos Mendez (+1-555-017-4401)",
+    "body": "Hey Carlos, I cannot do weekends because of Leo soccer tournaments, but I can swap if you have a weekday day shift."
+  },
+  {
+    "id": "msg_p3_008",
+    "day": 10,
+    "timestamp": "2026-11-10T15:30:00",
+    "channel": "email",
+    "sender": "Ms. Clara Jenkins <c.jenkins@oakridge-elementary.edu>",
+    "recipient": "David Kim <dkim.nurse@gmail.com>",
+    "subject": "Parent-Teacher Conference Scheduled - Friday Nov 13 at 3:30 PM",
+    "body": "Dear Mr. Kim, your 2nd grade parent conference for Leo is confirmed for Friday Nov 13 at 3:30 PM in Room 14. Leo is excelling in reading and mathematics!"
+  },
+  {
+    "id": "msg_p3_009",
+    "day": 12,
+    "timestamp": "2026-11-12T15:15:00",
+    "channel": "sms",
+    "sender": "David Kim",
+    "recipient": "Hanna Kim (+1-555-019-3388)",
+    "body": "Just woke up from post-night shift sleep. Feeling much better! Heading to pick up Leo from after-school care now."
+  },
+  {
+    "id": "msg_p3_010",
+    "day": 15,
+    "timestamp": "2026-11-15T18:00:00",
+    "channel": "sms",
+    "sender": "Carlos Mendez (+1-555-017-4401)",
+    "recipient": "David Kim",
+    "body": "Hey David, I heard you were looking to take Thanksgiving off. Rachel approved me covering Thanksgiving Day if you can take my shift on Nov 30."
+  },
+  {
+    "id": "msg_p3_011",
+    "day": 15,
+    "timestamp": "2026-11-15T18:15:00",
+    "channel": "sms",
+    "sender": "David Kim",
+    "recipient": "Carlos Mendez (+1-555-017-4401)",
+    "body": "That is an amazing deal Carlos! Thank you so much, that lets me spend the full holiday with Leo and my sister. I will take Nov 30 for you."
+  },
+  {
+    "id": "msg_p3_012",
+    "day": 20,
+    "timestamp": "2026-11-20T16:00:00",
+    "channel": "email",
+    "sender": "Rachel Torres <r.torres@valleymemorial.org>",
+    "recipient": "David Kim <david.kim@valleymemorial.org>",
+    "subject": "Shift Swap Approved: Thanksgiving Day Coverage",
+    "body": "David, Carlos Mendez coverage of your Thanksgiving shift has been logged into the hospital portal. You are confirmed off on Nov 26 and scheduled for Unit 3B day shift on Nov 30."
+  },
+  {
+    "id": "msg_p3_013",
+    "day": 26,
+    "timestamp": "2026-11-26T11:00:00",
+    "channel": "sms",
+    "sender": "Hanna Kim (+1-555-019-3388)",
+    "recipient": "David Kim",
+    "body": "Happy Thanksgiving! Leo is already helping me make mashed potatoes. See you at noon!"
+  },
+  {
+    "id": "msg_p3_014",
+    "day": 30,
+    "timestamp": "2026-11-30T15:00:00",
+    "channel": "email",
+    "sender": "Rachel Torres <r.torres@valleymemorial.org>",
+    "recipient": "David Kim <david.kim@valleymemorial.org>",
+    "subject": "Thank you for covering Unit 3B today",
+    "body": "Hi David, thanks for stepping in for Carlos today. Your BLS recertification credits were also processed by HR. Great work this month!"
+  }
+]
