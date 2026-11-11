@@ -34,3 +34,6 @@ results/
 # Local agent instructions; never pushed
 CLAUDE.md
 claude.md
+
+# Local notebook copies with Colab outputs
+notebooks/*_outputs.ipynb
