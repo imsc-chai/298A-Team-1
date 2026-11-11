@@ -1,10 +1,13 @@
-# Model A shared base + M3. Pinned to versions verified on 2026-11-11.
+# Model A shared base + M3.
+# Pinned: libraries that shape model inputs/outputs (parsing, retrieval, schemas).
 pydantic==2.14.3
 rank-bm25==0.2.2
 sentence-transformers==6.3.0
 pypdf==7.0.1
 pytesseract==0.3.13
-Pillow==13.0.0
-numpy==2.5.4
-requests==2.34.2
 pytest==9.2.0
+# Ranges, not pins: Colab preinstalls these and its own packages (google-colab, numba,
+# gradio) break if we force newer versions. An already-installed version that fits is kept.
+numpy>=1.26,<3
+Pillow>=10,<14
+requests>=2.31,<3
