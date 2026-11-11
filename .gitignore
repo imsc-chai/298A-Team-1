@@ -30,3 +30,7 @@ models/mac_ocr
 # Model A run outputs
 results/
 .cache/
+
+# Local agent instructions; never pushed
+CLAUDE.md
+claude.md

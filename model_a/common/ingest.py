@@ -39,7 +39,8 @@ def human_date(iso_date: str) -> str:
 
 def render_event(e: dict[str, Any]) -> str:
     """Shared rendering so the index and the search_calendar tool describe events identically."""
-    parts = [f"{e['title']} on {human_date(e['date'])} {e['start_time']}-{e['end_time']}"]
+    overnight = " (ends next day)" if e["end_time"] <= e["start_time"] else ""
+    parts = [f"{e['title']} on {human_date(e['date'])} {e['start_time']}-{e['end_time']}{overnight}"]
     if e.get("location"):
         parts.append(f"location: {e['location']}")
     if e.get("category"):

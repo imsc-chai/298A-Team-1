@@ -11,7 +11,7 @@ Every model uses this same dispatcher, so tool semantics never differ between mo
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Callable
 
@@ -181,9 +181,9 @@ class ToolDispatcher:
         if date and not _DATE.match(date):
             raise ValueError(f"date must be YYYY-MM-DD, got {date!r}")
         query = args.get("query")
-        # Read the connector's live event list (includes events created this task); its own
-        # search_events only does single-substring title matching.
-        events = [e for e in self.conn._events if not date or e["date"] == date]
+        # Date filtering (incl. overnight spill-over) comes from the connector; the query is
+        # matched here because the connector only does single-substring title matching.
+        events = [asdict(e) for e in self.conn.search_events(date=date)]
         if query:
             events = [e for e in events if _matches(query, " ".join(str(e.get(k, "")) for k in ("title", "notes", "location", "category")))]
         events.sort(key=lambda e: (e["date"], e["start_time"]))
@@ -193,18 +193,14 @@ class ToolDispatcher:
         return self._ok("search_calendar", args, f"{len(events)} event(s):\n" + "\n".join(lines), [e["id"] for e in events])
 
     def _read_messages(self, args: dict[str, Any]) -> ToolResult:
-        raw = self.conn.search_messages(reference_time=self.reference_time)  # rule 7 cutoff
-        msgs = [m.__dict__ for m in raw]
+        # reference_time cutoff (rule 7) and day_range are applied by the connector.
+        raw = self.conn.search_messages(reference_time=self.reference_time, day_range=args.get("day_range"))
+        msgs = [asdict(m) for m in raw]
         if args.get("contact"):
             terms = self._contact_terms(args["contact"])
             msgs = [m for m in msgs if any(t in f"{m['sender']} {m['recipient']}".lower() for t in terms)]
         if args.get("query"):
             msgs = [m for m in msgs if _matches(args["query"], f"{m['subject']} {m['body']}")]
-        if args.get("day_range"):
-            rng = args["day_range"]
-            if len(rng) != 2:
-                raise ValueError("day_range must be [start_day, end_day]")
-            msgs = [m for m in msgs if rng[0] <= int(m["timestamp"][8:10]) <= rng[1]]
         msgs.sort(key=lambda m: m["timestamp"])
         note = ""
         if len(msgs) > MAX_MESSAGES:
@@ -229,13 +225,13 @@ class ToolDispatcher:
         for key in ("start_time", "end_time"):
             if not _TIME.match(args[key]):
                 raise ValueError(f"{key} must be HH:MM (24h), got {args[key]!r}")
-        if args["end_time"] <= args["start_time"]:
-            raise ValueError("end_time must be after start_time")
+        # end_time < start_time is a valid overnight event; equal times are rejected by the connector.
         event = self.conn.create_event(
             title=args["title"], date=args["date"], start_time=args["start_time"],
             end_time=args["end_time"], busy=args["busy"], notes=args.get("notes", ""),
         )
-        obs = f"Created calendar event {event.id}: {event.title} on {event.weekday} {event.date} {event.start_time}-{event.end_time}"
+        overnight = " (ends next day)" if event.ends_next_day else ""
+        obs = f"Created calendar event {event.id}: {event.title} on {event.weekday} {event.date} {event.start_time}-{event.end_time}{overnight}"
         return self._ok("create_calendar_event", args, obs, [event.id])
 
     def _draft_email(self, args: dict[str, Any]) -> ToolResult:
