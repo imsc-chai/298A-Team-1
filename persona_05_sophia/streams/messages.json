@@ -1,0 +1,81 @@
+[
+  {
+    "id": "msg_p5_001",
+    "day": 1,
+    "timestamp": "2026-11-01T14:00:00",
+    "channel": "email",
+    "sender": "Dr. Marcus Jenkins <m.jenkins@oakridge-hs.edu>",
+    "recipient": "Sophia Martinez <smartinez@oakridge-hs.edu>",
+    "subject": "November Department Chairs Agenda & Safety Inspection",
+    "body": "Hi Sophia, reminder that the Science Department meeting is scheduled for Tuesday Nov 3 at 3:30 PM. Please bring the Q4 chemical requisition totals and science fair poster drafts."
+  },
+  {
+    "id": "msg_p5_002",
+    "day": 2,
+    "timestamp": "2026-11-02T16:00:00",
+    "channel": "email",
+    "sender": "Greg Miller <g.miller@biosciencesdirect.com>",
+    "recipient": "Sophia Martinez <smartinez@oakridge-hs.edu>",
+    "subject": "BioSciences Direct Order Invoice - Oakridge High ($1,280.00)",
+    "body": "Dear Mrs. Martinez, your educational lab order for electrophoresis agarose gels, DNA extraction kits, and enzymes has shipped. The formal invoice (chemical_reagent_invoice.pdf) for $1,280.00 is attached for district billing. Delivery expected Thursday morning."
+  },
+  {
+    "id": "msg_p5_003",
+    "day": 4,
+    "timestamp": "2026-11-04T15:30:00",
+    "channel": "email",
+    "sender": "Elena Ramos <elena.ramos.sf@gmail.com>",
+    "recipient": "Sophia Martinez <smartinez@oakridge-hs.edu>",
+    "subject": "Parent Conference Request - Lucas Ramos AP Biology Progress",
+    "body": "Dear Mrs. Martinez, I wanted to schedule a brief conference to check on Lucas progress in AP Biology before the midterm. Are you free to meet next Tuesday Nov 10 after school around 3:30 PM?"
+  },
+  {
+    "id": "msg_p5_004",
+    "day": 4,
+    "timestamp": "2026-11-04T16:00:00",
+    "channel": "email",
+    "sender": "Sophia Martinez <smartinez@oakridge-hs.edu>",
+    "recipient": "Elena Ramos <elena.ramos.sf@gmail.com>",
+    "subject": "Re: Parent Conference Request - Lucas Ramos AP Biology Progress",
+    "body": "Dear Mrs. Ramos, Tuesday Nov 10 at 3:30 PM in Room 214 works well. Lucas has shown great enthusiasm during our genetics laboratory exercises. Looking forward to speaking with you!"
+  },
+  {
+    "id": "msg_p5_005",
+    "day": 8,
+    "timestamp": "2026-11-08T17:00:00",
+    "channel": "sms",
+    "sender": "David Martinez (+1-555-012-6688)",
+    "recipient": "Sophia Martinez",
+    "body": "Hey Sophia, reminder that parent conference night is coming up next week. I will handle dinner and pick up groceries on Thursday."
+  },
+  {
+    "id": "msg_p5_006",
+    "day": 10,
+    "timestamp": "2026-11-10T16:45:00",
+    "channel": "email",
+    "sender": "Sophia Martinez <smartinez@oakridge-hs.edu>",
+    "recipient": "Dr. Marcus Jenkins <m.jenkins@oakridge-hs.edu>",
+    "subject": "IEP Accommodation Plan Implemented for Lucas Ramos",
+    "body": "Dr. Jenkins, I met with Mrs. Ramos today. Lucas 50 percent extended test time under IEP #IEP-4019-R has been successfully configured in the testing center for next week AP exam."
+  },
+  {
+    "id": "msg_p5_007",
+    "day": 15,
+    "timestamp": "2026-11-15T14:00:00",
+    "channel": "email",
+    "sender": "Robert Henderson <r.henderson@oakridge-hs.edu>",
+    "recipient": "Sophia Martinez <smartinez@oakridge-hs.edu>",
+    "subject": "Hazardous Chemical Inventory Audit - Room 214 Prep",
+    "body": "Sophia, I completed the safety check on your flammables storage. Everything is compliant with OSHA standards. The safety inventory sheet (laboratory_chemical_safety_inventory.csv) is filed in the department drive."
+  },
+  {
+    "id": "msg_p5_008",
+    "day": 24,
+    "timestamp": "2026-11-24T16:30:00",
+    "channel": "email",
+    "sender": "Dr. Marcus Jenkins <m.jenkins@oakridge-hs.edu>",
+    "recipient": "Oakridge High Faculty",
+    "subject": "Happy Thanksgiving Break to All Staff",
+    "body": "Dear Faculty, thank you for your exceptional dedication to our students throughout the first half of the semester. Enjoy a well-deserved Thanksgiving break with your families!"
+  }
+]

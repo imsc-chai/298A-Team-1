@@ -1,0 +1,435 @@
+[
+  {
+    "id": "msg_001",
+    "day": 1,
+    "timestamp": "2026-11-01T14:22:00",
+    "channel": "email",
+    "sender": "Dr. Arthur Chen <a.chen@univ.edu>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "CS 601 Midterm Grading & TA Scheduling",
+    "body": "Hi Maya, we need to schedule the exam grading sessions for mid-November. Please let me know your general availability next week. As usual, please make sure we avoid early mornings since I know you commute in after 10 AM."
+  },
+  {
+    "id": "msg_002",
+    "day": 1,
+    "timestamp": "2026-11-01T16:05:00",
+    "channel": "email",
+    "sender": "Maya Lin <maya.lin@grad.univ.edu>",
+    "recipient": "Dr. Arthur Chen <a.chen@univ.edu>",
+    "subject": "Re: CS 601 Midterm Grading & TA Scheduling",
+    "body": "Hi Dr. Chen, thanks! Yes, afternoons between 13:00 and 17:00 work best for me on Mondays, Wednesdays, or Thursdays. Tuesday mornings I have standing personal appointments and Thursday mid-day is my office hours."
+  },
+  {
+    "id": "msg_003",
+    "day": 2,
+    "timestamp": "2026-11-02T19:14:00",
+    "channel": "sms",
+    "sender": "Marcus Vance (+1-555-014-9932)",
+    "recipient": "Maya Lin",
+    "body": "Hey Maya! Are we still syncing Wednesday at 11am for the paper literature review?"
+  },
+  {
+    "id": "msg_004",
+    "day": 2,
+    "timestamp": "2026-11-02T19:22:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Marcus Vance (+1-555-014-9932)",
+    "body": "Yup! Library cafe at 11 works great. I will bring my benchmark draft notes."
+  },
+  {
+    "id": "msg_005",
+    "day": 3,
+    "timestamp": "2026-11-03T11:00:00",
+    "channel": "email",
+    "sender": "Samira Patel <s.patel@undergrad.univ.edu>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "Question regarding CS 401 Assignment 3 Part 2",
+    "body": "Hi Maya, I had a quick question regarding the dynamic programming problem in Homework 3. Will you be holding your regular office hours this Thursday at 11 AM in Grad Commons 3B? Thanks!"
+  },
+  {
+    "id": "msg_006",
+    "day": 3,
+    "timestamp": "2026-11-03T12:15:00",
+    "channel": "email",
+    "sender": "Maya Lin <maya.lin@grad.univ.edu>",
+    "recipient": "Samira Patel <s.patel@undergrad.univ.edu>",
+    "subject": "Re: Question regarding CS 401 Assignment 3 Part 2",
+    "body": "Hi Samira, yes, I will be in Grad Commons 3B from 11:00 AM to 1:00 PM this Thursday. Feel free to stop by and we can walk through your recurrence relation."
+  },
+  {
+    "id": "msg_007",
+    "day": 4,
+    "timestamp": "2026-11-04T09:10:00",
+    "channel": "sms",
+    "sender": "Chloe Bennett (+1-555-018-2201)",
+    "recipient": "Maya Lin",
+    "body": "Hey Maya, FedEx is dropping off a heavy package for the apartment. What is the gate code again? The delivery guy says call box is not ringing."
+  },
+  {
+    "id": "msg_008",
+    "day": 4,
+    "timestamp": "2026-11-04T09:12:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Chloe Bennett (+1-555-018-2201)",
+    "body": "The gate code is #4829! If package locker is full tell him to leave it in the mail alcove."
+  },
+  {
+    "id": "msg_009",
+    "day": 5,
+    "timestamp": "2026-11-05T14:30:00",
+    "channel": "sms",
+    "sender": "Chloe Bennett (+1-555-018-2201)",
+    "recipient": "Maya Lin",
+    "body": "Got the package into the living room, thanks! Also landlord confirmed water heater repair is scheduled for Friday morning."
+  },
+  {
+    "id": "msg_010",
+    "day": 6,
+    "timestamp": "2026-11-06T11:45:00",
+    "channel": "email",
+    "sender": "Bay Physical Therapy <info@bayptcare.clinic>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "Monthly Statement & Appointment Confirmation",
+    "body": "Dear Maya, your statement for October physical therapy rehabilitation is ready. A PDF copy (clinic_bill.pdf) has been generated for your records. Your remaining patient responsibility is 20.00 after BlueCross insurance adjustments. Your next scheduled session with Dr. Keller is Tuesday Nov 10 at 8:30 AM."
+  },
+  {
+    "id": "msg_011",
+    "day": 7,
+    "timestamp": "2026-11-07T13:20:00",
+    "channel": "sms",
+    "sender": "Priya Lin (+1-555-012-7744)",
+    "recipient": "Maya Lin",
+    "body": "Maya!! Mom said you booked your flight for the conference in Chicago next Thursday Nov 12? Can you send me your flight details so I know when you land at O Hare?"
+  },
+  {
+    "id": "msg_012",
+    "day": 7,
+    "timestamp": "2026-11-07T13:25:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Priya Lin (+1-555-012-7744)",
+    "body": "Yes! I downloaded the airline confirmation ticket to my files (flight_ticket.png). Flying SkyWest 412 out of SFO at 8:00 AM, getting into ORD around 2:15 PM Chicago time."
+  },
+  {
+    "id": "msg_013",
+    "day": 8,
+    "timestamp": "2026-11-08T17:40:00",
+    "channel": "email",
+    "sender": "Maya Lin <maya.lin@grad.univ.edu>",
+    "recipient": "Chloe Bennett <chloe.b@gmail.com>",
+    "subject": "Apartment Wi-Fi & Maintenance note",
+    "body": "Hey Chloe, I updated our router settings yesterday. The new Wi-Fi network name is Redwood_5G_Fast and password is saved in my apartment notes. Also reminder that landlord is fixing water heater this Friday."
+  },
+  {
+    "id": "msg_014",
+    "day": 9,
+    "timestamp": "2026-11-09T18:30:00",
+    "channel": "sms",
+    "sender": "Liam Scott (+1-555-017-3388)",
+    "recipient": "Maya Lin",
+    "body": "Hey Maya! Are you free for dinner or coffee next Thursday Nov 12 around 11am?"
+  },
+  {
+    "id": "msg_015",
+    "day": 9,
+    "timestamp": "2026-11-09T18:35:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Liam Scott (+1-555-017-3388)",
+    "body": "Hey Liam! Cannot do Thursday 12th at all, I will be flying out for a CS symposium. Let us catch up when I get back the following week!"
+  },
+  {
+    "id": "msg_016",
+    "day": 10,
+    "timestamp": "2026-11-10T16:00:00",
+    "channel": "sms",
+    "sender": "Marcus Vance (+1-555-014-9932)",
+    "recipient": "Maya Lin",
+    "body": "Hey, Dr. Chen mentioned we might need to push our Wednesday lab sync to Friday Nov 13. Does Friday afternoon still work for your deep work or can you spare 30 mins?"
+  },
+  {
+    "id": "msg_017",
+    "day": 10,
+    "timestamp": "2026-11-10T16:15:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Marcus Vance (+1-555-014-9932)",
+    "body": "I will be at the symposium in Chicago on Friday Nov 13 so will not be on campus. Let us sync Monday Nov 16 instead!"
+  },
+  {
+    "id": "msg_018",
+    "day": 11,
+    "timestamp": "2026-11-11T10:00:00",
+    "channel": "email",
+    "sender": "Midwest CS Graduate Symposium <organizers@midwestcs.org>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "Welcome to Chicago! Badge Pickup & Conference Program",
+    "body": "Dear Attendee Maya Lin, your registration for the Midwest CS Graduate Symposium is confirmed. Badge pickup begins Thursday Nov 12 at 4:00 PM in the Chicago Hilton Grand Ballroom. Attached is the symposium_program.pdf with room assignments."
+  },
+  {
+    "id": "msg_019",
+    "day": 12,
+    "timestamp": "2026-11-12T06:30:00",
+    "channel": "sms",
+    "sender": "SkyWest Flight Alerts",
+    "recipient": "Maya Lin",
+    "body": "SkyWest Flight 412 from SFO to ORD is on time. Gate 72, boarding starts at 7:25 AM. Boarding pass confirmation: KY92XZ."
+  },
+  {
+    "id": "msg_020",
+    "day": 12,
+    "timestamp": "2026-11-12T15:10:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Priya Lin (+1-555-012-7744)",
+    "body": "Just landed at O Hare! Heading on the Blue Line to downtown now."
+  },
+  {
+    "id": "msg_021",
+    "day": 13,
+    "timestamp": "2026-11-13T12:00:00",
+    "channel": "sms",
+    "sender": "Marcus Vance (+1-555-014-9932)",
+    "recipient": "Maya Lin",
+    "body": "How is the symposium going? Did you see the paper on bounded tool calling from CMU?"
+  },
+  {
+    "id": "msg_022",
+    "day": 13,
+    "timestamp": "2026-11-13T13:40:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Marcus Vance (+1-555-014-9932)",
+    "body": "Yes! Very relevant to our project. I took notes and will share them during our Monday lab standup."
+  },
+  {
+    "id": "msg_023",
+    "day": 14,
+    "timestamp": "2026-11-14T20:15:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Chloe Bennett (+1-555-018-2201)",
+    "body": "Just landed back at SFO! Taking an Uber home now."
+  },
+  {
+    "id": "msg_024",
+    "day": 15,
+    "timestamp": "2026-11-15T16:00:00",
+    "channel": "email",
+    "sender": "CS Department Coordinator <cs-admin@univ.edu>",
+    "recipient": "CS Teaching Assistants <cs-ta-all@univ.edu>",
+    "subject": "Midterm Exam Week Protocol & Proctoring Rosters",
+    "body": "Dear TAs, reminder that midterm exams take place this Monday Nov 16. Maya Lin is assigned to Auditorium A from 3:00 PM to 4:30 PM. Please arrive 15 minutes early to distribute exam booklets."
+  },
+  {
+    "id": "msg_025",
+    "day": 16,
+    "timestamp": "2026-11-16T17:00:00",
+    "channel": "email",
+    "sender": "Maya Lin <maya.lin@grad.univ.edu>",
+    "recipient": "Dr. Arthur Chen <a.chen@univ.edu>",
+    "subject": "CS 401 Midterm Proctoring Completed",
+    "body": "Hi Dr. Chen, the CS 401 exam ended smoothly in Auditorium A with all 114 booklets accounted for. I have locked them in the Grad Commons exam cabinet. We can begin grading Wednesday afternoon."
+  },
+  {
+    "id": "msg_026",
+    "day": 17,
+    "timestamp": "2026-11-17T11:30:00",
+    "channel": "sms",
+    "sender": "Bay PT Clinic (+1-555-016-8800)",
+    "recipient": "Maya Lin",
+    "body": "Bay PT: Great progress on your lumbar recovery today Maya. Reminder your next session is Tuesday Nov 24 at 8:30 AM."
+  },
+  {
+    "id": "msg_027",
+    "day": 18,
+    "timestamp": "2026-11-18T16:45:00",
+    "channel": "email",
+    "sender": "Marcus Vance <m.vance@grad.univ.edu>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "Midterm Grading Session 1 Complete",
+    "body": "Hey Maya, thanks for powering through questions 1 through 3 today! We finished about 65 percent of the exams. Let us wrap up the remaining questions on Friday before your research block."
+  },
+  {
+    "id": "msg_028",
+    "day": 19,
+    "timestamp": "2026-11-19T10:15:00",
+    "channel": "email",
+    "sender": "Dr. Arthur Chen <a.chen@univ.edu>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "Midterm Grading Check-in",
+    "body": "Hi Maya, could we schedule a 2-hour grading sync next week? Let me know your open afternoon slots."
+  },
+  {
+    "id": "msg_029",
+    "day": 20,
+    "timestamp": "2026-11-20T17:15:00",
+    "channel": "sms",
+    "sender": "Chloe Bennett (+1-555-018-2201)",
+    "recipient": "Maya Lin",
+    "body": "Hey Maya! Are we doing grocery shopping tomorrow morning or Sunday?"
+  },
+  {
+    "id": "msg_030",
+    "day": 20,
+    "timestamp": "2026-11-20T17:30:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Chloe Bennett (+1-555-018-2201)",
+    "body": "Sunday around 11am works best for me! I want to sleep in Saturday after exam grading."
+  },
+  {
+    "id": "msg_031",
+    "day": 21,
+    "timestamp": "2026-11-21T13:30:00",
+    "channel": "email",
+    "sender": "Prof. Elena Rostova <e.rostova@univ.edu>",
+    "recipient": "CS 601 Students",
+    "subject": "Checkpoint Presentations Feedback",
+    "body": "Class, excellent project checkpoint presentations today over Zoom. Groups have until Wednesday Nov 25 to submit revised milestone writeups."
+  },
+  {
+    "id": "msg_032",
+    "day": 22,
+    "timestamp": "2026-11-22T14:00:00",
+    "channel": "sms",
+    "sender": "Liam Scott (+1-555-017-3388)",
+    "recipient": "Maya Lin",
+    "body": "Hey Maya! Since you are back from Chicago, any chance we can do lunch this Wednesday Nov 25 around 12:30?"
+  },
+  {
+    "id": "msg_033",
+    "day": 22,
+    "timestamp": "2026-11-22T14:20:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Liam Scott (+1-555-017-3388)",
+    "body": "Wednesday 12:30 works great! Let us meet at the Campus Green Bistro."
+  },
+  {
+    "id": "msg_034",
+    "day": 23,
+    "timestamp": "2026-11-23T16:00:00",
+    "channel": "email",
+    "sender": "CS Department <cs-events@univ.edu>",
+    "recipient": "Graduate Students",
+    "subject": "Pre-Thanksgiving Department Coffee & Pastries - Tuesday 10 AM",
+    "body": "Please join faculty and staff in the Faculty Lounge on Tuesday Nov 24 from 10:00 AM to 11:00 AM for pre-holiday coffee and pastries."
+  },
+  {
+    "id": "msg_035",
+    "day": 24,
+    "timestamp": "2026-11-24T18:00:00",
+    "channel": "sms",
+    "sender": "Priya Lin (+1-555-012-7744)",
+    "recipient": "Maya Lin",
+    "body": "Maya! For Thanksgiving Thursday, what time are you coming over? Dinner will be ready around 2:00 PM."
+  },
+  {
+    "id": "msg_036",
+    "day": 24,
+    "timestamp": "2026-11-24T18:15:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Priya Lin (+1-555-012-7744)",
+    "body": "I will be there by 1:00 PM! I am bringing the pumpkin pie and apple cider."
+  },
+  {
+    "id": "msg_037",
+    "day": 25,
+    "timestamp": "2026-11-25T16:00:00",
+    "channel": "email",
+    "sender": "Maya Lin <maya.lin@grad.univ.edu>",
+    "recipient": "Marcus Vance <m.vance@grad.univ.edu>",
+    "subject": "CS 601 Revised Milestone Writeup Uploaded",
+    "body": "Hey Marcus, I incorporated Prof. Rostova feedback and uploaded the milestone document to the portal. Enjoy Thanksgiving with your family and see you next week!"
+  },
+  {
+    "id": "msg_038",
+    "day": 26,
+    "timestamp": "2026-11-26T10:00:00",
+    "channel": "sms",
+    "sender": "Chloe Bennett (+1-555-018-2201)",
+    "recipient": "Maya Lin",
+    "body": "Happy Thanksgiving Maya! Have fun at Priya place!"
+  },
+  {
+    "id": "msg_039",
+    "day": 27,
+    "timestamp": "2026-11-27T14:00:00",
+    "channel": "sms",
+    "sender": "Marcus Vance (+1-555-014-9932)",
+    "recipient": "Maya Lin",
+    "body": "Hey Maya, hope Thanksgiving was great! Ready to finalize the experimental baseline next week?"
+  },
+  {
+    "id": "msg_040",
+    "day": 27,
+    "timestamp": "2026-11-27T14:30:00",
+    "channel": "sms",
+    "sender": "Maya Lin",
+    "recipient": "Marcus Vance (+1-555-014-9932)",
+    "body": "Definitely! I am running the evaluation scripts over the weekend so we will have numbers ready for Dr. Chen on Monday."
+  },
+  {
+    "id": "msg_041",
+    "day": 28,
+    "timestamp": "2026-11-28T11:00:00",
+    "channel": "email",
+    "sender": "Academic Library <library-notices@univ.edu>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "Interlibrary Loan Book Arrived: Foundations of Multimodal Learning",
+    "body": "Dear Maya Lin, your requested book Foundations of Multimodal Learning (Item #IL-88201) has arrived and is ready for pickup at the Main Library Circulation Desk. Please retrieve it within 7 days."
+  },
+  {
+    "id": "msg_042",
+    "day": 28,
+    "timestamp": "2026-11-28T16:30:00",
+    "channel": "sms",
+    "sender": "Priya Lin (+1-555-012-7744)",
+    "recipient": "Maya Lin",
+    "body": "Hey Maya, you left your gray scarf at my house on Thursday! I can bring it by your campus lab on Tuesday."
+  },
+  {
+    "id": "msg_043",
+    "day": 29,
+    "timestamp": "2026-11-29T13:00:00",
+    "channel": "email",
+    "sender": "Student David Kim <d.kim@undergrad.univ.edu>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "CS 401 Question on Homework 4 Solutions",
+    "body": "Hi Maya, will the solution key for Homework 4 be posted before Wednesday class? I want to make sure I understand question 3 for the final review."
+  },
+  {
+    "id": "msg_044",
+    "day": 29,
+    "timestamp": "2026-11-29T14:15:00",
+    "channel": "email",
+    "sender": "Maya Lin <maya.lin@grad.univ.edu>",
+    "recipient": "Student David Kim <d.kim@undergrad.univ.edu>",
+    "subject": "Re: CS 401 Question on Homework 4 Solutions",
+    "body": "Hi David, yes, I am reviewing the solution set today and will publish the PDF on the course portal by Tuesday noon."
+  },
+  {
+    "id": "msg_045",
+    "day": 30,
+    "timestamp": "2026-11-30T09:00:00",
+    "channel": "email",
+    "sender": "Dr. Arthur Chen <a.chen@univ.edu>",
+    "recipient": "Maya Lin <maya.lin@grad.univ.edu>",
+    "subject": "Reminder: Monthly Research Evaluation Sync Today at 2 PM",
+    "body": "Hi Maya, looking forward to our milestone review today at 2:00 PM in Gates Hall 480. Please bring the benchmark accuracy charts and privacy evaluation summary."
+  },
+  {
+    "id": "msg_046",
+    "day": 30,
+    "timestamp": "2026-11-30T09:30:00",
+    "channel": "email",
+    "sender": "Maya Lin <maya.lin@grad.univ.edu>",
+    "recipient": "Dr. Arthur Chen <a.chen@univ.edu>",
+    "subject": "Re: Reminder: Monthly Research Evaluation Sync Today at 2 PM",
+    "body": "Sounds great Dr. Chen! Marcus and I have the numbers compiled across all 5 evaluation categories. See you at 2:00 PM."
+  }
+]

@@ -1,0 +1,7 @@
+date,vendor_name,expense_category,amount_usd,payment_method,business_purpose
+2026-10-01,Market Street Lofts,Studio Rent,850.00,ACH Direct Debit,Studio 302 Monthly Rent
+2026-10-14,Apple Inc.,Hardware,49.00,Visa ending 4109,Magic Keyboard & Studio Accessories
+2026-10-28,Adobe Creative Cloud,Software,4.99,Visa ending 4109,Adobe CC All Apps Subscription
+2026-11-01,Market Street Lofts,Studio Rent,850.00,ACH Direct Debit,Studio 302 Monthly Rent
+2026-11-02,Figma Inc.,Software,40.00,Visa ending 4109,Figma Organization Annual Seat
+2026-11-15,Type Network,Typography Licensing,80.00,Visa ending 4109,Web Font Client Handoff License

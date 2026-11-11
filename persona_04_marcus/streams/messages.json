@@ -1,0 +1,91 @@
+[
+  {
+    "id": "msg_p4_001",
+    "day": 1,
+    "timestamp": "2026-11-01T15:00:00",
+    "channel": "email",
+    "sender": "Thomas Thorne <t.thorne@apexvp.com>",
+    "recipient": "Marcus Vance <marcus@nexacore.ai>",
+    "subject": "Apex Ventures Seed Term Sheet & Monthly Sync",
+    "body": "Hi Marcus, excited for our sync tomorrow at 3 PM. We are finalizing our investment memo for the $3M round based on the $18M pre-money valuation agreed upon."
+  },
+  {
+    "id": "msg_p4_002",
+    "day": 1,
+    "timestamp": "2026-11-01T15:45:00",
+    "channel": "email",
+    "sender": "Marcus Vance <marcus@nexacore.ai>",
+    "recipient": "Thomas Thorne <t.thorne@apexvp.com>",
+    "subject": "Re: Apex Ventures Seed Term Sheet & Monthly Sync",
+    "body": "Hi Thomas, thanks! Rachel and I will walk through our Q4 API latency benchmarks and hiring pipeline tomorrow at 3:00 PM."
+  },
+  {
+    "id": "msg_p4_003",
+    "day": 3,
+    "timestamp": "2026-11-03T11:00:00",
+    "channel": "email",
+    "sender": "Rachel Sterling <rachel@nexacore.ai>",
+    "recipient": "Marcus Vance <marcus@nexacore.ai>",
+    "subject": "Candidate Priya Patel - Interview Feedback",
+    "body": "Marcus, Priya technical interview is tomorrow Wednesday at 2 PM. If she does well, let us prepare an offer package with $195k base and 0.75% equity."
+  },
+  {
+    "id": "msg_p4_004",
+    "day": 4,
+    "timestamp": "2026-11-04T16:00:00",
+    "channel": "sms",
+    "sender": "Jason Wu (+1-555-014-6611)",
+    "recipient": "Marcus Vance",
+    "body": "Hey Marcus, Priya killed the distributed systems interview! Solved the vector cache consistency question in 25 mins. Huge hire if we close her."
+  },
+  {
+    "id": "msg_p4_005",
+    "day": 5,
+    "timestamp": "2026-11-05T10:00:00",
+    "channel": "email",
+    "sender": "Amazon Web Services <billing@amazon.com>",
+    "recipient": "Marcus Vance <marcus@nexacore.ai>",
+    "subject": "AWS Monthly Invoice - October 2026 ($6,420.00)",
+    "body": "Dear NexaCore Systems, your AWS invoice for billing period October 2026 is ready. Total charges: $6,420.00. The invoice PDF (aws_cloud_monthly_invoice.pdf) has been charged to your corporate Visa ending in 8841."
+  },
+  {
+    "id": "msg_p4_006",
+    "day": 10,
+    "timestamp": "2026-11-10T16:30:00",
+    "channel": "email",
+    "sender": "Karen Vance-Miller <karen@vancemillerlaw.com>",
+    "recipient": "Marcus Vance <marcus@nexacore.ai>",
+    "subject": "Legal Review Complete: Series Seed Term Sheet",
+    "body": "Hi Marcus and Rachel, I completed the legal review of the Apex term sheet. The protective provisions and liquidation preference are standard clean terms. The finalized PDF (seed_round_term_sheet.pdf) is attached for execution."
+  },
+  {
+    "id": "msg_p4_007",
+    "day": 16,
+    "timestamp": "2026-11-16T14:00:00",
+    "channel": "email",
+    "sender": "Marcus Vance <marcus@nexacore.ai>",
+    "recipient": "Priya Patel <p.patel.ai@gmail.com>",
+    "subject": "Formal Offer of Employment: Senior ML Engineer at NexaCore Systems",
+    "body": "Dear Priya, on behalf of NexaCore Systems, we are thrilled to extend an offer for the position of Senior ML Engineer. The formal offer letter (candidate_offer_letter.pdf) outlines your compensation package and start date. We look forward to our discussion tomorrow at 2:00 PM!"
+  },
+  {
+    "id": "msg_p4_008",
+    "day": 18,
+    "timestamp": "2026-11-18T10:30:00",
+    "channel": "email",
+    "sender": "Priya Patel <p.patel.ai@gmail.com>",
+    "recipient": "Marcus Vance <marcus@nexacore.ai>",
+    "subject": "Offer Acceptance - Senior ML Engineer",
+    "body": "Hi Marcus and Rachel, I am thrilled to accept the offer to join NexaCore Systems! I have signed and returned the offer letter. My target start date will be Monday, January 11, 2027. Excited to build with the team!"
+  },
+  {
+    "id": "msg_p4_009",
+    "day": 24,
+    "timestamp": "2026-11-24T16:00:00",
+    "channel": "email",
+    "sender": "Thomas Thorne <t.thorne@apexvp.com>",
+    "recipient": "Marcus Vance <marcus@nexacore.ai>",
+    "subject": "Happy Thanksgiving & Q4 Board Preparation",
+    "body": "Marcus, great sync today. Closing Priya as Senior ML Engineer is a massive win for our technical roadmap. Enjoy the Thanksgiving break with your family!"
+  }
+]

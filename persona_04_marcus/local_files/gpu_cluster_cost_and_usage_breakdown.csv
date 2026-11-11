@@ -1,0 +1,6 @@
+date,gpu_instance_type,active_nodes,gpu_hours_billed,hourly_rate,daily_total_usd,workload_type
+2026-10-01,p4de.24xlarge (8x A100),4,96,$40.96,$138.00,Production Inference
+2026-10-08,p4de.24xlarge (8x A100),4,96,$40.96,$138.00,Production Inference
+2026-10-15,p4de.24xlarge (8x A100),4,96,$40.96,$138.00,Production Inference
+2026-10-22,p4de.24xlarge (8x A100),4,96,$40.96,$138.00,Production Inference
+2026-10-29,p4de.24xlarge (8x A100),4,96,$40.96,$138.00,Production Inference
