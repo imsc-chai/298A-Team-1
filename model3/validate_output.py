@@ -81,6 +81,9 @@ class PersonaFacts:
 
 
 def run_dirs(root: Path) -> list[Path]:
+    if not root.is_dir():
+        raise SystemExit(f"Results folder not found: {root}  (in a Colab `!` line, precompute the path; "
+                         "`{RUN:02d}` is not expanded there)")
     if RUN_DIR.match(root.name):
         return [root]
     dirs = sorted(p for p in root.iterdir() if p.is_dir() and RUN_DIR.match(p.name))
