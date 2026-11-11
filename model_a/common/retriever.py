@@ -17,7 +17,7 @@ import numpy as np
 from rank_bm25 import BM25Okapi
 
 from model_a.common.schemas import MemoryRecord, RecordType
-from model_a.config import cache_dir
+from model_a.common.config import cache_dir
 
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
 # bge v1.5 recommends this instruction on short queries (not on passages).

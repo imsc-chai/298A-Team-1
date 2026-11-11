@@ -3,7 +3,7 @@ import json
 import pytest
 from pydantic import BaseModel
 
-from model_a.llm.client import LLMError, LLMParseError, LLMSettings, OllamaClient
+from model_a.common.llm_client import LLMError, LLMParseError, LLMSettings, OllamaClient
 
 
 class Answer(BaseModel):

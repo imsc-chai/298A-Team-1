@@ -6,7 +6,7 @@ from model_a.common.connectors import open_connector
 from model_a.common.sandbox import task_sandbox
 from model_a.common.schemas import StepStatus
 from model_a.common.tools import ToolDispatcher, parse_registry, render_tools
-from model_a.config import load_tool_registry, persona_dir
+from model_a.common.config import load_tool_registry, persona_dir
 
 REF_TIME = "2026-11-04T09:10:00"
 
@@ -32,7 +32,7 @@ def test_confirmation_tools_refused_and_logged(env, tool, args):
     d, conn, _ = env
     n_events = len(conn._events)
     r = d.dispatch(tool, args)
-    assert r.status == StepStatus.REFUSED
+    assert r.status == StepStatus.REQUIRES_CONFIRMATION
     assert d.violations and d.violations[-1]["type"] == "boundedness"
     assert len(conn._events) == n_events  # connector never called
 
@@ -56,6 +56,14 @@ def test_invalid_calls_fail_cleanly(env, tool, args, fragment):
     r = env[0].dispatch(tool, args)
     assert r.status == StepStatus.FAILED
     assert fragment in r.observation
+
+
+def test_malformed_calls_are_flagged_not_well_formed(env):
+    d = env[0]
+    assert not d.dispatch("teleport", {}).well_formed
+    assert not d.dispatch("draft_sms", {"to": "+1-555-014-9932", "subject": "x", "body": "b"}).well_formed
+    assert not d.dispatch("send_email", {"id": "draft_0001"}).well_formed  # validated before refusal
+    assert d.dispatch("read_local_file", {"path": "local_files/nope.pdf"}).well_formed  # valid call, failed execution
 
 
 def test_messages_hidden_after_reference_time(env):
@@ -107,13 +115,13 @@ def test_drafts_are_draft_status(env):
     assert r1.evidence_ids == ["draft_0001"]
 
 
-def test_create_event_and_update_profile_stay_in_sandbox(env):
+def test_create_event_and_update_profile_stay_in_memory(env):
     d, conn, sb = env
     source_profile = (persona_dir("persona_01_maya") / "agent_memory" / "user_profile.json").read_text()
     r = d.dispatch("create_calendar_event", {"title": "Flight", "date": "2026-11-12", "start_time": "08:00", "end_time": "14:15", "busy": True})
     assert r.status == StepStatus.EXECUTED
     r = d.dispatch("update_profile", {"field": "preferences.earliest_meeting_time", "value": "10:30"})
     assert r.status == StepStatus.EXECUTED
-    saved = json.loads((sb / "agent_memory" / "user_profile.json").read_text())
-    assert saved["preferences"]["earliest_meeting_time"] == "10:30"
+    assert conn.get_profile()["preferences"]["earliest_meeting_time"] == "10:30"
+    assert "earliest_meeting_time" not in (sb / "agent_memory" / "user_profile.json").read_text()  # no disk writes
     assert (persona_dir("persona_01_maya") / "agent_memory" / "user_profile.json").read_text() == source_profile

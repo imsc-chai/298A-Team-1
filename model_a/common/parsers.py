@@ -19,7 +19,7 @@ import pytesseract
 from PIL import Image, ImageOps
 from pypdf import PdfReader
 
-from model_a.config import cache_dir
+from model_a.common.config import cache_dir
 
 # pypdf warns about benign xref quirks in the synthetic PDFs; the extracted text is correct.
 logging.getLogger("pypdf").setLevel(logging.ERROR)

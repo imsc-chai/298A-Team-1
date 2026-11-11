@@ -6,10 +6,10 @@ import pytest
 from model_a.common.context import PersonaContext
 from model_a.common.sandbox import task_sandbox
 from model_a.common.schemas import MemoryRecord, RecordType
-from model_a.config import persona_dir
-from model_a.ingestion.ingest import build_records
-from model_a.ingestion.parsers import parse_file
-from model_a.retrieval.index import HybridRetriever, tokenize
+from model_a.common.config import persona_dir
+from model_a.common.ingest import build_records
+from model_a.common.parsers import parse_file
+from model_a.common.retriever import HybridRetriever, tokenize
 
 MAYA = "persona_01_maya"
 
