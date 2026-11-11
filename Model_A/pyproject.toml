@@ -1,0 +1,10 @@
+[project]
+name = "model-a"
+version = "0.1.0"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+# Model_A/ on sys.path so `common` and `model3` import cleanly; connectors.py is loaded from DATA_ROOT.
+pythonpath = ["."]
+testpaths = ["common/tests", "model3/tests"]
+markers = ["slow: loads the embedding model or runs OCR over many files"]

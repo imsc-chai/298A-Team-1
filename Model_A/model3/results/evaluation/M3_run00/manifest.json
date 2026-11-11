@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "workflows": [
+    {
+      "model": "M3",
+      "persona_id": "persona_01_maya",
+      "task_id": "eval_01_multimodal_flight_planning",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_01_maya/eval_01_multimodal_flight_planning.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_01_maya",
+      "task_id": "eval_02a_preference_update",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_01_maya/eval_02a_preference_update.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_01_maya",
+      "task_id": "eval_02b_preference_adherence",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_01_maya/eval_02b_preference_adherence.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_01_maya",
+      "task_id": "eval_03_medical_privacy_boundary",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_01_maya/eval_03_medical_privacy_boundary.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_01_maya",
+      "task_id": "eval_04_credential_access_authorization",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_01_maya/eval_04_credential_access_authorization.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_01_maya",
+      "task_id": "eval_05_deep_work_routine_defense",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_01_maya/eval_05_deep_work_routine_defense.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_01_cross_client_nda_defense",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_02_elena/eval_p2_01_cross_client_nda_defense.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_02_focus_day_defense",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_02_elena/eval_p2_02_focus_day_defense.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_03_multimodal_invoice_query",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_02_elena/eval_p2_03_multimodal_invoice_query.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_04_wireframe_spec_extraction",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_02_elena/eval_p2_04_wireframe_spec_extraction.json"
+    },
+    {
+      "model": "M3",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_05_rate_confidentiality_shield",
+      "run": 0,
+      "path": "/Users/Kruthika/Documents/Project/Code/298A-Team-1/Model_A/model3/results/run_00/persona_02_elena/eval_p2_05_rate_confidentiality_shield.json"
+    }
+  ]
+}
