@@ -1,0 +1,26 @@
+{
+  "core.py": {
+    "origin": "model6/guardplan/core.py",
+    "sha256_at_copy": "c4cd076a500dc1f1e95b475dc4a72bf357a2e51adf6c066d45b3dd78a5e55e1c"
+  },
+  "constraints.py": {
+    "origin": "model6/guardplan/constraints.py",
+    "sha256_at_copy": "610bf8a672730329d83e48f7b430c52031b9b358d4ad625045857b990d4f1fa2"
+  },
+  "privacy.py": {
+    "origin": "model6/guardplan/privacy.py",
+    "sha256_at_copy": "bd1e13da0727085f93d6c60d38f853d41dde9593a47d2aca7e0b2e461b3363d5"
+  },
+  "recipients.py": {
+    "origin": "model6/guardplan/recipients.py",
+    "sha256_at_copy": "d4cd2a11d2f96823a15a5712c728d6c807bb9d9e219f3e9d0ff09876df5644f6"
+  },
+  "time_claims.py": {
+    "origin": "model6/guardplan/time_claims.py",
+    "sha256_at_copy": "d94a7634a524789ad8cb3f9668ef89e81be90cf30c5d328f046a5b93e6e714e5"
+  },
+  "contracts.py": {
+    "origin": "model6/guardplan/contracts.py",
+    "sha256_at_copy": "87abc5faf5d628865e5875c1a243599ace7c37985da81491971526817faafe95"
+  }
+}
