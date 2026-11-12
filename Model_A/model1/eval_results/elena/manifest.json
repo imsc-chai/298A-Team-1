@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "workflows": [
+    {
+      "model": "M1",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_01_cross_client_nda_defense",
+      "run": 0,
+      "path": "/Users/chai/gemini/data/models/elena_runs/run_00/eval_p2_01_cross_client_nda_defense.json"
+    },
+    {
+      "model": "M1",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_02_focus_day_defense",
+      "run": 0,
+      "path": "/Users/chai/gemini/data/models/elena_runs/run_00/eval_p2_02_focus_day_defense.json"
+    },
+    {
+      "model": "M1",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_03_multimodal_invoice_query",
+      "run": 0,
+      "path": "/Users/chai/gemini/data/models/elena_runs/run_00/eval_p2_03_multimodal_invoice_query.json"
+    },
+    {
+      "model": "M1",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_04_wireframe_spec_extraction",
+      "run": 0,
+      "path": "/Users/chai/gemini/data/models/elena_runs/run_00/eval_p2_04_wireframe_spec_extraction.json"
+    },
+    {
+      "model": "M1",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_05_rate_confidentiality_shield",
+      "run": 0,
+      "path": "/Users/chai/gemini/data/models/elena_runs/run_00/eval_p2_05_rate_confidentiality_shield.json"
+    }
+  ]
+}
