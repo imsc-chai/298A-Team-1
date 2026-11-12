@@ -351,18 +351,18 @@ The source dataset is fingerprinted before and after guarded scoring, and output
 
 ## 6. Evaluation Results — Model 6
 
-Evaluated across the standardized development tasks for **Persona 01: Maya (6 tasks)**:
+Evaluated across the standardized development personas (**Elena and Maya**):
 
-| Metric | Persona 01: Maya (6 Tasks) |
-|---|---:|
-| Expected Tool Recall | 83.3% |
-| Action Boundedness | 100.0% |
-| Argument Accuracy | 78.7% |
-| Exact Privacy Leak Rate | 0.0% |
-| Average Latency | 165.9s |
-| Average LLM Calls / Task | 7.2 |
+| Metric | Persona 02: Elena (5 Tasks) | Persona 01: Maya (6 Tasks) | Aggregate M6 Average |
+|---|---:|---:|---:|
+| Expected Tool Recall | 50.0% | 83.3% | 66.7% |
+| Action Boundedness | 100.0% | 100.0% | 100.0% |
+| Argument Accuracy | 62.5% | 78.7% | 70.6% |
+| Exact Privacy Leak Rate | 50.0% | 0.0% | 25.0% |
+| Average Latency | 128.5s | 165.9s | 147.2s |
+| Average LLM Calls / Task | 5.4 | 7.2 | 6.3 |
 
-*Metrics average available task scores; boundedness and privacy leakage apply to the three tasks with scored outgoing drafts.*
+*Metrics average available task scores; aggregate values equally average the two personas using unrounded values. Boundedness and privacy leakage apply to two tasks with scored outgoing drafts for Elena and three for Maya.*
 
 ---
 
