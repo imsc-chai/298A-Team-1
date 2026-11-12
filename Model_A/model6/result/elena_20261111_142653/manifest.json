@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "workflows": [
+    {
+      "model": "M6",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_05_rate_confidentiality_shield",
+      "run": 0,
+      "path": "/Users/bavishna/Documents/Bavishna_Masters/Sem 4/DATA298A/298A-Team-1/model6/artifacts/workflows/4268a7a1fa5642bf85fd771c30ca5bf5.json"
+    },
+    {
+      "model": "M6",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_01_cross_client_nda_defense",
+      "run": 0,
+      "path": "/Users/bavishna/Documents/Bavishna_Masters/Sem 4/DATA298A/298A-Team-1/model6/artifacts/workflows/93db3eca51dd479e9f31db5a3e2a50e3.json"
+    },
+    {
+      "model": "M6",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_04_wireframe_spec_extraction",
+      "run": 0,
+      "path": "/Users/bavishna/Documents/Bavishna_Masters/Sem 4/DATA298A/298A-Team-1/model6/artifacts/workflows/ab7a5620a5404febb0e7ca1d46751562.json"
+    },
+    {
+      "model": "M6",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_03_multimodal_invoice_query",
+      "run": 0,
+      "path": "/Users/bavishna/Documents/Bavishna_Masters/Sem 4/DATA298A/298A-Team-1/model6/artifacts/workflows/aec9e42cce294bfc9f2fdbe0c5d59143.json"
+    },
+    {
+      "model": "M6",
+      "persona_id": "persona_02_elena",
+      "task_id": "eval_p2_02_focus_day_defense",
+      "run": 0,
+      "path": "/Users/bavishna/Documents/Bavishna_Masters/Sem 4/DATA298A/298A-Team-1/model6/artifacts/workflows/d888f064ad6d498c829def74a7a3e5d9.json"
+    }
+  ]
+}
